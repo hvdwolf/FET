@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="xyz.hvdw.fytextratool.MainActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="top"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/left_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/number_pad_parent_margin"
+            android:orientation="vertical">
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:onClick="zip4jAllAppUpdateBin"
+                android:text="@string/zip_allappupdate" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:onClick="scriptedZipAllAppUpdateBin"
+                android:text="scripted ZIP" />
+
+            <Button
+                android:id="@+id/toggleButton"
+                android:onClick="toggleAppMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/app_light_dark"
+                android:checked="true"/>
+
+            <Button
+                android:id="@+id/DeviceDayNight"
+                android:onClick="switchDeviceToDayNightMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/device_light_dark"
+                android:checked="true"/>
+
+            <Button
+                android:id="@+id/AboutButton"
+                android:onClick="dispAboutInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/about_text"/>
+
+            <Button
+                android:id="@+id/importantProperties"
+                android:onClick="dispImportantProperties"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/important_props"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/center_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/left_panel"
+            android:layout_margin="@dimen/number_pad_parent_margin"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:onClick="openBluetoothSettings"
+                android:text="@string/open_def_bt"
+                android:drawableLeft="@drawable/bluetooth_icon" />
+
+            <Button
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="deviceInfo"
+                android:text="device info" />
+
+            <Button
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="systemInfo"
+                android:visibility="gone"
+                android:text="system info" />
+
+            <Button
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="syusettings"
+                android:text="Open specific Headunit Settings" />
+
+            <Button
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="engineermode"
+                android:text="Open engineer mode" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/right_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/center_panel"
+            android:layout_margin="@dimen/number_pad_parent_margin"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="setPass"
+                android:text="@string/set_pincode" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:onClick="changePass"
+                android:text="@string/change_pincode" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:onClick="disable"
+                android:text="@string/disable_pincode" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:onClick="checkPass"
+                android:text="@string/lock_unit"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

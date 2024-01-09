@@ -1,0 +1,30 @@
+<!-- res/layout/custom_firmware_update_dialog.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_marginTop="36dp"
+        android:id="@+id/firmwareflashtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="36dp"
+        android:text="@string/before_flash" />
+
+    <ImageView
+        android:layout_marginTop="36dp"
+        android:layout_below="@id/firmwareflashtext"
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/update_detected" />
+
+    <Button
+        android:id="@+id/firmwareOkButton"
+        android:layout_below="@id/imageView"
+        android:layout_marginTop="36dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ok_button"/>
+</RelativeLayout>

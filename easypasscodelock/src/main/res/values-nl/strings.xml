@@ -1,0 +1,14 @@
+<resources>
+    <string name="enter_a_new_password_txt">Type een nieuwe Pincode in</string>
+    <string name="confirm_password_txt">Bevestig Pincode</string>
+    <string name="password_changed_txt">Pincode gewijzigd</string>
+    <string name="please_enter_a_new_password_again_txt">Type nogmaals de nieuwe Pincode in</string>
+    <string name="max_8_characters_txt">Max 8 cijfers</string>
+    <string name="please_enter_current_password_txt">Type de huidige pincode in</string>
+    <string name="password_is_set_txt">Pincode is ingesteld</string>
+    <string name="incorrect_password_txt">Incorrecte Pincode</string>
+    <string name="password_disabled_txt">Pincode Uitgezet</string>
+    <string name="enter_your_password_txt">Type uw Pincode in</string>
+    <string name="clear_txt">Wissen</string>
+    <string name="forgot_password_txt">Pincode vergeten ?</string>
+</resources>
