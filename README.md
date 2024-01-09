@@ -7,16 +7,20 @@ A simple tool that adds some extra functionality to your FYT unit.
 
 
 # Screenshots
-(preliminary)
-![light theme](https://github.com/hvdwolf/FET/blob/master/images/lighttheme.png)
-![dark theme](https://github.com/hvdwolf/FET/blob/master/images/darktheme.png)
+(preliminary)<br>
+## Light Theme
+![light theme](https://github.com/hvdwolf/FET/raw/main/images/lighttheme.png)
+## Dark Theme
+![dark theme](https://github.com/hvdwolf/FET/raw/main/images/darktheme.png)
 
 
 ## Installation
+Not relevant right now as I stopped it anyway.<br><br>
+
 
 MIT License
 
-Copyleft 2023 Harry van der Wolf (surfer63)
+Copyleft 2023 Harry van der Wolf (surfer63)<br>
 Copyright (c) 2018 Fayaz Bin Salam for his easypasscodelock functionality.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
