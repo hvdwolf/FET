@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
             android.Manifest.permission.WRITE_SETTINGS,
             android.Manifest.permission.WRITE_SECURE_SETTINGS};
     String[] propNames = {"ro.board.platform", "ro.build.version.sdk", "ro.build.version.release", "ro.fyt.uiid", "sys.fyt.bluetooth_type", "sys.fyt.front_video_ic", "ro.build.fytid",
-            "persist.sys.fetkernel", "ro.fota.platform", "sys.fyt.cvbs.height", "sys.fyt.cvbs.width", "persist.sys.syu.audio", "ro.system.build.date", "ro.lsec.app.version",
-            "persist.sys.syu.audio", "persist.syu.camera360", "persist.fyt.fm.name", "persist.fyt.zh_frontview_enable" };
+            "sys.fyt.platform", "ro.fota.platform", "sys.fyt.cvbs.height", "sys.fyt.cvbs.width", "persist.sys.syu.audio", "ro.system.build.date", "ro.lsec.app.version",
+            "persist.sys.syu.audio", "persist.syu.camera360", "persist.fyt.fm.name", "persist.fyt.withrdsfn", "persist.fyt.zh_frontview_enable", "ro.build.fytmanufacturer" };
     Map<String, String> propsHashMap = new HashMap<>();
 
     ProgressBar mprogressBar;
