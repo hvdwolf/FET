@@ -42,7 +42,7 @@
     <string name="system_theme_night">Sets system to night mode</string>
     <string name="reboot_title">Reboot required</string>
     <string name="reboot_text">You need to reboot your unit now to activate the change.</string>
-    <string name="headunit_settings">Open Headunit Settings</string>
+    <string name="headunit_settings">Open Head unit Settings</string>
     <string name="system_info">system info</string>
     <string name="device_info">device info</string>
     <string name="engineer_mode">Open engineer mode</string>
