@@ -1,19 +1,21 @@
 package xyz.hvdw.fytextratool;
 
-import android.app.UiModeManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -26,7 +28,6 @@ import java.util.Map;
 
 import p32929.easypasscodelock.Utils.EasyLock;
 
-//import p32929.easypasscodelock.Utils.LockscreenHandler;
 
 public class MainActivity extends AppCompatActivity {
     String[] REQUIRED_PERMISSIONS = {
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
             "persist.sys.fetkernel", "ro.fota.platform", "sys.fyt.cvbs.height", "sys.fyt.cvbs.width", "persist.sys.syu.audio", "ro.system.build.date", "ro.lsec.app.version",
             "persist.sys.syu.audio", "persist.syu.camera360", "persist.fyt.fm.name", "persist.fyt.zh_frontview_enable" };
     Map<String, String> propsHashMap = new HashMap<>();
+
+    ProgressBar mprogressBar;
+    File cacheDir;
     // Define a constant for the permission request
     private static final int REQUEST_CODE = 123;
     private static final String TAG = "Fyt Extra Tool";
@@ -49,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String PREF_MODE_KEY = "app_mode";
     private static final String LIGHT_MODE = "light";
     private static final String DARK_MODE = "dark";
-
+    private static final String PREF_SYSTEM_MODE_KEY = "system_mode";
+    private static final String DAY_MODE = "day";
+    private static final String NIGHT_MODE = "night";
 
 
     @Override
@@ -57,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Context context;
+
+        mprogressBar = findViewById(R.id.progressBar);
+        // Make it invisible
+        mprogressBar.setVisibility(View.INVISIBLE);
+
 
         String logFileName = createLogFile();
         MyGettersSetters.setLogFileName(logFileName);
@@ -66,9 +77,13 @@ public class MainActivity extends AppCompatActivity {
         if (checkIsFYT()) {
             //If it is a FYT we can continue and do some further checks
             Utils.checkPermissions(this);
+            // Check app and system modi and set button texts
+            textButtonsAppSystem();
             //String fetValueForKey2 = propsHashMap.get("persist.sys.fetkernel");
             //EasyLock.checkPassword(this);
             //Utils.showAboutDialog(this);
+            //File cacheDir = this.getCacheDir();
+            //Toast.makeText(MainActivity.this, cacheDir.toString(),Toast.LENGTH_SHORT).show();
         }
 
 
@@ -80,9 +95,27 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void textButtonsAppSystem() {
+        Button appMode = findViewById(R.id.toggleButton);
+        Button systemMode = findViewById(R.id.DeviceDayNight);
+        Button suSystemMode = findViewById(R.id.suDeviceDayNight);
+        int currentMode = getSavedMode("App");
+        if (currentMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            appMode.setText(R.string.app_theme_light);
+        } else {
+            appMode.setText(R.string.app_theme_dark);
+        }
+        currentMode = getSavedMode("System");
+        if (currentMode == 1) { //Day
+            systemMode.setText(R.string.system_theme_night);
+            suSystemMode.setText(R.string.system_theme_night);
+        } else {
+            systemMode.setText(R.string.system_theme_day);
+            suSystemMode.setText(R.string.system_theme_day);
+        }
+    }
+
     public void dispAboutInfo(View view) {
-        //Intent intent = new Intent(this, AboutProperties.class);
-        //startActivity(intent);
         Utils.showAboutDialog(this, "about");
     }
     public void dispImportantProperties(View view) {
@@ -94,26 +127,35 @@ public class MainActivity extends AppCompatActivity {
 
     /* Below 4 methods are for the light/dark app toggle mode */
     public void toggleAppMode(View view) {
-        int currentMode = getSavedAppMode();
+        int currentMode = getSavedMode("App");
         if (currentMode == AppCompatDelegate.MODE_NIGHT_YES) {
             Logger.logToFile("App theme currently set to night mode. Set to day mode.");
-            saveAppMode(AppCompatDelegate.MODE_NIGHT_NO);
+            saveMode("App", AppCompatDelegate.MODE_NIGHT_NO);
         } else {
             Logger.logToFile("App theme currently set to day mode. Set to night mode.");
-            saveAppMode(AppCompatDelegate.MODE_NIGHT_YES);
+            saveMode("App", AppCompatDelegate.MODE_NIGHT_YES);
         }
         // Apply the new app mode
-        applyAppMode(getSavedAppMode());
+        applyAppMode(getSavedMode("App"));
     }
-    private int getSavedAppMode() {
+    private int getSavedMode(String whichItem) {
         SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-        String mode = preferences.getString(PREF_MODE_KEY, LIGHT_MODE);
-        return mode.equals(LIGHT_MODE) ? AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES;
+        if (whichItem.equals("App")) {
+            String mode = preferences.getString(PREF_MODE_KEY, LIGHT_MODE);
+            return mode.equals(LIGHT_MODE) ? AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES;
+        } else {
+            String mode = preferences.getString(PREF_SYSTEM_MODE_KEY, DAY_MODE);
+            return mode.equals(DAY_MODE) ? 1 : 2; //DAY = 1; NIGHT = 2
+        }
     }
 
-    private void saveAppMode(int mode) {
+    private void saveMode(String item, int mode) {
         SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
-        editor.putString(PREF_MODE_KEY, mode == AppCompatDelegate.MODE_NIGHT_NO ? LIGHT_MODE : DARK_MODE);
+        if (item.equals("App")) {
+            editor.putString(PREF_MODE_KEY, mode == AppCompatDelegate.MODE_NIGHT_NO ? LIGHT_MODE : DARK_MODE);
+        } else {
+            editor.putString(PREF_SYSTEM_MODE_KEY, String.valueOf(mode));
+        }
         editor.apply();
     }
 
@@ -126,32 +168,37 @@ public class MainActivity extends AppCompatActivity {
     /* Above 4 methods  are for the light/dark app toggle mode */
 
     /* Below method switches the unit to night or day mode */
-    @RequiresApi(api = Build.VERSION_CODES.Q)
     public void switchDeviceToDayNightMode(View view) {
         Boolean switchToNight = true;
-        UiModeManager uiModeManager = (UiModeManager) getSystemService(Context.UI_MODE_SERVICE);
 
-        if (uiModeManager != null) {
-            // Check if the night mode is not already active
-            if ((getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
-                    != Configuration.UI_MODE_NIGHT_YES) {
-                Logger.logToFile("Currently in day mode, so switch to Night mode");
-                uiModeManager.setNightMode(UiModeManager.MODE_NIGHT_YES);
-                switchToNight = true;
-            } else {
-                Logger.logToFile("Currently in night mode, so switch to day mode");
-                uiModeManager.setNightMode(UiModeManager.MODE_NIGHT_NO);
-                switchToNight = false;
-            }
-
-            if (switchToNight) {
-                // Inform the user that the mode has been changed to night
-                Toast.makeText(this, "Switched to Night Mode", Toast.LENGTH_SHORT).show();
-            } else {
-                // The device is switched to day mode
-                Toast.makeText(this, "Switched to Day Mode", Toast.LENGTH_SHORT).show();
-            }
+        int currentMode = getSavedMode("System");
+        if (currentMode == 1) {
+            Utils.setNightMode(this, false);
+            saveMode("System", 1);
+        } else {
+            Utils.setNightMode(this, true);
+            saveMode("System", 2);
         }
+
+        Utils.showInfoDialog(this,getString(R.string.reboot_title), getString(R.string.reboot_text));
+    }
+
+    public void suSwitchDeviceToDayNightMode(View view) {
+
+        ContentResolver contentResolver = this.getContentResolver();
+        int currentMode = getSavedMode("System");
+        if (currentMode == 1) {
+            //RootCommands.executeRootCommand("settings put secure ui_night_mode 2");
+            //ShellRootCommands.rootExec("settings put secure ui_night_mode 2"); //set device mode to night
+            Settings.Secure.putInt(contentResolver, "ui_night_mode", 2);
+            saveMode("System", 2);
+        } else {
+            //ShellRootCommands.rootExec("settings put secure ui_night_mode 1"); //set devicem mode to day
+            Settings.Secure.putInt(contentResolver, "ui_night_mode", 1);
+            saveMode("System", 1);
+        }
+
+        Utils.showInfoDialog(this,getString(R.string.reboot_title), getString(R.string.reboot_text));
     }
 
 
@@ -221,6 +268,11 @@ public class MainActivity extends AppCompatActivity {
         Logger.logToFile("Starting the deeper Device Information (System Info))");
         Utils.startExternalAppByActivity(this,"com.android.settings", "com.android.settings.deviceinfo.aboutphone.MyDeviceInfoFragment");
     }
+
+    public void defaultandroidsettings(View view) {
+        Logger.logToFile("Starting the default Android Settings");
+        startActivity(new Intent("android.settings.SETTINGS"));
+    }
     public void syusettings(View view) {
         Logger.logToFile("Starting the syu settings");
         final Intent launchIntentForPackage = getPackageManager().getLaunchIntentForPackage("com.syu.settings");
@@ -231,101 +283,60 @@ public class MainActivity extends AppCompatActivity {
         Utils.startExternalAppByActivity(this,"com.sprd.engineermode", "com.sprd.engineermode.EngineerModeActivity");
     }
 
+    public void disp_config_txt(View view) {
+        //LongTextActivity.displayText("/oem/app/config.txt");
+        //Intent intent = new Intent(this, LongTextActivity.class);
+        //intent.putExtra("fileName", "/oem/app/config.txt");
+        //startActivity(intent);
+        Utils.showAboutDialog(this, "/oem/app/config.txt");
+    }
+
     /* Below is currently not used due to filepath issues */
     public void zipAllAppUpdateBin(View view) {
 
+        // Start with displaying our progressBar
+        mprogressBar.setVisibility(View.VISIBLE);
         String message = getString(R.string.fytbackup_first_sentence) + "\n" +
                 "- AllAppUpdate.bin\n" +
                 "- config.txt\n" +
                 "- updatecfg.txt\n";
         message += getBackupMessage();
+        cacheDir = this.getCacheDir();
+        String cacheDirString = cacheDir.toString();
+        Logger.logToFile("Copying zip-arm to " + cacheDirString + " and set perimissions to 755");
+        FileUtils.copyAssetFileToCache(MainActivity.this, "zip-arm");
+        FileUtils.changeFilePermissions(new File(cacheDirString + "/zip-arm"), "755");
 
-        // Call the zipFiles method from ZipUtility
-        //ZipUtility.zipFiles(sourcePath, outputPath);
-        // Copy file "example.txt" from assets to cache
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                Logger.logToFile("Copying 7zzs to /cache and set perimissions to 755");
-                FileUtils.copyAssetFileToCache(MainActivity.this, "7zzs");
-                FileUtils.changeFilePermissions(new File("/cache/7zzs"), "755");
-                Logger.logToFile("Copying 7862lsec.sh to /cache and set perimissions to 755");
-                FileUtils.copyAssetFileToCache(MainActivity.this, "7862lsec.sh");
-                FileUtils.changeFilePermissions(new File("/cache/7862lsec.sh"), "755");
-                // Now remove and recreate folder BACKUP
-                Logger.logToFile("Removing and recreating folder BACKUP");
-                FileUtils.removeAndRecreateFolder("BACKUP");
-            }
-        };
-        Handler h = new Handler();
-        h.postDelayed(r,1000);
-
-        ShellScriptRunner.runShellScriptFromCache("7862lsec.sh");
-
-        Utils.showInfoDialog(this,getString(R.string.backup_finished), message);
-        // Cleanup
-        FileUtils.removeFile("/cache/7862lsec.sh");
-        FileUtils.removeFile("/cache/7zzs");
-    }
-
-    public void scriptedZipAllAppUpdateBin(View view) {
-        Logger.logToFile("Using the scripted AllAppUpdateBin method");
-        String platformScript = "";
-        String message = getString(R.string.fytbackup_first_sentence) + "\n" +
-                "- AllAppUpdate.bin\n" +
-                "- config.txt\n" +
-                "- updatecfg.txt\n";
-
-        Utils.showBeforeFlashDialog(this);
-        // As our dialog is asynchronous we just wait for 2500 milliseconds before doing something else
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Do nothing, just wait for 2.5 seconds
-            }
-        }, 2500);
-
-
-        String binary = Utils.prepareForBackup(this, true);
-
-        Map<String, String> fytPlatform = MyGettersSetters.getPropsHashMap();
-        if (fytPlatform.get("ro.board.platform").contains("ums512")) {
-            String result = FileUtils.copyAssetsFileToExternalStorage(this, platformScript, "lsec_updatesh", platformScript);
-            result = FileUtils.copyAssetsFileToExternalStorage(this, binary, ".", binary);
-            if (result.equals("")) {
-                Logger.logToFile("Copied " + binary + " to external storage");
-            } else {
-                Logger.logToFile("Failed to copy " + binary + " to external storage");
-            }
-        }
-
-        Logger.logToFile("Start the RKUpdate service to activate the flashing process");
-        final Intent launchIntentForPackage = getPackageManager().getLaunchIntentForPackage("android.rockchip.update.service");
-        startActivity( launchIntentForPackage );
-
-
-    }
-
-    public void zip4jAllAppUpdateBin(View view) throws IOException {
-
-        Logger.logToFile("Using the zip4jAllAppUpdateBin method");
-        String[] oemFolderPath = {"/oem/app", "/oem/priv-app", "/oem/vital-app", "/oem/oem", "/oem/360res"};
-        String password = "048a02243bb74474b25233bda3cd02f8";
-
-        String done = Utils.showBeforeFlashDialog(this);
-
-        /*
+        // First (re)create folder BACKUP
+        // Then copy lsec631xupdate, config.txt and updatecfg into BACKUP
         FileUtils.removeAndRecreateFolder("BACKUP");
         File BackupFolder = new File(Environment.getExternalStorageDirectory(), "BACKUP/AllAppUpdate.bin");
-        String BackupFolderPath = FileUtils.fileToString(BackupFolder);
-        Logger.logToFile("Created the backup folder " + BackupFolderPath);
+        //String BackupFolderPath = FileUtils.readFileToString(BackupFolder);
+        Logger.logToFile("Created the backup folder " + BackupFolder.toString());
 
-        String result = FileUtils.copyAssetsFileToExternalStorage(this, "lsec6315update", "BACKUP", "lsec6315update");
-        if (result.equals("")) {
-            Logger.logToFile("Copied lsec6315update to the BACKUP folder");
+        // Copy the lsec631Xupdate binary using the earlier created message
+        String result = "";
+        String binary = "";
+        if (message.contains("lsec6315update")) {
+            binary = "lsec6315update";
+            result = FileUtils.copyAssetsFileToExternalStorage(this, binary, "BACKUP", binary);
         } else {
-            Logger.logToFile("Failed to copy lsec6315update to the BACKUP folder");
+            binary = "lsec6316update";
+            result = FileUtils.copyAssetsFileToExternalStorage(this, binary, "BACKUP", binary);
         }
+        if (result.equals("")) {
+            Logger.logToFile("Copied " + binary + " to the BACKUP folder");
+        } else {
+            Logger.logToFile("Failed to copy " + binary + " to the BACKUP folder");
+        }
+        // Copy the updatecfg.txt
+        result = FileUtils.copyAssetsFileToExternalStorage(this, "updatecfg.txt", "BACKUP", "updatecfg.txt");
+        if (result.equals("")) {
+            Logger.logToFile("Copied updatecfg.txt to the BACKUP folder");
+        } else {
+            Logger.logToFile("Failed to copy updatecfg.txt to the BACKUP folder");
+        }
+
         // Copy config.txt
         File inFile = new File("/oem/app/config.txt");
         File outFile = new File("/storage/emulated/0/BACKUP/config.txt");
@@ -335,15 +346,60 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             Logger.logToFile("Failed to copy config.txt to the BACKUP folder with error " + e.toString());
             //throw new RuntimeException(e);
-        } */
+        }
 
-        String BackupFolderPath = Utils.prepareForBackup(this, false);
-        // Zip the AllAppUpdate.bin
-        ZipUtility.zipFoldersWithoutCompressionWithPassword(oemFolderPath, BackupFolderPath, password);
+        ///////////////////////
+        // option 1
+        // Below 2 sentences are working but block the UI
+        //String zipCommand = cacheDirString + "/zip-arm  -r -v -y -0 --password 048a02243bb74474b25233bda3cd02f8 /storage/emulated/0/BACKUP/AllAppUpdate.bin .";
+        //Now start the command to do the backup using ShellExec or Rootexec
+        //ShellRootCommands.shellExec("cd /oem", zipCommand);
 
-        // Tell the user who well we did this ;)
-        //Utils.showInfoDialog(this, getString(R.string.backup_finished), getBackupMessage());
+        //////////////////////////////
+        // option 2
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                String zipCommand = cacheDirString + "/zip-arm  -r -v -y -0 --password 048a02243bb74474b25233bda3cd02f8 /storage/emulated/0/BACKUP/AllAppUpdate.bin .";
+                ShellRootCommands.shellExec("cd /oem", zipCommand);
+                //new ZipTask().onPreExecute();
+            }
+        });
+
+        /////////////////////////////////////
+        // Option 3
+        //new ZipTask().doInBackground();
+
+        // And now hide our progressBar again
+        mprogressBar.setVisibility(View.INVISIBLE);
+
+        Utils.showInfoDialog(this,getString(R.string.backup_finished), message);
+
     }
+
+    private class ZipTask extends AsyncTask<Void, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mprogressBar.setVisibility(View.VISIBLE);
+        }
+        @Override
+        protected String doInBackground(Void... params) {
+            String cacheDirString = cacheDir.toString();
+            String zipCommand = cacheDirString + "/zip-arm  -r -v -y -0 --password 048a02243bb74474b25233bda3cd02f8 /storage/emulated/0/BACKUP/AllAppUpdate.bin .";
+            ShellRootCommands.shellExec("cd /oem", zipCommand);
+
+            return "ZipTask ready";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            // This is executed on the main thread after the background task is completed
+            mprogressBar.setVisibility(View.GONE);
+        }
+    }
+
 
     private String getBackupMessage() {
         String message = getString(R.string.fytbackup_first_sentence) + "\n" +

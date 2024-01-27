@@ -1,23 +1,17 @@
 package xyz.hvdw.fytextratool;
 
-import static android.app.PendingIntent.getActivity;
-import static android.text.TextUtils.split;
-
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.UiModeManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
 import android.os.Build;
-import android.os.Environment;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -199,6 +193,8 @@ public class Utils {
         // Create a layout for the dialog
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.VERTICAL);
+        //layout.getLayoutParams().width = 800;
+        //layout.requestLayout();
         layout.setPadding(16, 16, 16, 16);
 
         // Create a ScrollView
@@ -215,47 +211,59 @@ public class Utils {
         TextView textView = new TextView(context);
         TableLayout propsTableLayout = new TableLayout(context);
 
-        if (whichInfo.equals("about")) {
-            dialogTitle = context.getString(R.string.about_text);
-            // First add some app info
-            textView.setText(context.getString(R.string.displayed_name) + ": " + context.getString(R.string.app_name) + "\n");
-            textView.append(context.getString(R.string.author) + ": " + context.getString(R.string.programmer) + "\n");
-            textView.append(context.getString(R.string.website) + ": https:/github.com/hvdwolf/FET \n\n");
+        switch (whichInfo) {
+            case "about":
+                dialogTitle = context.getString(R.string.about_text);
+                // First add some app info
+                textView.setText(context.getString(R.string.displayed_name) + ": " + context.getString(R.string.app_name) + "\n");
+                textView.append(context.getString(R.string.author) + ": " + context.getString(R.string.programmer) + "\n");
+                textView.append(context.getString(R.string.website) + ": https:/github.com/hvdwolf/FET \n\n");
 
-            try {
-                PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
-                textView.append(context.getString(R.string.version) + ": " + info.versionName + "\n");
-                textView.append(context.getString(R.string.pkg_name) + ": " + info.packageName + "\n\n");
+                try {
+                    PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+                    textView.append(context.getString(R.string.version) + ": " + info.versionName + "\n");
+                    textView.append(context.getString(R.string.pkg_name) + ": " + info.packageName + "\n\n");
+                    textView.append(context.getString(R.string.adroid_root) + "\n\n");
 
-            } catch (PackageManager.NameNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-            contentLayout.addView(textView);
-        } else { // means whichInfo = properties
-            dialogTitle = context.getString(R.string.important_props);
-            textView.setText(context.getString(R.string.important_props) + ":\n\n");
-
-            for (Map.Entry<String, String> entry : propsHashMap.entrySet()) {
-                TableRow row = new TableRow(context);
-                TextView textViewKey = new TextView(context);
-                String key = entry.getKey();
-                textViewKey.setText(key);
-                row.addView(textViewKey); // First Key column in row
-                String value = entry.getValue();
-                if (value.equals("")) {
-                    value = context.getString(R.string.not_applicable_abbreviation);
+                } catch (PackageManager.NameNotFoundException e) {
+                    throw new RuntimeException(e);
                 }
-                TextView textviewValue = new TextView(context);
-                textviewValue.setText(value);
-                row.addView(textviewValue); // Add 2nd column value ro row
-                propsTableLayout.addView(row); // Add the row to the table
-                //textView.append(context.getString(R.string.the_property) + ": " + key + ", " + context.getString(R.string.hashmap_value) + value + "\n");
-                //textView.append(key + "\t:\t" + value + "\n");
-                //Logger.logToFile("properties: Key: " + key + ", Value: " + value);
-            }
-            contentLayout.addView(propsTableLayout);
-        }
+                contentLayout.addView(textView);
+                break;
 
+            case "properties":
+                dialogTitle = context.getString(R.string.important_props);
+                textView.setText(context.getString(R.string.important_props) + ":\n\n");
+
+                for (Map.Entry<String, String> entry : propsHashMap.entrySet()) {
+                    TableRow row = new TableRow(context);
+                    TextView textViewKey = new TextView(context);
+                    String key = entry.getKey();
+                    textViewKey.setText(key);
+                    row.addView(textViewKey); // First Key column in row
+                    String value = entry.getValue();
+                    if (value.equals("")) {
+                        value = context.getString(R.string.not_applicable_abbreviation);
+                    }
+                    TextView textviewValue = new TextView(context);
+                    textviewValue.setText(value);
+                    row.addView(textviewValue); // Add 2nd column value ro row
+                    propsTableLayout.addView(row); // Add the row to the table
+                    //textView.append(context.getString(R.string.the_property) + ": " + key + ", " + context.getString(R.string.hashmap_value) + value + "\n");
+                    //textView.append(key + "\t:\t" + value + "\n");
+                    //Logger.logToFile("properties: Key: " + key + ", Value: " + value);
+                }
+                contentLayout.addView(propsTableLayout);
+                break;
+
+            case "/oem/app/config.txt":
+                dialogTitle = FileUtils.extractFileName(whichInfo);
+                File textFile = new File(whichInfo);
+                String longText = FileUtils.readFileToString(textFile);
+                textView.setText(longText);
+                contentLayout.addView(textView);
+                break;
+        }
 
         // Add contentLayout to the ScrollView
         scrollView.addView(contentLayout);
@@ -272,100 +280,27 @@ public class Utils {
         // Show the AlertDialog
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+        alertDialog.getWindow().setLayout(
+                (int) (context.getResources().getDisplayMetrics().widthPixels * 0.9),
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
     }
 
-    public static String prepareForBackup(Context context, Boolean scripted) {
-        String binary = "lsec6316update";
-        String platformScript = "appBackup_8581lsec.sh";
-        String result = "";
-        FileUtils.removeAndRecreateFolder("BACKUP");
-        File BackupFolder = new File(Environment.getExternalStorageDirectory(), "BACKUP/AllAppUpdate.bin");
-        String BackupFolderPath = FileUtils.fileToString(BackupFolder);
-        Logger.logToFile("Created the backup folder " + BackupFolderPath);
 
-        Map<String, String> fytPlatform = MyGettersSetters.getPropsHashMap();
-        if (fytPlatform.get("ro.board.platform").contains("ums512")) {
-            binary = "lsec6315update";
-            platformScript = "appBackup_7862lsec.sh";
-        }
-        result = FileUtils.copyAssetsFileToExternalStorage(context, binary, "BACKUP", binary);
-        if (result.equals("")) {
-            Logger.logToFile("Copied " + binary + " to the BACKUP folder");
-        } else {
-            Logger.logToFile("Failed to copy " + binary + " to the BACKUP folder");
-        }
-
-        result = FileUtils.copyAssetsFileToExternalStorage(context, "updatecfg.txt", "BACKUP", "updatecfg.txt");
-        if (result.equals("")) {
-            Logger.logToFile("Copied updatecfg.txt to the BACKUP folder");
-        } else {
-            Logger.logToFile("Failed to copy updatecfg.txt to the BACKUP folder");
-        }
-        if (scripted) {
-            FileUtils.removeAndRecreateFolder("lsec_updatesh");
-            result = FileUtils.copyAssetsFileToExternalStorage(context, "7zzs", ".", "7zzs");
-            if (result.equals("")) {
-                Logger.logToFile("Copied 7zzs to external storage");
-            } else {
-                Logger.logToFile("Failed to copy 7zzs to external storage");
+    public static void setNightMode(Context context, boolean isNightModeEnabled) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // Use UiModeManager for devices running Android 10 (API level 29) and above
+            UiModeManager uiModeManager = context.getSystemService(UiModeManager.class);
+            if (uiModeManager != null) {
+                uiModeManager.setNightMode(isNightModeEnabled ? UiModeManager.MODE_NIGHT_YES : UiModeManager.MODE_NIGHT_NO);
             }
-            FileUtils.changeFilePermissions(new File("/storage/emulated/0/7zzs"), "755");
-            String[] splitPlatformscript= platformScript.split("_");
-            result = FileUtils.copyAssetsFileToExternalStorage(context, platformScript, "lsec_updatesh", splitPlatformscript[1]);
-            if (result.equals("")) {
-                Logger.logToFile("Copied the " + splitPlatformscript[1] + " to external storage lsec_updatesh");
-            } else {
-                Logger.logToFile("Failed to copy the " + splitPlatformscript[1] + " to external storage lsec_updatesh");
-            }
-
-        }
-        // Copy config.txt
-        File inFile = new File("/oem/app/config.txt");
-        File outFile = new File("/storage/emulated/0/BACKUP/config.txt");
-        try {
-            FileUtils.copyFile(inFile, outFile);
-            Logger.logToFile("Copied config.txt to the BACKUP folder");
-        } catch (IOException e) {
-            Logger.logToFile("Failed to copy config.txt to the BACKUP folder with error " + e.toString());
-            //throw new RuntimeException(e);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Use Configuration for devices running Android 5.0 (API level 21) and above
+            Configuration configuration = context.getResources().getConfiguration();
+            configuration.uiMode &= ~Configuration.UI_MODE_NIGHT_MASK; // Clear the existing night mode
+            configuration.uiMode |= isNightModeEnabled ? Configuration.UI_MODE_NIGHT_YES : Configuration.UI_MODE_NIGHT_NO;
+            context.getResources().updateConfiguration(configuration, null);
         }
 
-        if (scripted) {
-            // We do the last step to copy the binary in the root of external storage as last step
-            return binary;
-        } else {
-            return BackupFolderPath;
-        }
-    }
-
-    public static String showBeforeFlashDialog(Context context) {
-        // Create an AlertDialog.Builder and set the custom layout
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.custom_firmware_update_dialog, null);
-
-        // Set the view to the builder
-        builder.setView(view);
-
-        // Create the AlertDialog
-        final AlertDialog dialog = builder.create();
-
-        // Find views in the custom layout
-        ImageView imageView = view.findViewById(R.id.imageView);
-        Button okButton = view.findViewById(R.id.firmwareOkButton);
-        TextView tView = view.findViewById(R.id.firmwareflashtext);
-        tView.setText(context.getString(R.string.prepare_script) + "\n\n" + context.getString(R.string.before_flash));
-
-        // Set click listener for the OK button to dismiss the dialog
-        okButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        // Show the dialog
-        dialog.show();
-        return "done";
     }
 }

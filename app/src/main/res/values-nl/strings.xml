@@ -37,4 +37,17 @@
     <string name="not_applicable_abbreviation">n.v.t.</string>
     <string name="before_flash">Na een paar seconden zul je onderstaande popup zien waarna het script start.</string>
     <string name="prepare_script">Het script wordt voorbereid</string>
+    <string name="app_theme_light">Gebruik lichte App modus</string>
+    <string name="app_theme_dark">Gebruik donkere app modus</string>
+    <string name="system_theme_day">Zet systeem naar dag modus</string>
+    <string name="system_theme_night">Zet systeem naar nacht modus</string>
+    <string name="reboot_title">Een reboot is nodig</string>
+    <string name="reboot_text">Je moet je unit nu herstarten om de wijziging te activeren.</string>
+    <string name="headunit_settings">Open Head unit Settings</string>
+    <string name="system_info">systeem info</string>
+    <string name="device_info">aparaat info</string>
+    <string name="engineer_mode">Open engineer modus</string>
+    <string name="disp_config_txt">Toon config.txt</string>
+    <string name="adroid_root">Knoppen met \"de android met root op zijn borst\" benodigen root toegang.</string>
+    <string name="def_android_settings">Standaard Android Settings scherm</string>
 </resources>

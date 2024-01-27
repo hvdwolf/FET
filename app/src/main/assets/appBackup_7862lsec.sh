@@ -12,19 +12,19 @@
 # First storage
 ls -l /storage
 # emulated
-ls -l /storage/emulated/0
+ls -l /storage/sdcard0
 
 rm -rf /cache/FET
 mkdir 755 /cache/FET
-cp -r /storage/emulated/0/7zss /cache/FET
+cp -r /storage/sdcard0/7zss /cache/FET
 chmod -R 755 /cache/FET/7zss
 cd /cache/FET
 
 /cache/FET/7zzs a -r -tzip -snh -snl -bb1 -mx=0 -p048a02243bb74474b25233bda3cd02f8 /storage/sdcard1/BACKUP/AllAppUpdate.bin /oem/*
 
-rm -rf /storage/emulated/0/lsec_updatesh
-rm -rf /storage/emulated/0/lsec6315update
-rm -rf /storage/emulated/0/7zzs
+rm -rf /storage/sdcard0/lsec_updatesh
+rm -rf /storage/sdcard0/lsec6315update
+rm -rf /storage/sdcard0/7zzs
 
 ##############################################################################
 # You will now find on your usb-stick inside the folder BACKUP

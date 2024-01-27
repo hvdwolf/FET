@@ -1,7 +1,6 @@
 package p32929.easypasscodelock.Activities;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,8 +8,6 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.core.app.ActivityCompat;
 
 import p32929.easypasscodelock.Interfaces.ActivityChanger;
 import p32929.easypasscodelock.R;

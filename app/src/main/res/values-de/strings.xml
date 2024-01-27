@@ -36,5 +36,17 @@
     <string name="not_applicable_full">Not applicable</string>
     <string name="not_applicable_abbreviation">N.A.</string>
     <string name="before_flash">In a few seconds you will see below displayed popup and your script will start.</string>
-    <string name="prepare_script">The script will be prepared</string>
+    <string name="prepare_script">The script will be prepared</string>\    <string name="app_theme_light">Set to Light app theme</string>
+    <string name="app_theme_dark">Set to Dark app theme</string>
+    <string name="system_theme_day">Set system to day mode</string>
+    <string name="system_theme_night">Sets system to night mode</string>
+    <string name="reboot_title">Reboot required</string>
+    <string name="reboot_text">You need to reboot your unit now to activate the change.</string>
+    <string name="headunit_settings">Open Headunit Settings</string>
+    <string name="system_info">system info</string>
+    <string name="device_info">device info</string>
+    <string name="engineer_mode">Open engineer mode</string>
+    <string name="disp_config_txt">Display config.txt</string>
+    <string name="adroid_root">Buttons with \"the android with root on its chest\" require root access.</string>
+    <string name="def_android_settings">Default Android Settings screen</string>
 </resources>

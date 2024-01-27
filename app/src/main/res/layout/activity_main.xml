@@ -25,40 +25,42 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:onClick="zip4jAllAppUpdateBin"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
+                android:onClick="zipAllAppUpdateBin"
                 android:text="@string/zip_allappupdate" />
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:onClick="scriptedZipAllAppUpdateBin"
-                android:text="scripted ZIP" />
 
             <Button
                 android:id="@+id/toggleButton"
                 android:onClick="toggleAppMode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/app_light_dark"
-                android:checked="true"/>
+                android:layout_marginTop="@dimen/number_pad_margin_top"
+                android:text="@string/app_light_dark" />
 
             <Button
                 android:id="@+id/DeviceDayNight"
                 android:onClick="switchDeviceToDayNightMode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
+                android:visibility="gone"
+                android:text="@string/device_light_dark" />
+
+            <Button
+                android:id="@+id/suDeviceDayNight"
+                android:onClick="suSwitchDeviceToDayNightMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
                 android:text="@string/device_light_dark"
-                android:checked="true"/>
+                android:drawableLeft="@drawable/rootfunction" />
 
             <Button
                 android:id="@+id/AboutButton"
                 android:onClick="dispAboutInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
                 android:text="@string/about_text"/>
 
             <Button
@@ -66,8 +68,16 @@
                 android:onClick="dispImportantProperties"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
                 android:text="@string/important_props"/>
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
+                android:visibility="gone"
+                android:text="Please be patient..."
+                android:id="@+id/progressBar" />
         </LinearLayout>
 
         <LinearLayout
@@ -81,40 +91,54 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
                 android:onClick="openBluetoothSettings"
                 android:text="@string/open_def_bt"
                 android:drawableLeft="@drawable/bluetooth_icon" />
 
             <Button
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="deviceInfo"
-                android:text="device info" />
+                android:text="@string/device_info" />
 
             <Button
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
                 android:layout_marginBottom="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="systemInfo"
                 android:visibility="gone"
-                android:text="system info" />
+                android:text="@string/system_info" />
 
             <Button
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="syusettings"
-                android:text="Open specific Headunit Settings" />
+                android:text="@string/headunit_settings" />
 
             <Button
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="defaultandroidsettings"
+                android:text="@string/def_android_settings" />
+
+            <Button
+                android:layout_marginTop="@dimen/number_pad_margin_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="engineermode"
-                android:text="Open engineer mode" />
+                android:text="@string/engineer_mode" />
+
+            <Button
+                android:layout_marginTop="@dimen/number_pad_margin_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="disp_config_txt"
+                android:text="@string/disp_config_txt" />
 
         </LinearLayout>
 
@@ -127,7 +151,7 @@
             android:orientation="vertical">
 
             <Button
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="setPass"
@@ -136,7 +160,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
                 android:onClick="changePass"
                 android:text="@string/change_pincode" />
 
@@ -150,10 +174,16 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
                 android:onClick="checkPass"
                 android:text="@string/lock_unit"
                 android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
+                android:text="Pincode works, but physical\nhomekey overrules lockscreen,\nso currently useless." />
         </LinearLayout>
 
 

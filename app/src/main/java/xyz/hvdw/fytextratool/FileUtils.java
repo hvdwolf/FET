@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import xyz.hvdw.fytextratool.MyGettersSetters;
 
 public class FileUtils {
 
@@ -198,7 +197,7 @@ public class FileUtils {
         }
     }
 
-    public static String fileToString(File file) {
+    public static String readFileToString(File file) {
         StringBuilder stringBuilder = new StringBuilder();
 
         try {
@@ -212,8 +211,22 @@ public class FileUtils {
             bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
+            return e.toString();
         }
 
         return stringBuilder.toString();
+    }
+
+    public static String extractFileName(String filePath) {
+        // Find the last occurrence of "/"
+        int lastSlashIndex = filePath.lastIndexOf("/");
+
+        // Extract the file name using substring
+        if (lastSlashIndex != -1) {
+            return filePath.substring(lastSlashIndex + 1);
+        } else {
+            // No "/" found, return the original path
+            return filePath;
+        }
     }
 }
