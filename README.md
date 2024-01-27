@@ -3,9 +3,6 @@
 A simple tool that adds some extra functionality to your FYT unit.
 
 
-# Stopped for the time being and only partly functional.
-
-
 # Screenshots
 (preliminary)<br>
 ## Light Theme
@@ -15,7 +12,7 @@ A simple tool that adds some extra functionality to your FYT unit.
 
 
 ## Installation
-Not relevant right now as I stopped it anyway.<br><br>
+Just side-load the application from your file manager.<br><br>
 
 
 MIT License
