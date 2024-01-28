@@ -296,11 +296,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Start with displaying our progressBar
         mprogressBar.setVisibility(View.VISIBLE);
-        String message = getString(R.string.fytbackup_first_sentence) + "\n" +
-                "- AllAppUpdate.bin\n" +
-                "- config.txt\n" +
-                "- updatecfg.txt\n";
-        message += getBackupMessage();
+
+        String message = getBackupMessage();
         cacheDir = this.getCacheDir();
         String cacheDirString = cacheDir.toString();
         Logger.logToFile("Copying zip-arm to " + cacheDirString + " and set perimissions to 755");
@@ -314,8 +311,16 @@ public class MainActivity extends AppCompatActivity {
         //String BackupFolderPath = FileUtils.readFileToString(BackupFolder);
         Logger.logToFile("Created the backup folder " + BackupFolder.toString());
 
+        // Copy the updatecfg.txt
+        String result = FileUtils.copyAssetsFileToExternalStorage(this, "updatecfg.txt", "BACKUP", "updatecfg.txt");
+        if (result.equals("")) {
+            Logger.logToFile("Copied updatecfg.txt to the BACKUP folder");
+        } else {
+            Logger.logToFile("Failed to copy updatecfg.txt to the BACKUP folder");
+        }
+
         // Copy the lsec631Xupdate binary using the earlier created message
-        String result = "";
+        result = "";
         String binary = "";
         if (message.contains("lsec6315update")) {
             binary = "lsec6315update";
@@ -328,13 +333,6 @@ public class MainActivity extends AppCompatActivity {
             Logger.logToFile("Copied " + binary + " to the BACKUP folder");
         } else {
             Logger.logToFile("Failed to copy " + binary + " to the BACKUP folder");
-        }
-        // Copy the updatecfg.txt
-        result = FileUtils.copyAssetsFileToExternalStorage(this, "updatecfg.txt", "BACKUP", "updatecfg.txt");
-        if (result.equals("")) {
-            Logger.logToFile("Copied updatecfg.txt to the BACKUP folder");
-        } else {
-            Logger.logToFile("Failed to copy updatecfg.txt to the BACKUP folder");
         }
 
         // Copy config.txt
@@ -468,9 +466,10 @@ public class MainActivity extends AppCompatActivity {
     public static String createLogFile() {
         // Get the external storage directory
         File externalStorage = android.os.Environment.getExternalStorageDirectory();
+        FileUtils.optionallyCreateFolder("FET_Logs");
         String curDateTime = Utils.getDateTime();
         // Create a File object representing the log file
-        return new File(externalStorage, curDateTime + "_" + BASE_LOG_FILE_NAME).getAbsolutePath();
+        return new File(externalStorage, "FET_Logs" + File.separator + curDateTime + "_" + BASE_LOG_FILE_NAME).getAbsolutePath();
     }
 
 }

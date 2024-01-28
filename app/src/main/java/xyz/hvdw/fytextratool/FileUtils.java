@@ -166,6 +166,19 @@ public class FileUtils {
         }
     }
 
+    public static void optionallyCreateFolder(String folderName) {
+        // Get the external storage directory
+        File externalStorage = Environment.getExternalStorageDirectory();
+
+        // Create a File object representing the folder to be created if not existing yet
+        File folderToCreate = new File(externalStorage, folderName);
+        boolean success = true;
+        if (!folderToCreate.exists()) {
+            success = folderToCreate.mkdirs();
+        }
+    }
+
+
     private static void deleteRecursive(File fileOrDirectory) {
         if (fileOrDirectory.isDirectory()) {
             for (File child : fileOrDirectory.listFiles()) {
