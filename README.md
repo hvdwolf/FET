@@ -14,6 +14,8 @@ A simple tool that adds some extra functionality to your FYT unit.<br>
 ## Installation
 Just side-load the application from your file manager.<br><br>
 
+## Releases
+The releases are not done via github, but via the XDA-forum via the thread: https://xdaforums.com/t/fet-fyt-extra-tool.4653315/
 
 MIT License
 
