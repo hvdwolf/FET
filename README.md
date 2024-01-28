@@ -5,10 +5,10 @@ A simple tool that adds some extra functionality to your FYT unit.<br>
 
 # Screenshots
 (preliminary)<br>
-## Light Theme
-![light theme](https://github.com/hvdwolf/FET/raw/main/images/lighttheme.png)
 ## Dark Theme
 ![dark theme](https://github.com/hvdwolf/FET/raw/main/images/darktheme.png)
+## Light Theme
+![light theme](https://github.com/hvdwolf/FET/raw/main/images/lighttheme.png)
 
 
 ## Installation
