@@ -49,4 +49,6 @@
     <string name="disp_config_txt">Display config.txt</string>
     <string name="adroid_root">Buttons with \"the android with root on its chest\" require root access.</string>
     <string name="def_android_settings">Default Android Settings screen</string>
+    <string name="pincode_useless">Pincode works, but physical\nhomekey overrules lockscreen,\nso currently useless.</string>
+
 </resources>

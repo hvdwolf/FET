@@ -1,7 +1,7 @@
 
 # FYT Extra Tools
 A simple tool that adds some extra functionality to your FYT unit.
-
+![logo](https://github.com/hvdwolf/FET/raw/main/images/logo.png)
 
 # Screenshots
 (preliminary)<br>

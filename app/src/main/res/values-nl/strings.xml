@@ -50,4 +50,5 @@
     <string name="disp_config_txt">Toon config.txt</string>
     <string name="adroid_root">Knoppen met \"de android met root op zijn borst\" benodigen root toegang.</string>
     <string name="def_android_settings">Standaard Android Settings scherm</string>
+    <string name="pincode_useless">Pincode works, but physical\nhomekey overrules lockscreen,\nso currently useless.</string>
 </resources>
