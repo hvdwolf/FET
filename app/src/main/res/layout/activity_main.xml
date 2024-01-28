@@ -71,6 +71,14 @@
                 android:layout_marginTop="@dimen/number_pad_margin_top"
                 android:text="@string/important_props"/>
 
+            <Button
+                android:id="@+id/collectSystemInfo"
+                android:onClick="collectSystemInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
+                android:text="@string/btn_collect_system_info"/>
+
             <ProgressBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

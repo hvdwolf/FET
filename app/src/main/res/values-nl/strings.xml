@@ -53,4 +53,9 @@
     <string name="pincode_useless">Pincode works, but physical\nhomekey overrules lockscreen,\nso currently useless.</string>
     <string name="teyes_unit_title">Dit is een gedeeltelijk incompatible Teyes unit.</string>
     <string name="teyes_unit_txt">Dit is een Teyes unit met \"ro.build.fytmanufacturer = 95\". Het partitionering/flashing schema is afwijken. Er is geen backup mogelijk.</string>
+    <string name="btn_collect_system_info">Verzamel systeem info</string>
+    <string name="start_collect_system_info">Start verzamelen systeem info.\nEven geduld alsjeblieft.</string>
+    <string name="collected_system_info_title">Alle systeem info verzameld.</string>
+    <string name="collected_system_info_txt">Controleer de Interne opslag op zip bestand HWGetInfo.zip en folder HWGetInfo die de verzamelde systeem info bevat.</string>
+    <string name="toast_start_zip">Starten van de backup. Even geduld alsjeblieft.</string>
 </resources>

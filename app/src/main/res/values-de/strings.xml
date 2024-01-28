@@ -52,5 +52,9 @@
     <string name="pincode_useless">Pincode funktioniert, aber physischer\nHomekey hebelt den Lockscreen aus,\ndeshalb momentan nutzlos.</string>
     <string name="teyes_unit_title">This is a partly incompatible Teyes unit.</string>
     <string name="teyes_unit_txt">This is a Teyes unit with \"ro.build.fytmanufacturer = 95\". The partition/flashing scheme is different. No backup possible.</string>
-
+    <string name="btn_collect_system_info">Collect system info</string>
+    <string name="start_collect_system_info">Starting to collect system info.\nPlease be patient.</string>
+    <string name="collected_system_info_title">Collected all system info</string>
+    <string name="collected_system_info_txt">Check Internal Storage for zip file HWGetInfo.zip and folder HWGetInfo containing the collected system info.</string>
+    <string name="toast_start_zip">Starting backup. Please be patient.</string>
 </resources>

@@ -294,6 +294,7 @@ public class MainActivity extends AppCompatActivity {
         String fytProp = propsHashMap.get("ro.build.fytmanufacturer");
         if (!fytProp.equals("95")) { // If not a T'eyes unit we can start our backup
 
+            //showToastAndWait(getString(R.string.toast_start_zip), 100);
             // Start with displaying our progressBar
             mprogressBar.setVisibility(View.VISIBLE);
 
@@ -388,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(Void... params) {
             String cacheDirString = cacheDir.toString();
             String zipCommand = cacheDirString + "/zip-arm  -r -v -y -0 --password 048a02243bb74474b25233bda3cd02f8 /storage/emulated/0/BACKUP/AllAppUpdate.bin .";
-            ShellRootCommands.shellExec("cd /oem", zipCommand);
+            ShellRootCommands.shellExec("echo twipe_all > /storage/emulated/0/BACKUP/updatecfg.txt", "cd /oem", zipCommand);
 
             return "ZipTask ready";
         }
@@ -464,6 +465,19 @@ public class MainActivity extends AppCompatActivity {
             }
         }, delayMillis);
     }
+    private void showToastAndWait(String message, int delayMillis) {
+        // Show a Toast
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
+        // Close the app after a delay
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Do nothing, just wait
+            }
+        }, delayMillis);
+    }
+
 
     // We create the logfile here in the MainActivity to be able to use it from here in all classes
     public static String createLogFile() {
@@ -473,6 +487,41 @@ public class MainActivity extends AppCompatActivity {
         String curDateTime = Utils.getDateTime();
         // Create a File object representing the log file
         return new File(externalStorage, "FET_Logs" + File.separator + curDateTime + "_" + BASE_LOG_FILE_NAME).getAbsolutePath();
+    }
+
+    public void collectSystemInfo(View view){
+        //showToastAndWait(getString(R.string.start_collect_system_info), 100);
+        cacheDir = this.getCacheDir();
+        String cacheDirString = cacheDir.toString();
+        Logger.logToFile("Copying zip-arm to " + cacheDirString + " and set perimissions to 755");
+        FileUtils.copyAssetFileToCache(MainActivity.this, "zip-arm");
+        FileUtils.changeFilePermissions(new File(cacheDirString + "/zip-arm"), "755");
+
+        String infoFolder = " > /storage/emulated/0/HWGetInfo/";
+        FileUtils.removeAndRecreateFolder("HWGetInfo");
+        String[] Commands = {"cat /proc/cpuinfo  > /storage/emulated/0/HWgetInfo/cpuinfo.txt",
+                "cat /proc/meminfo  > /storage/emulated/0/HWgetInfo/meminfo.txt",
+                "uname -a  > /storage/emulated/0/HWgetInfo/uname.txt",
+                "getprop  > /storage/emulated/0/HWgetInfo/properties.txt",
+                "ls -l /dev/block/platform/soc/soc:ap-ahb/c0c00000.sdio/by-name  > /storage/emulated/0/HWgetInfo/mapping_blocks2partitions.txt",
+                "mount  > /storage/emulated/0/HWgetInfo/mounts.txt",
+                "cat /proc/partitions  > /storage/emulated/0/HWGetInfo/partitions.txt",
+                "ls -lR /dev/  > /storage/emulated/0/HWGetInfo/dev_listing.txt",
+                "ls -lR /system/  > /storage/emulated/0/HWGetInfo/system_listing.txt",
+                "ls -lR /sys/  > /storage/emulated/0/HWGetInfo/sys_listing.txt",
+                "ls -lR /oem/  > /storage/emulated/0/HWGetInfo/oem_listing.txt",
+                "ls -lR /vendor/  > /storage/emulated/0/HWGetInfo/vendor_listing.txt",
+                "ls -lR /product/  > /storage/emulated/0/HWGetInfo/product_listing.txt",
+                "cp /oem/app/config.txt /storage/emulated/0/HWGetInfo/",
+                "cp /oem/app/fyt.prop /storage/emulated/0/HWGetInfo/",
+                "cp /system/build.prop /storage/emulated/0/HWGetInfo/",
+                "cp /oem/Ver /storage/emulated/0/HWGetInfo/",
+                "rm -rf /storage/emulated/0/HWGetInfo.zip",
+                "cd /storage/emulated/0/HWGetInfo/",
+                cacheDirString + "/zip-arm  -r -v -y * /storage/emulated/0/HWGetInfo.zip"};
+
+        ShellRootCommands.shellExec(Commands);
+        Utils.showInfoDialog(this, getString(R.string.collected_system_info_title), getString(R.string.collected_system_info_txt));
     }
 
 }
