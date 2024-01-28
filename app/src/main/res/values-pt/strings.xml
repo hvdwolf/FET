@@ -51,4 +51,6 @@
     <string name="adroid_root">Buttons with \"the android with root on its chest\" require root access.</string>
     <string name="def_android_settings">Default Android Settings screen</string>
     <string name="pincode_useless">Pincode works, but physical\nhomekey overrules lockscreen,\nso currently useless.</string>
+    <string name="teyes_unit_title">This is a partly incompatible Teyes unit.</string>
+    <string name="teyes_unit_txt">This is a Teyes unit with \"ro.build.fytmanufacturer = 95\". The partition/flashing scheme is different. No backup possible.</string>
 </resources>

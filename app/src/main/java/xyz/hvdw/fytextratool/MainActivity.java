@@ -284,94 +284,97 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void disp_config_txt(View view) {
-        //LongTextActivity.displayText("/oem/app/config.txt");
-        //Intent intent = new Intent(this, LongTextActivity.class);
-        //intent.putExtra("fileName", "/oem/app/config.txt");
-        //startActivity(intent);
         Utils.showAboutDialog(this, "/oem/app/config.txt");
     }
 
     /* Below is currently not used due to filepath issues */
     public void zipAllAppUpdateBin(View view) {
 
-        // Start with displaying our progressBar
-        mprogressBar.setVisibility(View.VISIBLE);
+        // Check if we are on a T'eyes
+        String fytProp = propsHashMap.get("ro.build.fytmanufacturer");
+        if (!fytProp.equals("95")) { // If not a T'eyes unit we can start our backup
 
-        String message = getBackupMessage();
-        cacheDir = this.getCacheDir();
-        String cacheDirString = cacheDir.toString();
-        Logger.logToFile("Copying zip-arm to " + cacheDirString + " and set perimissions to 755");
-        FileUtils.copyAssetFileToCache(MainActivity.this, "zip-arm");
-        FileUtils.changeFilePermissions(new File(cacheDirString + "/zip-arm"), "755");
+            // Start with displaying our progressBar
+            mprogressBar.setVisibility(View.VISIBLE);
 
-        // First (re)create folder BACKUP
-        // Then copy lsec631xupdate, config.txt and updatecfg into BACKUP
-        FileUtils.removeAndRecreateFolder("BACKUP");
-        File BackupFolder = new File(Environment.getExternalStorageDirectory(), "BACKUP/AllAppUpdate.bin");
-        //String BackupFolderPath = FileUtils.readFileToString(BackupFolder);
-        Logger.logToFile("Created the backup folder " + BackupFolder.toString());
+            String message = getBackupMessage();
+            cacheDir = this.getCacheDir();
+            String cacheDirString = cacheDir.toString();
+            Logger.logToFile("Copying zip-arm to " + cacheDirString + " and set perimissions to 755");
+            FileUtils.copyAssetFileToCache(MainActivity.this, "zip-arm");
+            FileUtils.changeFilePermissions(new File(cacheDirString + "/zip-arm"), "755");
 
-        // Copy the updatecfg.txt
-        String result = FileUtils.copyAssetsFileToExternalStorage(this, "updatecfg.txt", "BACKUP", "updatecfg.txt");
-        if (result.equals("")) {
-            Logger.logToFile("Copied updatecfg.txt to the BACKUP folder");
-        } else {
-            Logger.logToFile("Failed to copy updatecfg.txt to the BACKUP folder");
-        }
+            // First (re)create folder BACKUP
+            // Then copy lsec631xupdate, config.txt and updatecfg into BACKUP
+            FileUtils.removeAndRecreateFolder("BACKUP");
+            File BackupFolder = new File(Environment.getExternalStorageDirectory(), "BACKUP/AllAppUpdate.bin");
+            //String BackupFolderPath = FileUtils.readFileToString(BackupFolder);
+            Logger.logToFile("Created the backup folder " + BackupFolder.toString());
 
-        // Copy the lsec631Xupdate binary using the earlier created message
-        result = "";
-        String binary = "";
-        if (message.contains("lsec6315update")) {
-            binary = "lsec6315update";
-            result = FileUtils.copyAssetsFileToExternalStorage(this, binary, "BACKUP", binary);
-        } else {
-            binary = "lsec6316update";
-            result = FileUtils.copyAssetsFileToExternalStorage(this, binary, "BACKUP", binary);
-        }
-        if (result.equals("")) {
-            Logger.logToFile("Copied " + binary + " to the BACKUP folder");
-        } else {
-            Logger.logToFile("Failed to copy " + binary + " to the BACKUP folder");
-        }
+            // Copy the updatecfg.txt
+            /*String result = FileUtils.copyAssetsFileToExternalStorage(this, "updatecfg.txt", "BACKUP", "updatecfg.txt");
+            if (result.equals("")) {
+                Logger.logToFile("Copied updatecfg.txt to the BACKUP folder");
+            } else {
+                Logger.logToFile("Failed to copy updatecfg.txt to the BACKUP folder");
+            }*/
 
-        // Copy config.txt
-        File inFile = new File("/oem/app/config.txt");
-        File outFile = new File("/storage/emulated/0/BACKUP/config.txt");
-        try {
-            FileUtils.copyFile(inFile, outFile);
-            Logger.logToFile("Copied config.txt to the BACKUP folder");
-        } catch (IOException e) {
-            Logger.logToFile("Failed to copy config.txt to the BACKUP folder with error " + e.toString());
-            //throw new RuntimeException(e);
-        }
-
-        ///////////////////////
-        // option 1
-        // Below 2 sentences are working but block the UI
-        //String zipCommand = cacheDirString + "/zip-arm  -r -v -y -0 --password 048a02243bb74474b25233bda3cd02f8 /storage/emulated/0/BACKUP/AllAppUpdate.bin .";
-        //Now start the command to do the backup using ShellExec or Rootexec
-        //ShellRootCommands.shellExec("cd /oem", zipCommand);
-
-        //////////////////////////////
-        // option 2
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                String zipCommand = cacheDirString + "/zip-arm  -r -v -y -0 --password 048a02243bb74474b25233bda3cd02f8 /storage/emulated/0/BACKUP/AllAppUpdate.bin .";
-                ShellRootCommands.shellExec("cd /oem", zipCommand);
-                //new ZipTask().onPreExecute();
+            // Copy the lsec631Xupdate binary using the earlier created message
+            String result = "";
+            String binary = "";
+            if (message.contains("lsec6315update")) {
+                binary = "lsec6315update";
+                result = FileUtils.copyAssetsFileToExternalStorage(this, binary, "BACKUP", binary);
+            } else {
+                binary = "lsec6316update";
+                result = FileUtils.copyAssetsFileToExternalStorage(this, binary, "BACKUP", binary);
             }
-        });
+            if (result.equals("")) {
+                Logger.logToFile("Copied " + binary + " to the BACKUP folder");
+            } else {
+                Logger.logToFile("Failed to copy " + binary + " to the BACKUP folder");
+            }
 
-        /////////////////////////////////////
-        // Option 3
-        //new ZipTask().doInBackground();
+            // Copy config.txt
+            File inFile = new File("/oem/app/config.txt");
+            File outFile = new File("/storage/emulated/0/BACKUP/config.txt");
+            try {
+                FileUtils.copyFile(inFile, outFile);
+                Logger.logToFile("Copied config.txt to the BACKUP folder");
+            } catch (IOException e) {
+                Logger.logToFile("Failed to copy config.txt to the BACKUP folder with error " + e.toString());
+                //throw new RuntimeException(e);
+            }
 
-        // And now hide our progressBar again
-        mprogressBar.setVisibility(View.INVISIBLE);
+            ///////////////////////
+            // option 1
+            // Below 2 sentences are working but block the UI
+            String zipCommand = cacheDirString + "/zip-arm  -r -v -y -0 --password 048a02243bb74474b25233bda3cd02f8 /storage/emulated/0/BACKUP/AllAppUpdate.bin .";
+            //Now start the command to do the backup using ShellExec or Rootexec
+            ShellRootCommands.shellExec("echo twipe_all > /storage/emulated/0/BACKUP/updatecfg.txt", "cd /oem", zipCommand);
 
-        Utils.showInfoDialog(this,getString(R.string.backup_finished), message);
+            //////////////////////////////
+            // option 2
+            /*AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    String zipCommand = cacheDirString + "/zip-arm  -r -v -y -0 --password 048a02243bb74474b25233bda3cd02f8 /storage/emulated/0/BACKUP/AllAppUpdate.bin .";
+                    ShellRootCommands.shellExec("cd /oem", zipCommand);
+                    //new ZipTask().onPreExecute();
+                }
+            });*/
+
+            /////////////////////////////////////
+            // Option 3
+            //new ZipTask().doInBackground();
+
+            // And now hide our progressBar again
+            mprogressBar.setVisibility(View.INVISIBLE);
+
+            Utils.showInfoDialog(this, getString(R.string.backup_finished), message);
+        } else { // So we are on a T'eyes unit. This backup will not functiom.
+            Utils.showInfoDialog(this, getString(R.string.teyes_unit_title), getString(R.string.teyes_unit_txt));
+        }
 
     }
 

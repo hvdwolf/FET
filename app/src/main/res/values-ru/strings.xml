@@ -15,10 +15,10 @@
     <string name="zip_allappupdate">Создать FYTBACKUP</string>
     <string name="ok_button">Хорошо</string>
     <string name="cancel_button">Отмена</string>
-    <string name="not_a_fyt">Not a FYT</string>
-    <string name="not_a_fyt_message">This is not a FYT unit. The app will be closed.</string>
-    <string name="correct_fyt_wrong_sdk">Correct FYT, incorrect SDK</string>
-    <string name="correct_fyt_wrong_sdk_message">This app is only for FYTs on real Android 10 with SDK version 29. The app will be closed.</string>
+    <string name="not_a_fyt">Не FYT</string>
+    <string name="not_a_fyt_message">Это не устройство FYT. Приложение будет закрыто.</string>
+    <string name="correct_fyt_wrong_sdk">Правильный FYT, неправильный SDK</string>
+    <string name="correct_fyt_wrong_sdk_message">Это приложение предназначено только для FYT на настоящей Android 10 с SDK версии 29. Приложение будет закрыто.</string>
     <string name="fytbackup_first_sentence">Теперь вы найдете 4 файла в памяти ГУ в папке BACKUP:</string>
     <string name="fytbackup_last_sentence_7862">Если скопировать эти 4 файла на чистый USB-диск, вы всегда сможете восстановить устройство</string>
     <string name="fytbackup_last_sentence_8581">Если скопировать эти 4 файла на чистый USB-диск, вы всегда сможете восстановить устройство</string>
@@ -50,5 +50,7 @@
     <string name="disp_config_txt">Содержимое config.txt</string>
     <string name="adroid_root">Для кнопок с иконкой android необходимы root-права.</string>
     <string name="def_android_settings">Открыть настройки android</string>
-    <string name="pincode_useless">Pincode werkt, maar de fyieke \nhomekey "bypassed" het lockscreen,\nzo op dit moment nutteloos.</string>
+    <string name="pincode_useless">PIN-код работает, но физическая домашняя\nкнопка "обходит" локскрин, поэтому\nв настоящее время бесполезна.</string>
+    <string name="teyes_unit_title">Это частично несовместимое устройство Teyes.</string>
+    <string name="teyes_unit_txt">Это устройство Teyes с \"ro.build.fytmanufacturer = 95\". Схема раздела/прошивки отличается. Резервное копирование невозможно.</string>
 </resources>
