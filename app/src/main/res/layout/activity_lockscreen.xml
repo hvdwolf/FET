@@ -13,28 +13,28 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:onClick="setPass"
-        android:text="@string/set_pincode" />
+        android:text="@string/btn_set_pincode" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:onClick="changePass"
-        android:text="@string/change_pincode" />
+        android:text="@string/btn_change_pincode" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:onClick="disable"
-        android:text="@string/disable_pincode" />
+        android:text="@string/btn_disable_pincode" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:onClick="checkPass"
-        android:text="@string/lock_unit"
+        android:text="@string/btn_lock_unit"
         android:textStyle="bold" />
 
 

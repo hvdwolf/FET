@@ -287,6 +287,12 @@ public class MainActivity extends AppCompatActivity {
         Utils.showAboutDialog(this, "/oem/app/config.txt");
     }
 
+    public void enableAppsOnBoot(View view) {
+        //Intent intent = new Intent(MainActivity.this, EnableAppsOnBoot.class);
+        //startActivity(intent);
+        startActivity(new Intent(MainActivity.this, EnableAppsOnBoot.class));
+    }
+
     /* Below is currently not used due to filepath issues */
     public void zipAllAppUpdateBin(View view) {
 
@@ -434,7 +440,7 @@ public class MainActivity extends AppCompatActivity {
         //"ro.fota.platform" gives SC7862 or SC8581
 
         ///////////// SET TO FALSE BEFORE RELEASE TO FYT /////////////
-        Boolean TEST = false;
+        Boolean TEST = true;
         if (TEST) { // For testing on my phone
             FYT = true;
         } else { // When using on a unit to really test whether it is a FYT

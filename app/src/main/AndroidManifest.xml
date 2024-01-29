@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />     <!-- For Android 11 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" /> <!-- To be able to make a selectable list of installed packages; As of Android 11 -->
 
     <application
         android:requestLegacyExternalStorage="true"
@@ -27,6 +28,10 @@
         </activity>
         <activity android:name=".LockScreenActivity" />
         <activity android:name=".TestActivity" />
+        <activity android:name=".EnableAppsOnBoot" android:exported="false">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".MainActivity"/>
+            <meta-data android:name="android.app.lib_name" android:value=""/>
+        </activity>
     </application>
 
 </manifest>

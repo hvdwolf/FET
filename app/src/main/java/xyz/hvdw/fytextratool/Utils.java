@@ -213,7 +213,7 @@ public class Utils {
 
         switch (whichInfo) {
             case "about":
-                dialogTitle = context.getString(R.string.about_text);
+                dialogTitle = context.getString(R.string.btn_about_text);
                 // First add some app info
                 textView.setText(context.getString(R.string.displayed_name) + ": " + context.getString(R.string.app_name) + "\n");
                 textView.append(context.getString(R.string.author) + ": " + context.getString(R.string.programmer) + "\n");
@@ -232,8 +232,8 @@ public class Utils {
                 break;
 
             case "properties":
-                dialogTitle = context.getString(R.string.important_props);
-                textView.setText(context.getString(R.string.important_props) + ":\n\n");
+                dialogTitle = context.getString(R.string.btn_important_props);
+                textView.setText(context.getString(R.string.btn_important_props) + ":\n\n");
 
                 for (Map.Entry<String, String> entry : propsHashMap.entrySet()) {
                     TableRow row = new TableRow(context);
