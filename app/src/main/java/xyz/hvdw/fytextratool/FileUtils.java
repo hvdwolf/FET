@@ -12,6 +12,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 public class FileUtils {
@@ -78,19 +80,19 @@ public class FileUtils {
     }
 
     /* Below 2 methods copy a file from assets to external storage */
-    public static String copyAssetsFileToExternalStorage(Context context, String sourceFileName, String destinationFolder, String destinationFileName) {
+    public static String copyAssetsFileToExternalStorageFolder(Context context, String sourceFileName, String destinationFolder, String destinationFileName) {
         String returnString = "";
+
         try {
             // Get the internal storage directory
             File internalFile = new File(context.getFilesDir(), sourceFileName);
             //AssetManager assetManager;
             //String[] assetFile = assetManager.list("lsec6315update");
-            InputStream inFile = context.getAssets().open("lsec6315update");
+            InputStream inFile = context.getAssets().open(sourceFileName);
 
             // Get the external storage directory
             File externalStorage = Environment.getExternalStorageDirectory();
 
-            // Create a directory on external storage if not exists
             File destinationDirectory = new File(externalStorage, destinationFolder);
             if (!destinationDirectory.exists()) {
                 destinationDirectory.mkdirs();
@@ -111,6 +113,36 @@ public class FileUtils {
         }
         return returnString;
     }
+
+    public static String copyAssetsFileToExternalStorage(Context context, String sourceFileName, String destinationFileName) {
+        String returnString = "";
+        try {
+            // Get the internal storage directory
+            File internalFile = new File(context.getFilesDir(), sourceFileName);
+            //AssetManager assetManager;
+            //String[] assetFile = assetManager.list("lsec6315update");
+            InputStream inFile = context.getAssets().open(sourceFileName);
+
+            // Get the external storage directory
+            File externalStorage = Environment.getExternalStorageDirectory();
+            File externalFile = new File(externalStorage, destinationFileName);
+
+            OutputStream outFile = new FileOutputStream(externalFile);
+
+            // Copy the file
+            //copyFile(internalFile, externalFile); //Uses File handlers
+            copyFileAsStream(inFile, outFile); // uses Streams
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Logger.logToFile(e.toString());
+            returnString = e.toString();
+        }
+        return returnString;
+    }
+
+
+
 
     /* Below method copyFileasStream uses two streams  as input*/
     private static void copyFileAsStream(InputStream inputStream, OutputStream destinationStream) throws IOException {
@@ -240,6 +272,50 @@ public class FileUtils {
         } else {
             // No "/" found, return the original path
             return filePath;
+        }
+    }
+
+    public static boolean areFilesIdentical(File file1, File file2) {
+        if (file1.length() != file2.length()) {
+            return false; // Files have different sizes, they can't be identical
+        }
+
+        try {
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            FileInputStream fis1 = new FileInputStream(file1);
+            FileInputStream fis2 = new FileInputStream(file2);
+
+            byte[] buffer1 = new byte[8192];
+            byte[] buffer2 = new byte[8192];
+
+            int bytesRead1;
+            int bytesRead2;
+
+            while ((bytesRead1 = fis1.read(buffer1)) > 0) {
+                bytesRead2 = fis2.read(buffer2);
+                if (bytesRead1 != bytesRead2) {
+                    return false; // Files have different sizes
+                }
+
+                if (!MessageDigest.isEqual(buffer1, buffer2)) {
+                    return false; // Files have different content
+                }
+
+                digest.update(buffer1, 0, bytesRead1);
+            }
+
+            fis1.close();
+            fis2.close();
+
+            byte[] hash1 = digest.digest();
+
+            // If you want to compare checksums, you can compare hash1 and hash2
+            // Otherwise, you can remove this part
+
+            return true; // Files are identical
+        } catch (IOException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return false; // Error occurred during comparison
         }
     }
 }

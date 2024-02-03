@@ -7,12 +7,12 @@ public class MyGettersSetters {
 
     private final static MyGettersSetters staticInstance = new MyGettersSetters();
     private MyGettersSetters() {
-
     }
 
     private String logFileName;
     private File logFile;
     private Map<String, String> propsHashMap;
+    private Boolean testVersion;
 
     public static String getLogFileName() {
         return staticInstance.logFileName;
@@ -30,5 +30,8 @@ public class MyGettersSetters {
 
     public static Map<String, String> getPropsHashMap () { return staticInstance.propsHashMap; };
     public static void setPropsHashMap( Map<String, String> PropsHashMap) {staticInstance.propsHashMap = PropsHashMap; }
+
+    public static Boolean getTestVersion() { return staticInstance.testVersion; }
+    public static void setTestVersion(Boolean testVers) {staticInstance.testVersion = testVers; }
 
 }

@@ -56,14 +56,6 @@
                 android:drawableLeft="@drawable/rootfunction" />
 
             <Button
-                android:id="@+id/AboutButton"
-                android:onClick="dispAboutInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:text="@string/btn_about_text"/>
-
-            <Button
                 android:id="@+id/importantProperties"
                 android:onClick="dispImportantProperties"
                 android:layout_width="match_parent"
@@ -85,7 +77,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:text="Start Apps On Boot"/>
+                android:visibility="gone"
+                android:text="Start Apps On BOOT_COMPLETED"/>
+
+            <Button
+                android:id="@+id/AboutButton"
+                android:onClick="dispAboutInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
+                android:text="@string/btn_about_text"/>
 
             <ProgressBar
                 android:layout_width="match_parent"
@@ -94,6 +95,7 @@
                 android:visibility="gone"
                 android:text="Please be patient..."
                 android:id="@+id/progressBar" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -155,6 +157,16 @@
                 android:layout_height="wrap_content"
                 android:onClick="disp_config_txt"
                 android:text="@string/btn_disp_config_txt" />
+
+            <Button
+                android:id="@+id/btneditconfig"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="editConfigTxt"
+                android:text="@string/btn_edit_config_txt"
+                android:visibility = "gone"
+                android:drawableLeft="@drawable/rootfunction" />
 
         </LinearLayout>
 

@@ -13,8 +13,8 @@
     <string name="main_message_additional">Dodatkowy tekst wyjaśniający, dlaczego potrzebujemy tego pozwolenia</string>
     <string name="btn_open_def_bt">Otwórz domyślne ustawienia BT</string>
     <string name="btn_zip_allappupdate">Spakuj aplikacje FYT do pliku AllAppUpdate.bin</string>
-    <string name="ok_button">OK</string>
-    <string name="cancel_button">Anuluj</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Anuluj</string>
     <string name="not_a_fyt">To nie FYT</string>
     <string name="not_a_fyt_message">To nie jest urządzenie FYT. Aplikacja zostanie zamknięta.</string>
     <string name="correct_fyt_wrong_sdk">Urządzenie FYT, niewłaściwe SDK</string>
@@ -58,4 +58,7 @@
     <string name="collected_system_info_title">Zebrano wszystkie informacje systemowe</string>
     <string name="collected_system_info_txt">Informacje systemowe zostały zapisane w pliku HWGetInfo.zip i folderze HWGetInfo.</string>
     <string name="toast_start_zip">Trwa tworzenie kopii zapasowej. Proszę o cierpliwość.</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_edit_config_txt">Edit config.txt</string>
+    <string name="config_txt_not_found">file config.txt does not exist or could not find file in folder /oem/app.</string>
 </resources>

@@ -13,8 +13,8 @@
     <string name="main_message_additional">Extra tekst die uitlegt waarom we deze toestemming nodig hebben</string>
     <string name="btn_open_def_bt">Standaard BT-instellingen openen</string>
     <string name="btn_zip_allappupdate">Zip FYT apps in AllAppUpdate.bin</string>
-    <string name="ok_button">OK</string>
-    <string name="cancel_button">Annuleren</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Annuleren</string>
     <string name="not_a_fyt">Geen FYT</string>
     <string name="not_a_fyt_message">Dit is geen FYT unit. De app wordt gesloten.</string>
     <string name="correct_fyt_wrong_sdk">Correcte FYT, incorrecte SDK</string>
@@ -58,4 +58,7 @@
     <string name="collected_system_info_title">Alle systeem info verzameld.</string>
     <string name="collected_system_info_txt">Controleer de Interne opslag op zip bestand HWGetInfo.zip en folder HWGetInfo die de verzamelde systeem info bevat.</string>
     <string name="toast_start_zip">Starten van de backup. Even geduld alsjeblieft.</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_edit_config_txt">Edit config.txt</string>
+    <string name="config_txt_not_found">bestand config.txt bestaat niet of kon niet gevonden worden in folder /oem/app.</string>
 </resources>

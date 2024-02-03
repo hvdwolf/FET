@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+
 import p32929.easypasscodelock.Utils.EasyLock;
 
 
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String PREF_SYSTEM_MODE_KEY = "system_mode";
     private static final String DAY_MODE = "day";
     private static final String NIGHT_MODE = "night";
+    private Boolean logFileCreated = false;
 
 
     @Override
@@ -68,9 +70,12 @@ public class MainActivity extends AppCompatActivity {
         // Make it invisible
         mprogressBar.setVisibility(View.INVISIBLE);
 
-
-        String logFileName = createLogFile();
-        MyGettersSetters.setLogFileName(logFileName);
+        // Make sure it is only executed once, for example after a reconfigure. Like the app light/dark restarts the onCreate
+        if (!logFileCreated) {
+            String logFileName = createLogFile();
+            MyGettersSetters.setLogFileName(logFileName);
+            logFileCreated = true;
+        }
         Log.i(TAG, "Start of program at " + Utils.getDateTime());
         Logger.logToFile("Start of program at " + Utils.getDateTime());
         // Is this a FYT and as second test: on Android 10 SDK 29
@@ -79,11 +84,15 @@ public class MainActivity extends AppCompatActivity {
             Utils.checkPermissions(this);
             // Check app and system modi and set button texts
             textButtonsAppSystem();
-            //String fetValueForKey2 = propsHashMap.get("persist.sys.fetkernel");
-            //EasyLock.checkPassword(this);
-            //Utils.showAboutDialog(this);
-            //File cacheDir = this.getCacheDir();
-            //Toast.makeText(MainActivity.this, cacheDir.toString(),Toast.LENGTH_SHORT).show();
+            // Check if rooted. If not disable some buttons
+            boolean isRooted = CheckIfRooted.isUnitRooted();
+            Logger.logToFile("Boolean isRooted is " + Boolean.toString(isRooted));
+            boolean isMagiskRooted = CheckIfRooted.isMagiskRooted();
+            Logger.logToFile("Boolean isMagiskRooted is " + Boolean.toString(isMagiskRooted));
+            if ( !isRooted && !isMagiskRooted) {
+                disableRootedButtons();
+            }
+
         }
 
 
@@ -115,6 +124,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void disableRootedButtons() {
+        //If not our testVersion
+        if (!MyGettersSetters.getTestVersion()) {
+            Button androidsystemmode = findViewById(R.id.suDeviceDayNight);
+            Button editconfig = findViewById(R.id.btneditconfig);
+            androidsystemmode.setEnabled(false);
+            editconfig.setEnabled(false);
+        }
+
+    }
+
     public void dispAboutInfo(View view) {
         Utils.showAboutDialog(this, "about");
     }
@@ -142,9 +162,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = getPreferences(MODE_PRIVATE);
         if (whichItem.equals("App")) {
             String mode = preferences.getString(PREF_MODE_KEY, LIGHT_MODE);
+            Logger.logToFile("saved App mode is " + mode);
             return mode.equals(LIGHT_MODE) ? AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES;
         } else {
             String mode = preferences.getString(PREF_SYSTEM_MODE_KEY, DAY_MODE);
+            Logger.logToFile("saved System mode is " + mode);
             return mode.equals(DAY_MODE) ? 1 : 2; //DAY = 1; NIGHT = 2
         }
     }
@@ -172,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
         Boolean switchToNight = true;
 
         int currentMode = getSavedMode("System");
-        if (currentMode == 1) {
+        if (currentMode == 2) {
             Utils.setNightMode(this, false);
             saveMode("System", 1);
         } else {
@@ -283,17 +305,40 @@ public class MainActivity extends AppCompatActivity {
         Utils.startExternalAppByActivity(this,"com.sprd.engineermode", "com.sprd.engineermode.EngineerModeActivity");
     }
 
+    /**
+     * This method shows an info dialog (with scrollview) for the mention file/text
+     * @param view
+     */
     public void disp_config_txt(View view) {
         Utils.showAboutDialog(this, "/oem/app/config.txt");
     }
 
     public void enableAppsOnBoot(View view) {
-        //Intent intent = new Intent(MainActivity.this, EnableAppsOnBoot.class);
-        //startActivity(intent);
-        startActivity(new Intent(MainActivity.this, EnableAppsOnBoot.class));
+        Intent intent = new Intent(MainActivity.this, EnableAppsOnBoot.class);
+        intent.putExtra("TITLE", "Start Apps On BOOT_COMPLETED");
+        startActivity(intent);
+        //startActivity(new Intent(MainActivity.this, EnableAppsOnBoot.class));
+
     }
 
-    /* Below is currently not used due to filepath issues */
+    /**
+     * This method simply starts the editor activity with the provided config.txt file
+     * From this editor activity the Save/Cancel actions are arragned
+     * @param view
+     */
+    public void editConfigTxt(View view) {
+        Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+        intent.putExtra("FILENAME", "/oem/app/config.txt");
+        intent.putExtra("TITLE", getString(R.string.btn_edit_config_txt));
+        startActivity(intent);
+    }
+
+    /**
+     * This method makes a backup of the app layer as provided by FYT in the AllAppUpdate.bin
+     * It will zip with password withour compression and add the lsex631Xupdate, config.txt and updatecfg.txt to folder
+     * BACKUP on External Storage (Internal memory)
+     * @param view
+     */
     public void zipAllAppUpdateBin(View view) {
 
         // Check if we are on a T'eyes
@@ -318,23 +363,15 @@ public class MainActivity extends AppCompatActivity {
             //String BackupFolderPath = FileUtils.readFileToString(BackupFolder);
             Logger.logToFile("Created the backup folder " + BackupFolder.toString());
 
-            // Copy the updatecfg.txt
-            /*String result = FileUtils.copyAssetsFileToExternalStorage(this, "updatecfg.txt", "BACKUP", "updatecfg.txt");
-            if (result.equals("")) {
-                Logger.logToFile("Copied updatecfg.txt to the BACKUP folder");
-            } else {
-                Logger.logToFile("Failed to copy updatecfg.txt to the BACKUP folder");
-            }*/
-
             // Copy the lsec631Xupdate binary using the earlier created message
             String result = "";
             String binary = "";
             if (message.contains("lsec6315update")) {
                 binary = "lsec6315update";
-                result = FileUtils.copyAssetsFileToExternalStorage(this, binary, "BACKUP", binary);
+                result = FileUtils.copyAssetsFileToExternalStorageFolder(this, binary, "BACKUP", binary);
             } else {
                 binary = "lsec6316update";
-                result = FileUtils.copyAssetsFileToExternalStorage(this, binary, "BACKUP", binary);
+                result = FileUtils.copyAssetsFileToExternalStorageFolder(this, binary, "BACKUP", binary);
             }
             if (result.equals("")) {
                 Logger.logToFile("Copied " + binary + " to the BACKUP folder");
@@ -440,7 +477,8 @@ public class MainActivity extends AppCompatActivity {
         //"ro.fota.platform" gives SC7862 or SC8581
 
         ///////////// SET TO FALSE BEFORE RELEASE TO FYT /////////////
-        Boolean TEST = true;
+        Boolean TEST = false;
+        MyGettersSetters.setTestVersion(TEST);
         if (TEST) { // For testing on my phone
             FYT = true;
         } else { // When using on a unit to really test whether it is a FYT
@@ -505,7 +543,8 @@ public class MainActivity extends AppCompatActivity {
 
         String infoFolder = " > /storage/emulated/0/HWGetInfo/";
         FileUtils.removeAndRecreateFolder("HWGetInfo");
-        String[] Commands = {"cat /proc/cpuinfo  > /storage/emulated/0/HWgetInfo/cpuinfo.txt",
+        String[] Commands = {
+                "cat /proc/cpuinfo  > /storage/emulated/0/HWgetInfo/cpuinfo.txt",
                 "cat /proc/meminfo  > /storage/emulated/0/HWgetInfo/meminfo.txt",
                 "uname -a  > /storage/emulated/0/HWgetInfo/uname.txt",
                 "getprop  > /storage/emulated/0/HWgetInfo/properties.txt",

@@ -34,6 +34,9 @@ public class EnableAppsOnBoot extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enable_apps_on_boot);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(getIntent().getStringExtra("TITLE"));
+        }
         // Get a list of installed applications
         List<PackageInfo> allPackageInfoList = getInstalledApplications();
         List<PackageInfo> launcherPackageInfoList = getAllLauncherApps();

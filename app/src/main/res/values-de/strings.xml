@@ -13,8 +13,8 @@
     <string name="main_message_additional">Zusätzliche Erklärung, warum wir diese Genehmigung benötigen</string>
     <string name="btn_open_def_bt">Standard-BT-Einstellungen öffnen</string>
     <string name="btn_zip_allappupdate">Zip FYT-Anwendungen in AllAppUpdate.bin</string>
-    <string name="ok_button">OK</string>
-    <string name="cancel_button">Stornieren</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Stornieren</string>
     <string name="not_a_fyt">Kein FYT</string>
     <string name="not_a_fyt_message">Dies ist keine FYT-Einheit. Die App wird geschlossen.</string>
     <string name="correct_fyt_wrong_sdk">FYT: Korrekt, SDK passt nicht</string>
@@ -57,4 +57,7 @@
     <string name="collected_system_info_title">Collected all system info</string>
     <string name="collected_system_info_txt">Check Internal Storage for zip file HWGetInfo.zip and folder HWGetInfo containing the collected system info.</string>
     <string name="toast_start_zip">Starting backup. Please be patient.</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_edit_config_txt">Edit config.txt</string>
+    <string name="config_txt_not_found">file config.txt does not exist or could not find file in folder /oem/app.</string>
 </resources>

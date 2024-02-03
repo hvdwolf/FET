@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -44,5 +45,35 @@ public class CacheFileUtils {
             Logger.logToFile(e.toString());
         }
     }
+
+    public static String saveStringToCacheFile(File filename, String data) {
+
+        String result = "";
+
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(filename);
+            writer.write(data);
+            result = "writing config.txt to cache";
+        } catch (IOException e) {
+            e.printStackTrace();
+            Logger.logToFile("error writing to cache: " + e.toString());
+            result = e.toString();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                    result += "\nwritten to cache";
+                    Logger.logToFile("config.txt written to cache");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                Logger.logToFile("error writing to cache: " + e.toString());
+                result = e.toString();
+            }
+        }
+        return result;
+    }
+
 
 }

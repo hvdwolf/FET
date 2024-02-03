@@ -109,7 +109,7 @@ public class Utils {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(title)
                 .setMessage(message)
-                .setPositiveButton(context.getString(R.string.ok_button), new DialogInterface.OnClickListener() {
+                .setPositiveButton(context.getString(R.string.btn_ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Positive button click action (if needed)
                         dialog.dismiss();
@@ -180,6 +180,16 @@ public class Utils {
         return formattedDateTime;
     }
 
+    public static String getDateTimeForLog() {
+
+        Date currentDate = new Date();
+        String dateFormat = "yyyy-MM-dd HH:mm:ss";
+        // Create a SimpleDateFormat object with the specified format and locale
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.getDefault());
+        // Format the current date and time as a string
+        String formattedDateTime = simpleDateFormat.format(currentDate);
+        return formattedDateTime;
+    }
 
     public static void showAboutDialog(Context context, String whichInfo) {
         Map<String, String> propsHashMap = new HashMap<>();
@@ -210,6 +220,7 @@ public class Utils {
 
         TextView textView = new TextView(context);
         TableLayout propsTableLayout = new TableLayout(context);
+
 
         switch (whichInfo) {
             case "about":
@@ -257,9 +268,14 @@ public class Utils {
                 break;
 
             case "/oem/app/config.txt":
+                String longText;
                 dialogTitle = FileUtils.extractFileName(whichInfo);
                 File textFile = new File(whichInfo);
-                String longText = FileUtils.readFileToString(textFile);
+                if (textFile.exists()) {
+                    longText = FileUtils.readFileToString(textFile);
+                } else {
+                    longText = context.getString(R.string.config_txt_not_found);
+                }
                 textView.setText(longText);
                 contentLayout.addView(textView);
                 break;
@@ -273,7 +289,7 @@ public class Utils {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(layout)
                 .setTitle(dialogTitle)
-                .setPositiveButton(context.getString(R.string.ok_button), (dialog, which) -> {
+                .setPositiveButton(context.getString(R.string.btn_ok), (dialog, which) -> {
                     // Handle OK button click if needed
                 });
 

@@ -17,7 +17,7 @@ public class Logger {
 
         // Append the log message to a file
         try (FileWriter writer = new FileWriter(new File(MyGettersSetters.getLogFileName()), true)) {
-            writer.append(message).append("\n");
+            writer.append(Utils.getDateTimeForLog() + " : " + message).append("\n");
         } catch (IOException e) {
             e.printStackTrace();
             //logToFile(e.toString());

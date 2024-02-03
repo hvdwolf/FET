@@ -1,0 +1,7 @@
+#!/system/bin/sh
+
+rm -rf /storage/emulated/0/lsec_updatesh/*
+rmdir /storage/emulated/0/lsec_updatesh
+rm -rf /storage/emulated/0/lsec631*update
+rm -rf /storage/emulated/0/config.txt
+
