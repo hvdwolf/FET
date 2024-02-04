@@ -48,7 +48,7 @@
     <string name="btn_device_info">Об устройстве</string>
     <string name="btn_engineer_mode">Открыть инженерные настройки</string>
     <string name="btn_disp_config_txt">Содержимое config.txt</string>
-    <string name="adroid_root">Для кнопок с иконкой android необходимы root-права.</string>
+    <string name="android_root">Для кнопок с иконкой android необходимы root-права.</string>
     <string name="btn_def_android_settings">Открыть настройки android</string>
     <string name="pincode_useless">PIN-код работает, но физическая домашняя\nкнопка "обходит" локскрин, поэтому\nв настоящее время бесполезна.</string>
     <string name="teyes_unit_title">Это частично несовместимое устройство Teyes.</string>

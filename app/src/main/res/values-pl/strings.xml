@@ -48,7 +48,7 @@
     <string name="btn_device_info">informacje o urządzeniu</string>
     <string name="btn_engineer_mode">Otwórz narzędzia deweloperskie</string>
     <string name="btn_disp_config_txt">Wyświetl plik konfiguracyjny config.txt</string>
-    <string name="adroid_root">Przyciski zawierające \"the android with root on its chest\" wymagają uprawnień na poziomie root.</string>
+    <string name="android_root">Przyciski zawierające \"the android with root on its chest\" wymagają uprawnień na poziomie root.</string>
     <string name="btn_def_android_settings">Ustawienia systemu Android</string>
     <string name="pincode_useless">Kod PIN działa, ale fizyczny przycisk \nHome omija blokadę ekranu,\nwięc funkcja jest aktualnie nieużyteczna.</string>
     <string name="teyes_unit_title">To urządzenie firmy Teyes jest częściowo niekompatybilne.</string>

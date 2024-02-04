@@ -48,7 +48,7 @@
     <string name="btn_device_info">Thông tin Thiết bị</string>
     <string name="btn_engineer_mode">Mở chế độ Engineer</string>
     <string name="btn_disp_config_txt">Hiển thị config.txt</string>
-    <string name="adroid_root">Các nút có \"the android with root on its chest\" yêu cầu quyền truy cập root.</string>
+    <string name="android_root">Các nút có \"the android with root on its chest\" yêu cầu quyền truy cập root.</string>
     <string name="btn_def_android_settings">Màn hình Cài đặt Android mặc định</string>
     <string name="pincode_useless">Mã pin hoạt động nhưng phím home vật lý \n sẽ ghi đè màn hình khóa \n nên hiện tại vô dụng.</string>
     <string name="teyes_unit_title">Đây là một Teyes unit không tương thích hoàn toàn.</string>

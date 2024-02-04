@@ -47,7 +47,7 @@
     <string name="btn_device_info">Geräteinfo</string>
     <string name="btn_engineer_mode">Öffne den Ingenieur Modus</string>
     <string name="btn_disp_config_txt">Zeige config.txt</string>
-    <string name="adroid_root">Knöpfe mit \"Der Androide mit Root auf der Brust\" benötigen Root Rechte.</string>
+    <string name="android_root">Knöpfe mit \"Der Androide mit Root auf der Brust\" benötigen Root Rechte.</string>
     <string name="btn_def_android_settings">Standard Android Einstellungen</string>
     <string name="pincode_useless">Pincode funktioniert, aber physischer\nHomekey hebelt den Lockscreen aus,\ndeshalb momentan nutzlos.</string>
     <string name="teyes_unit_title">This is a partly incompatible Teyes unit.</string>

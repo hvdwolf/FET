@@ -48,7 +48,7 @@
     <string name="btn_device_info">aparaat info</string>
     <string name="btn_engineer_mode">Open engineer modus</string>
     <string name="btn_disp_config_txt">Toon config.txt</string>
-    <string name="adroid_root">Knoppen met \"de android met root op zijn borst\" benodigen root toegang.</string>
+    <string name="android_root">Knoppen met \"de android met root op zijn borst\" benodigen root toegang.</string>
     <string name="btn_def_android_settings">Standaard Android Settings scherm</string>
     <string name="pincode_useless">Pincode works, but physical\nhomekey overrules lockscreen,\nso currently useless.</string>
     <string name="teyes_unit_title">Dit is een gedeeltelijk incompatible Teyes unit.</string>

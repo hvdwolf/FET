@@ -1,5 +1,6 @@
 #!/system/bin/sh
 
+chmod _R 777 storage/emulated/0/lsec_updatesh
 rm -rf /storage/emulated/0/lsec_updatesh/*
 rmdir /storage/emulated/0/lsec_updatesh
 rm -rf /storage/emulated/0/lsec631*update

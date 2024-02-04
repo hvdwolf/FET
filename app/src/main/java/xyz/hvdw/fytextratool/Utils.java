@@ -1,12 +1,8 @@
 package xyz.hvdw.fytextratool;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.UiModeManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,8 +10,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
-import android.hardware.usb.UsbManager;
-import android.net.ConnectivityManager;
 import android.os.Build;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -240,7 +234,7 @@ public class Utils {
                     PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
                     textView.append(context.getString(R.string.version) + ": " + info.versionName + "\n");
                     textView.append(context.getString(R.string.pkg_name) + ": " + info.packageName + "\n\n");
-                    textView.append(context.getString(R.string.adroid_root) + "\n\n");
+                    textView.append(context.getString(R.string.android_root) + "\n\n");
 
                 } catch (PackageManager.NameNotFoundException e) {
                     throw new RuntimeException(e);

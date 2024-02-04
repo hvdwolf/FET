@@ -477,7 +477,7 @@ public class MainActivity extends AppCompatActivity {
         //"ro.fota.platform" gives SC7862 or SC8581
 
         ///////////// SET TO FALSE BEFORE RELEASE TO FYT /////////////
-        Boolean TEST = true;
+        Boolean TEST = false;
         MyGettersSetters.setTestVersion(TEST);
         if (TEST) { // For testing on my phone
             FYT = true;

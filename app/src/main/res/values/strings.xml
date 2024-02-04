@@ -50,7 +50,7 @@
     <string name="btn_device_info">device info</string>
     <string name="btn_engineer_mode">Open engineer mode</string>
     <string name="btn_disp_config_txt">Display config.txt</string>
-    <string name="adroid_root">Buttons with \"the android with root on its chest\" require root access.</string>
+    <string name="android_root">Buttons with \"the android with root on its chest\" require root access.</string>
     <string name="btn_def_android_settings">Default Android Settings screen</string>
     <string name="pincode_useless">Pincode works, but physical\nhomekey overrules lockscreen,\nso currently useless.</string>
     <string name="teyes_unit_title">This is a partly incompatible Teyes unit.</string>
