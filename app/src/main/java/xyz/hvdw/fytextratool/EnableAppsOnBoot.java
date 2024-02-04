@@ -1,5 +1,6 @@
 package xyz.hvdw.fytextratool;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -37,14 +38,20 @@ public class EnableAppsOnBoot extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(getIntent().getStringExtra("TITLE"));
         }
-        // Get a list of installed applications
-        List<PackageInfo> allPackageInfoList = getInstalledApplications();
+
+        // Get a list of applications that have a luancher intent
         List<PackageInfo> launcherPackageInfoList = getAllLauncherApps();
+        // Get a list of packages that like to use the boot_completed command and need to be white listed
+        //List<ApplicationInfo> appsWithBootPermission = getApplicationsWithBootPermission(this);
+        List<PackageInfo> appsWithBootPermission = getApplicationsWithBootPermission(this);
+
 
         // Set up the ListView with the custom adapter
         ListView appListView = findViewById(R.id.appListView);
-        AppListAdapter appListAdapter = new AppListAdapter(this, launcherPackageInfoList);
-        //AppListAdapter appListAdapter = new AppListAdapter(this, allPackageInfoList);
+        // The launcher apps
+        //AppListAdapter appListAdapter = new AppListAdapter(this, launcherPackageInfoList);
+        // The boot_completed apps
+        AppListAdapter appListAdapter = new AppListAdapter(this, appsWithBootPermission);
         appListView.setAdapter(appListAdapter);
 
         // Handle item click events
@@ -57,44 +64,12 @@ public class EnableAppsOnBoot extends AppCompatActivity {
         });
     }
 
-    /*private List<PackageInfo> getInstalledApplications() {
-        PackageManager pm = getPackageManager();
-        //return packageManager.getInstalledPackages(PackageManager.GET_META_DATA);
-        List<ApplicationInfo> allPackageInfoList = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-        List<ApplicationInfo> launcherPackageInfoList = new ArrayList<>();
-
-        for (ApplicationInfo packageInfo : allPackageInfoList) {
-            if (hasLauncherIntent(pm, packageInfo.packageName)) {
-                launcherPackageInfoList.add(packageInfo);
-            }
-        }
-        return launcherPackageInfoList;
-    }*/
 
     private static boolean hasLauncherIntent(PackageManager packageManager, String packageName) {
         Intent launchIntent = packageManager.getLaunchIntentForPackage(packageName);
         return launchIntent != null;
     }
 
-    // Below one is working but doesn not filter non-launcher packages
-    private List<PackageInfo> getInstalledApplications() {
-        PackageManager pm = getPackageManager();
-        //return pm.getInstalledPackages(PackageManager.GET_META_DATA);
-        List<ApplicationInfo> allPackages =
-                pm.getInstalledApplications(PackageManager.GET_META_DATA);
-
-        List<ApplicationInfo> launcherPackageInfoList = new ArrayList<>();
-                String TAG = "pipo";
-        for (ApplicationInfo packageInfo : allPackages) {
-            Log.d(TAG, "Installed package :" + packageInfo.packageName);
-            Log.d(TAG, "Source dir : " + packageInfo.sourceDir);
-            Log.d(TAG, "Launch Activity :" +
-                    pm.getLaunchIntentForPackage(packageInfo.packageName));
-            launcherPackageInfoList.add(packageInfo);
-        }
-        return pm.getInstalledPackages(PackageManager.GET_META_DATA);
-        //return launcherPackageInfoList;
-    }
 
     private List<PackageInfo> getAllLauncherApps() {
         List<PackageInfo> appList = new ArrayList<>();
@@ -119,5 +94,39 @@ public class EnableAppsOnBoot extends AppCompatActivity {
         }
 
         return appList;
+    }
+
+    private List<PackageInfo> getApplicationsWithBootPermission(Context context) {
+    //private List<ApplicationInfo> getApplicationsWithBootPermission(Context context) {
+        //List<ApplicationInfo> appsWithBootPermission = new ArrayList<>();
+        List<PackageInfo> appsWithBootPermission = new ArrayList<>();
+        PackageManager packageManager = context.getPackageManager();
+
+        // Get the list of installed packages
+        List<PackageInfo> installedPackages = packageManager.getInstalledPackages(PackageManager.GET_PERMISSIONS);
+
+        for (PackageInfo packageInfo : installedPackages) {
+            // Check if the package has requested the BOOT_COMPLETED permission
+            if (hasBootPermission(packageInfo)) {
+                // Add the application info to the list
+                //appsWithBootPermission.add(packageInfo.applicationInfo);
+                appsWithBootPermission.add(packageInfo);
+            }
+        }
+
+        return appsWithBootPermission;
+    }
+
+    private boolean hasBootPermission(PackageInfo packageInfo) {
+        // Check if the package has requested the BOOT_COMPLETED permission
+        String[] requestedPermissions = packageInfo.requestedPermissions;
+        if (requestedPermissions != null) {
+            for (String permission : requestedPermissions) {
+                if (permission.equals("android.permission.RECEIVE_BOOT_COMPLETED")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

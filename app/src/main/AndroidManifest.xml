@@ -12,6 +12,10 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" /> <!-- To be able to make a selectable list of installed packages; As of Android 11 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />  <!-- we don't need this ourselves but to check on packages with boot_completed -->
+    <permission android:name="android.permission.REBOOT"/>  <!-- So we can reboot our device -->
+
 
     <application
         android:requestLegacyExternalStorage="true"

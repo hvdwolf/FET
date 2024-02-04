@@ -77,7 +77,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:visibility="gone"
                 android:text="Start Apps On BOOT_COMPLETED"/>
 
             <Button
@@ -165,7 +164,6 @@
                 android:layout_height="wrap_content"
                 android:onClick="editConfigTxt"
                 android:text="@string/btn_edit_config_txt"
-                android:visibility = "gone"
                 android:drawableLeft="@drawable/rootfunction" />
 
         </LinearLayout>

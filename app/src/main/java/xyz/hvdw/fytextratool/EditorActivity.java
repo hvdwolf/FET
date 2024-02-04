@@ -1,26 +1,19 @@
 package xyz.hvdw.fytextratool;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class EditorActivity extends AppCompatActivity {
@@ -124,25 +117,16 @@ public class EditorActivity extends AppCompatActivity {
             Logger.logToFile("Failed to copy " + script + " to external storage lsec_updatesh");
         }
 
-
-        //final Intent launchIntentForPackage = getPackageManager().getLaunchIntentForPackage("android.rockchip.update.service");
-        //startActivity( launchIntentForPackage );
-
-        /*Toast.makeText(this,"Trying to start the android.rockchip.update.service", Toast.LENGTH_SHORT).show();
+        Utils.showInfoDialog(this, getString(R.string.firmware_upgrade_title), getString(R.string.firmware_upgrade_txt));
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 // Code to be executed after the delay
-                Intent intent = new Intent();
-                ComponentName componentName = new ComponentName("android.rockchip.update.service", "android.rockchip.update.service.UpdateAndRebootActivity");
-                componentName = new ComponentName("android.rockchip.update.service", "android.rockchip.update.service.FirmwareUpdatingActivity");
-                intent.setComponent(componentName);
-                startService(intent);
+                //ShellRootCommands.rootExec("echo \"0\" > /sys/bus/usb/devices/1-1/authorized","echo \"1\" > /sys/bus/usb/devices/1-1/authorized");
+                ShellRootCommands.shellExec("echo \"0\" > /sys/bus/usb/devices/1-1/authorized","echo \"1\" > /sys/bus/usb/devices/1-1/authorized");
             }
-        }, 500); // 500 milliseconds wait
-         */
-        ShellRootCommands.rootExec("mount -o remount /storage/emulated/0");
+        }, 2000);
 
     }
 

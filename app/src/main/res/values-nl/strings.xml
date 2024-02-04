@@ -61,4 +61,6 @@
     <string name="btn_save">Save</string>
     <string name="btn_edit_config_txt">Edit config.txt</string>
     <string name="config_txt_not_found">bestand config.txt bestaat niet of kon niet gevonden worden in folder /oem/app.</string>
+    <string name="firmware_upgrade_title">Firmware flash vindt zo plaats</string>
+    <string name="firmware_upgrade_txt">Binnen een paar seconden zie je de popup met Start/Cancel voor een \"firmware upgrade\". Deze is nodig om de wijzigingen toe te passen.</string>
 </resources>

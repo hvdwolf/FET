@@ -60,4 +60,6 @@
     <string name="btn_save">Save</string>
     <string name="btn_edit_config_txt">Edit config.txt</string>
     <string name="config_txt_not_found">file config.txt does not exist or could not find file in folder /oem/app.</string>
+    <string name="firmware_upgrade_title">Firmware flash to take place</string>
+    <string name="firmware_upgrade_txt">In a few seconds you will see the popup with Start/Cancel for a \"firmware upgrade\". This is necessary to apply the changes.</string>
 </resources>
