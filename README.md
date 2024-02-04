@@ -17,6 +17,9 @@ Just side-load the application from your file manager.<br><br>
 ## Releases
 The releases are not done via github, but via the XDA-forum via the thread: https://xdaforums.com/t/fet-fyt-extra-tool.4653315/
 
+## Translations
+Default is (US) English. Translated (90~100%) in Dutch, German, Italian, Polish, Russian, Vietnamese.
+
 <HR>
 MIT License
 
