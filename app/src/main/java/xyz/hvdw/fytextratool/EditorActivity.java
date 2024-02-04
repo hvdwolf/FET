@@ -123,8 +123,7 @@ public class EditorActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // Code to be executed after the delay
-                //ShellRootCommands.rootExec("echo \"0\" > /sys/bus/usb/devices/1-1/authorized","echo \"1\" > /sys/bus/usb/devices/1-1/authorized");
-                ShellRootCommands.shellExec("echo \"0\" > /sys/bus/usb/devices/1-1/authorized","echo \"1\" > /sys/bus/usb/devices/1-1/authorized");
+                ShellRootCommands.rootExec("echo \"0\" > /sys/bus/usb/devices/1-1/authorized","echo \"1\" > /sys/bus/usb/devices/1-1/authorized");
             }
         }, 2000);
 
