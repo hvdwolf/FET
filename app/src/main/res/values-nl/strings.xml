@@ -63,4 +63,9 @@
     <string name="config_txt_not_found">bestand config.txt bestaat niet of kon niet gevonden worden in folder /oem/app.</string>
     <string name="firmware_upgrade_title">Firmware flash vindt zo plaats</string>
     <string name="firmware_upgrade_txt">Binnen een paar seconden zie je de popup met Start/Cancel voor een \"firmware upgrade\". Deze is nodig om de wijzigingen toe te passen.</string>
+    <string name="btn_add_btsettings_to_fyt_settings">Voeg de standaard BT settings toe aan de FYT Settings.</string>
+    <string name="add_btsettings_to_fyt_settings_title">Voeg de standaard BT settings toe aan de FYT Settings.</string>
+    <string name="add_btsettings_to_fyt_settings_text">Dit zal het standaard Bluetooth settings scherm, dat je nooit rechtsreeks kunt benaderen, toevoegen aan de FYT Settings apk.</string>
+    <string name="btsettings_already_added_to_fyt_settings_text">The standaard Bluetooth settings zijn al toegevoegd aan de FYT Settings apk.</string>
+    <string name="btn_continue">Ga verder</string>
 </resources>

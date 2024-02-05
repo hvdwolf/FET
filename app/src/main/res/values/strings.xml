@@ -65,4 +65,9 @@
     <string name="config_txt_not_found">file config.txt does not exist or could not find file in folder /oem/app.</string>
     <string name="firmware_upgrade_title">Firmware flash to take place</string>
     <string name="firmware_upgrade_txt">In a few seconds you will see the popup with Start/Cancel for a \"firmware upgrade\". This is necessary to apply the changes.</string>
+    <string name="btn_add_btsettings_to_fyt_settings">Add default BT settings to FYT Settings.</string>
+    <string name="add_btsettings_to_fyt_settings_title">Add default BT settings to FYT Settings.</string>
+    <string name="add_btsettings_to_fyt_settings_text">This will add the default Bluetooth settings screen, that you are never able to access directly, into the FYT Settings apk.</string>
+    <string name="btsettings_already_added_to_fyt_settings_text">The default Bluetooth settings are already added into the FYT Settings apk.</string>
+    <string name="btn_continue">Continue</string>
 </resources>
