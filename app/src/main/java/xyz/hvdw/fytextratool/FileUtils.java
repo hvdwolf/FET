@@ -119,8 +119,7 @@ public class FileUtils {
         try {
             // Get the internal storage directory
             File internalFile = new File(context.getFilesDir(), sourceFileName);
-            //AssetManager assetManager;
-            //String[] assetFile = assetManager.list("lsec6315update");
+
             InputStream inFile = context.getAssets().open(sourceFileName);
 
             // Get the external storage directory
@@ -130,7 +129,6 @@ public class FileUtils {
             OutputStream outFile = new FileOutputStream(externalFile);
 
             // Copy the file
-            //copyFile(internalFile, externalFile); //Uses File handlers
             copyFileAsStream(inFile, outFile); // uses Streams
 
         } catch (IOException e) {

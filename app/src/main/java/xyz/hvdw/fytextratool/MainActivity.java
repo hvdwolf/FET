@@ -20,12 +20,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AppCompatDelegate;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 
 import p32929.easypasscodelock.Utils.EasyLock;
 
@@ -58,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String DAY_MODE = "day";
     private static final String NIGHT_MODE = "night";
     private Boolean logFileCreated = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,8 +126,10 @@ public class MainActivity extends AppCompatActivity {
         if (!MyGettersSetters.getTestVersion()) {
             Button androidsystemmode = findViewById(R.id.suDeviceDayNight);
             Button editconfig = findViewById(R.id.btneditconfig);
+            Button addBTtoFyt = findViewById(R.id.addbttosettings);
             androidsystemmode.setEnabled(false);
             editconfig.setEnabled(false);
+            addBTtoFyt.setEnabled(false);
         }
 
     }
@@ -277,6 +276,16 @@ public class MainActivity extends AppCompatActivity {
     public void openBluetoothSettings(View view) {
         // Start Bluetooth settings
         Utils.startBluetoothSettings(this);
+    }
+
+    public void addBTSettingsToFYTSettings(View view) {
+        Intent intent = new Intent(MainActivity.this, CustomDialog.class);
+        intent.putExtra("FILENAME", "/oem/app/config.txt");
+        intent.putExtra("TITLE", getString(R.string.add_btsettings_to_fyt_settings_title));
+        intent.putExtra("TEXT", getString(R.string.add_btsettings_to_fyt_settings_text));
+        intent.putExtra("IMAGE", "btsettingstofyt");
+        startActivity(intent);
+
     }
     public void systemInfo(View view) {
         Logger.logToFile("Starting the Equipment Information Activity");

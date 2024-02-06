@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import xyz.hvdw.fytextratool.MyGettersSetters;
 
 public class Logger {
 

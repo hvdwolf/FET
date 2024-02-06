@@ -115,6 +115,15 @@
                 android:drawableLeft="@drawable/bluetooth_icon" />
 
             <Button
+                android:id="@+id/addbttosettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
+                android:onClick="addBTSettingsToFYTSettings"
+                android:text="@string/btn_add_btsettings_to_fyt_settings"
+                android:drawableLeft="@drawable/rootfunction" />
+
+            <Button
                 android:layout_marginTop="@dimen/number_pad_margin_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

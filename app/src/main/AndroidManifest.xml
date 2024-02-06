@@ -40,6 +40,10 @@
             <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".MainActivity"/>
             <meta-data android:name="android.app.lib_name" android:value=""/>
         </activity>
+        <activity android:name=".CustomDialog" android:exported="false">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".MainActivity"/>
+            <meta-data android:name="android.app.lib_name" android:value=""/>
+        </activity>
     </application>
 
 </manifest>

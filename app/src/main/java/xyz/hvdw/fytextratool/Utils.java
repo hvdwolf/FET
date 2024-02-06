@@ -11,7 +11,11 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.os.Build;
+import android.os.Handler;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -321,4 +325,41 @@ public class Utils {
     }
 
 
+    public static void prepareInternalFlash(Context context) {
+        FileUtils.removeAndRecreateFolder("lsec_updatesh");
+        Map<String, String> fytPlatform = MyGettersSetters.getPropsHashMap();
+        String binary = "";
+        String script = "";
+
+        if (fytPlatform.get("ro.board.platform").contains("ums512")){
+            binary = "lsec6315update";
+            script = "7862lsec.sh";
+        } else {
+            binary = "lsec6316update";
+            script = "8581lsec.sh";
+        }
+        String result = FileUtils.copyAssetsFileToExternalStorage(context, binary, binary);
+        String resultScript = FileUtils.copyAssetsFileToExternalStorageFolder(context, "config_script", "lsec_updatesh", script);
+
+        if (result.equals("")) {
+            Logger.logToFile("Copied " + binary + " to the external storage");
+        } else {
+            Logger.logToFile("Failed to copy " + binary + " to external storage");
+        }
+        if (resultScript.equals("")) {
+            Logger.logToFile("Copied " + script + " to external storage lsec_updatesh");
+        } else {
+            Logger.logToFile("Failed to copy " + script + " to external storage lsec_updatesh");
+        }
+
+        Utils.showInfoDialog(context, context.getString(R.string.firmware_upgrade_title), context.getString(R.string.firmware_upgrade_txt));
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Code to be executed after the delay
+                ShellRootCommands.rootExec("echo \"0\" > /sys/bus/usb/devices/1-1/authorized","echo \"1\" > /sys/bus/usb/devices/1-1/authorized");
+            }
+        }, 2000);
+    }
 }

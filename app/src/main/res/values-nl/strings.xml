@@ -21,7 +21,7 @@
     <string name="correct_fyt_wrong_sdk_message">Deze app is alleen voor FYTs met een echte Android 10 met SDK versie 29. De app wordt gesloten.</string>
     <string name="fytbackup_first_sentence">Je vindt nu 4 bestanden op je usb-stick in de folder BACKUP:</string>
     <string name="fytbackup_last_sentence_7862">Als je deze 4 bestanden samen met een 6315_1.zip op een lege USB-stick kopieert, kun je altijd je uis7862 (ums512) unit in functie herstellen.</string>
-    <string name="fytbackup_last_sentence_8581">If you copy these 4 files with a 6316_1.zip to a clean USB-disk, you can always restore your uis8581 (sc9863) unit.</string>
+    <string name="fytbackup_last_sentence_8581">Als je deze 4 bestanden samen met een 6316_1.zip op een lege USB-stick kopieert, kun je altijd je uis8581 (sc9863) unit in functie herstellen.</string>
     <string name="backup_finished">Backup van FYT apps voltooid</string>
     <string name="btn_app_light_dark">Licht/Donker App thema</string>
     <string name="btn_device_light_dark">Set Device to Day or Night mode</string>
@@ -50,7 +50,7 @@
     <string name="btn_disp_config_txt">Toon config.txt</string>
     <string name="android_root">Knoppen met \"de android met root op zijn borst\" benodigen root toegang.</string>
     <string name="btn_def_android_settings">Standaard Android Settings scherm</string>
-    <string name="pincode_useless">Pincode works, but physical\nhomekey overrules lockscreen,\nso currently useless.</string>
+    <string name="pincode_useless">Pincode beveiliging werkt op een scherm zonder fysieke knoppen\n, maar de fysieke homekey omzeilt het vergrendelscherm,\ndus op zo\'n unit nutteloos.</string>
     <string name="teyes_unit_title">Dit is een gedeeltelijk incompatible Teyes unit.</string>
     <string name="teyes_unit_txt">Dit is een Teyes unit met \"ro.build.fytmanufacturer = 95\". Het partitionering/flashing schema is afwijken. Er is geen backup mogelijk.</string>
     <string name="btn_collect_system_info">Verzamel systeem info</string>
@@ -66,6 +66,6 @@
     <string name="btn_add_btsettings_to_fyt_settings">Voeg de standaard BT settings toe aan de FYT Settings.</string>
     <string name="add_btsettings_to_fyt_settings_title">Voeg de standaard BT settings toe aan de FYT Settings.</string>
     <string name="add_btsettings_to_fyt_settings_text">Dit zal het standaard Bluetooth settings scherm, dat je nooit rechtsreeks kunt benaderen, toevoegen aan de FYT Settings apk.</string>
-    <string name="btsettings_already_added_to_fyt_settings_text">The standaard Bluetooth settings zijn al toegevoegd aan de FYT Settings apk.</string>
+    <string name="btsettings_already_added_to_fyt_settings_text">De standaard Bluetooth settings zijn al toegevoegd aan de FYT Settings apk.</string>
     <string name="btn_continue">Ga verder</string>
 </resources>
