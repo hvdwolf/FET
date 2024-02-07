@@ -5,9 +5,9 @@ A simple tool that adds some extra functionality to your FYT unit.<br>
 
 # Screenshots
 (preliminary)<br>
-## Dark Theme
+## Dark Theme 1.0.8
 ![dark theme](https://github.com/hvdwolf/FET/raw/main/images/darktheme.png)
-## Light Theme
+## Light Theme 1.0.7
 ![light theme](https://github.com/hvdwolf/FET/raw/main/images/lighttheme.png)
 
 
@@ -15,7 +15,8 @@ A simple tool that adds some extra functionality to your FYT unit.<br>
 Just side-load the application from your file manager.<br><br>
 
 ## Releases
-The releases are not done via github, but via the XDA-forum via the thread: https://xdaforums.com/t/fet-fyt-extra-tool.4653315/
+The releases are not done via github, but via the XDA-forum via the thread: https://xdaforums.com/t/fet-fyt-extra-tool.4653315/ <br>
+That is also where you find the Changelogs and more screenshots displaying new/modified functionality.
 
 ## Translations
 Default is (US) English. Translated (90~100%) in Dutch, German, Italian, Polish, Russian, Vietnamese.
