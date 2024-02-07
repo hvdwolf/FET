@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="xyz.hvdw.fytextratool.MainActivity">
 
     <LinearLayout
@@ -16,7 +14,7 @@
 
         <LinearLayout
             android:id="@+id/left_panel"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/number_pad_parent_margin"
             android:orientation="vertical">
@@ -35,6 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/number_pad_margin_top"
+                android:visibility="gone"
                 android:text="@string/btn_app_light_dark" />
 
             <Button
@@ -56,20 +55,28 @@
                 android:drawableLeft="@drawable/rootfunction" />
 
             <Button
-                android:id="@+id/importantProperties"
-                android:onClick="dispImportantProperties"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:text="@string/btn_important_props"/>
-
-            <Button
                 android:id="@+id/collectSystemInfo"
                 android:onClick="collectSystemInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/number_pad_margin_top"
                 android:text="@string/btn_collect_system_info"/>
+
+            <Button
+                android:layout_marginTop="@dimen/number_pad_margin_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="disp_config_txt"
+                android:text="@string/btn_disp_config_txt" />
+
+            <Button
+                android:id="@+id/btneditconfig"
+                android:layout_marginTop="@dimen/number_pad_margin_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="editConfigTxt"
+                android:text="@string/btn_edit_config_txt"
+                android:drawableLeft="@drawable/rootfunction" />
 
             <Button
                 android:id="@+id/enableAppsOnBoot"
@@ -79,14 +86,6 @@
                 android:layout_marginTop="@dimen/number_pad_margin_top"
                 android:visibility="gone"
                 android:text="Start Apps On BOOT_COMPLETED"/>
-
-            <Button
-                android:id="@+id/AboutButton"
-                android:onClick="dispAboutInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:text="@string/btn_about_text"/>
 
             <ProgressBar
                 android:layout_width="match_parent"
@@ -99,8 +98,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/center_panel"
-            android:layout_width="match_parent"
+            android:id="@+id/right_panel"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/left_panel"
             android:layout_margin="@dimen/number_pad_parent_margin"
@@ -160,70 +159,9 @@
                 android:onClick="engineermode"
                 android:text="@string/btn_engineer_mode" />
 
-            <Button
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="disp_config_txt"
-                android:text="@string/btn_disp_config_txt" />
-
-            <Button
-                android:id="@+id/btneditconfig"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="editConfigTxt"
-                android:text="@string/btn_edit_config_txt"
-                android:drawableLeft="@drawable/rootfunction" />
-
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/right_panel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/center_panel"
-            android:layout_margin="@dimen/number_pad_parent_margin"
-            android:orientation="vertical">
-
-            <Button
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="setPass"
-                android:text="@string/btn_set_pincode" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:onClick="changePass"
-                android:text="@string/btn_change_pincode" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:onClick="disable"
-                android:text="@string/btn_disable_pincode" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:onClick="checkPass"
-                android:text="@string/btn_lock_unit"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:text="@string/pincode_useless" />
-        </LinearLayout>
-
 
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

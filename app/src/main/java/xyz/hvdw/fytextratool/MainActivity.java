@@ -11,6 +11,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String DAY_MODE = "day";
     private static final String NIGHT_MODE = "night";
     private Boolean logFileCreated = false;
+    //private MenuItem toggleTextItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,15 +104,65 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    ///////////////////////////////////////////// top-right menu /////////////////////////
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //toggleTextItem = menu.findItem(R.id.action_apptogglebutton);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        // Unfortunately switch/case does not work, so we need a lot of if statements
+        if (id == R.id.action_apptogglebutton) {
+            toggleAppMode();
+            return true;
+        }
+        if (id == R.id.action_importantProperties) {
+            dispImportantProperties();
+            return true;
+        }
+
+        if (id == R.id.action_about) {
+            Utils.showAboutDialog(this, "about");
+            return true;
+        }
+
+        //pincode screens
+        if (id == R.id.action_pin_readme) {
+            Utils.showInfoDialog(this,getString(R.string.menuitem_pin_readme), getString(R.string.pin_disclaimer_text));
+        }
+        if (id == R.id.action_setpin) {
+            EasyLock.setPassword(this, TestActivity.class);
+        }
+        if (id == R.id.action_changepin) {
+            EasyLock.setPassword(this, TestActivity.class);
+        }
+        if (id == R.id.action_disablepin) {
+            EasyLock.disablePassword(this, TestActivity.class);
+        }
+        if (id == R.id.action_lockunit) {
+            EasyLock.checkPassword(this);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    /////////////////////////////////////////////  top-right menu /////////////////////////
+
     private void textButtonsAppSystem() {
         Button appMode = findViewById(R.id.toggleButton);
+
         Button systemMode = findViewById(R.id.DeviceDayNight);
         Button suSystemMode = findViewById(R.id.suDeviceDayNight);
         int currentMode = getSavedMode("App");
         if (currentMode == AppCompatDelegate.MODE_NIGHT_YES) {
             appMode.setText(R.string.app_theme_light);
+            //toggleTextItem.setTitle(R.string.app_theme_light);
         } else {
             appMode.setText(R.string.app_theme_dark);
+            //toggleTextItem.setTitle(R.string.app_theme_dark);
         }
         currentMode = getSavedMode("System");
         if (currentMode == 1) { //Day
@@ -137,14 +190,26 @@ public class MainActivity extends AppCompatActivity {
     public void dispAboutInfo(View view) {
         Utils.showAboutDialog(this, "about");
     }
-    public void dispImportantProperties(View view) {
-        //Intent intent = new Intent(this, AboutProperties.class);
-        //startActivity(intent);
+    public void dispImportantProperties() {
         Utils.showAboutDialog(this, "properties");
     }
 
 
-    /* Below 4 methods are for the light/dark app toggle mode */
+    /* Below 5 methods are for the light/dark app toggle mode */
+    // menu option
+    public void toggleAppMode() {
+        int currentMode = getSavedMode("App");
+        if (currentMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            Logger.logToFile("App theme currently set to night mode. Set to day mode.");
+            saveMode("App", AppCompatDelegate.MODE_NIGHT_NO);
+        } else {
+            Logger.logToFile("App theme currently set to day mode. Set to night mode.");
+            saveMode("App", AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        // Apply the new app mode
+        applyAppMode(getSavedMode("App"));
+    }
+    // main screen option
     public void toggleAppMode(View view) {
         int currentMode = getSavedMode("App");
         if (currentMode == AppCompatDelegate.MODE_NIGHT_YES) {
@@ -252,6 +317,7 @@ public class MainActivity extends AppCompatActivity {
     } */
 
 
+    /*
     public void setPass(View view) {
         EasyLock.setPassword(this, TestActivity.class);
     }
@@ -266,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void checkPass(View view) {
         EasyLock.checkPassword(this);
-    }
+    }*/
 
     public void exitApp(View view) {
         // Call finish() to exit the program
