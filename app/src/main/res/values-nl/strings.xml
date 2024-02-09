@@ -3,7 +3,7 @@
     <string name="add_btsettings_to_fyt_settings_title">Voeg de standaard BT settings toe aan de FYT Settings.</string>
     <string name="admin_message_disabled">Apparaatbeheer: uitgeschakeld</string>
     <string name="admin_message_enabled">Apparaatbeheer: ingeschakeld</string>
-    <string name="android_root">Knoppen met \"de android met root op zijn borst\" benodigen root toegang.</string>
+    <string name="android_root">Knoppen met het groene Android-pictogram vereisen root-toegang</string>
     <string name="app_theme_dark">Gebruik donkere app modus</string>
     <string name="app_theme_light">Gebruik lichte App modus</string>
     <string name="author">Gemaakt door</string>
@@ -37,7 +37,7 @@
     <string name="enable_dev_admin">Apparaatbeheer inschakelen</string>
     <string name="exit_app">Verlaat app</string>
     <string name="firmware_upgrade_title">Firmware flash vindt zo plaats</string>
-    <string name="firmware_upgrade_txt">Binnen een paar seconden zie je de popup met Start/Cancel voor een \"firmware upgrade\". Deze is nodig om de wijzigingen toe te passen.</string>
+    <string name="firmware_upgrade_txt">Binnen een paar seconden zie je de popup met Start/Cancel voor een \"firmware upgrade\". Klik \"Start\" want dit is nodig om de wijzigingen toe te passen.</string>
     <string name="fytbackup_first_sentence">Je vindt nu 4 bestanden op je usb-stick in de folder BACKUP:</string>
     <string name="fytbackup_last_sentence_7862">Als je deze 4 bestanden samen met een 6315_1.zip op een lege USB-stick kopieert, kun je altijd je uis7862 (ums512) unit in functie herstellen.</string>
     <string name="fytbackup_last_sentence_8581">Als je deze 4 bestanden samen met een 6316_1.zip op een lege USB-stick kopieert, kun je altijd je uis8581 (sc9863) unit in functie herstellen.</string>

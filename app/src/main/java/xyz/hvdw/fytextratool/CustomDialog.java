@@ -115,7 +115,7 @@ public class CustomDialog extends AppCompatActivity {
         String[] lines = configText.split("\n");
         String fytOBD = "sys.fyt.systemobd=true";
         String a2dp = "persist.lsec.enable_a2dp=true";
-        String btName = "ro.lsec.btname=Bluetooth 2";
+        String btName = "ro.lsec.btname=Bluetooth builtin chip id=0";
         Boolean bOBD = false;
         Boolean ba2dp = false;
         Boolean bbtName = false;

@@ -5,7 +5,7 @@
     <string name="add_btsettings_to_fyt_settings_title">Add default BT settings to FYT Settings.</string>
     <string name="admin_message_disabled">Device Admin : disabled</string>
     <string name="admin_message_enabled">Device Admin : enabled</string>
-    <string name="android_root">Buttons with \"the android with root on its chest\" require root access.</string>
+    <string name="android_root">Buttons with the green Android icon require root access</string>
     <string name="app_theme_dark">Set to Dark app theme</string>
     <string name="app_theme_light">Set to Light app theme</string>
     <string name="author">Created by</string>
@@ -39,7 +39,7 @@
     <string name="enable_dev_admin">Enable device admin</string>
     <string name="exit_app">Exit</string>
     <string name="firmware_upgrade_title">Firmware flash to take place</string>
-    <string name="firmware_upgrade_txt">In a few seconds you will see the popup with Start/Cancel for a \"firmware upgrade\". This is necessary to apply the changes.</string>
+    <string name="firmware_upgrade_txt">In a few seconds you will see the popup with Start/Cancel for a \"firmware upgrade\". Click \"Start\΅ as this is necessary to apply the changes.</string>
     <string name="fytbackup_first_sentence">You will now find 4 files on your usb-stick inside the folder BACKUP:</string>
     <string name="fytbackup_last_sentence_7862">If you copy these 4 files with a 6315_1.zip to a clean USB-disk, you can always restore your uis7862 (ums512) unit.</string>
     <string name="fytbackup_last_sentence_8581">If you copy these 4 files with a 6316_1.zip to a clean USB-disk, you can always restore your uis8581 (sc9863) unit.</string>
