@@ -1,5 +1,7 @@
 package xyz.hvdw.fytextratool;
 
+import com.topjohnwu.superuser.Shell;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
@@ -9,6 +11,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.DatagramSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TreeMap;
 
 public class ShellRootCommands {
 
@@ -148,7 +153,26 @@ public class ShellRootCommands {
             }
         }
     }
-    /* end of shell and su call functions/methods *
+    /* end of shell and su call functions/methods */
 
+    /**
+     * TopJohnWu libsu library used for this function. Simpler function and more feedback.
+     * @param strings
+     * @return
      */
+    public static TreeMap libsuRootExec(String... strings) {
+        Shell.Result result;
+        TreeMap<String, List> totalOutput = new TreeMap<>();
+
+        for (String s : strings) {
+            s = s.trim();
+            result = Shell.cmd(s).exec();
+            List<String> out = result.getOut();  // stdout
+            int code = result.getCode();         // return code of the last command
+            boolean ok = result.isSuccess();     // return code == 0?
+            Logger.logToFile("return code from command " + s + "gives (0 or error): " + ok);
+            totalOutput.put(String.valueOf(ok),out);
+        }
+        return totalOutput;
+    }
 }

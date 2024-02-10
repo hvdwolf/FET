@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Utils {
     static String[] REQUIRED_PERMISSIONS = {
@@ -355,8 +356,9 @@ public class Utils {
             @Override
             public void run() {
                 // Code to be executed after the delay
-                ShellRootCommands.rootExec("echo \"0\" > /sys/bus/usb/devices/1-1/authorized","echo \"1\" > /sys/bus/usb/devices/1-1/authorized");
+                //ShellRootCommands.rootExec("echo \"0\" > /sys/bus/usb/devices/1-1/authorized","echo \"1\" > /sys/bus/usb/devices/1-1/authorized");
+                TreeMap output = ShellRootCommands.libsuRootExec("echo \"0\" > /sys/bus/usb/devices/1-1/authorized","echo \"1\" > /sys/bus/usb/devices/1-1/authorized");
             }
-        }, 2000);
+        }, 1500);
     }
 }
