@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FragmentGeneral">
+
+    <LinearLayout
+        android:id="@+id/left_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/number_pad_parent_margin"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:onClick="zipAllAppUpdateBin"
+            android:text="@string/btn_zip_allappupdate" />
+
+        <Button
+            android:id="@+id/DeviceDayNight"
+            android:onClick="switchDeviceToDayNightMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:visibility="gone"
+            android:text="@string/btn_device_light_dark" />
+
+        <Button
+            android:id="@+id/suDeviceDayNight"
+            android:onClick="suSwitchDeviceToDayNightMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:text="@string/btn_device_light_dark"
+            android:drawableLeft="@drawable/rootfunction" />
+
+        <Button
+            android:id="@+id/collectSystemInfo"
+            android:onClick="collectSystemInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:text="@string/btn_collect_system_info"/>
+
+        <Button
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="disp_config_txt"
+            android:text="@string/btn_disp_config_txt" />
+
+        <Button
+            android:id="@+id/btneditconfig"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="editConfigTxt"
+            android:text="@string/btn_edit_config_txt"
+            android:drawableLeft="@drawable/rootfunction" />
+        <Button
+            android:id="@+id/enableAppsOnBoot"
+            android:onClick="enableAppsOnBoot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:visibility="gone"
+            android:text="Start Apps On BOOT_COMPLETED"/>
+
+
+    </LinearLayout>
+
+</RelativeLayout>
