@@ -40,7 +40,7 @@
     <string name="exit_app">Exit</string>
     <string name="firmware_upgrade_title">Firmware flash to take place</string>
     <string name="firmware_upgrade_txt">In a few seconds you will see the popup with Start/Cancel for a \"firmware upgrade\". Click \"Start\΅ as this is necessary to apply the changes.</string>
-    <string name="fytbackup_first_sentence">You will now find 4 files on your usb-stick inside the folder BACKUP:</string>
+    <string name="fytbackup_first_sentence">You will now find 4 files on the internal storage inside the folder BACKUP:</string>
     <string name="fytbackup_last_sentence_7862">If you copy these 4 files with a 6315_1.zip to a clean USB-disk, you can always restore your uis7862 (ums512) unit.</string>
     <string name="fytbackup_last_sentence_8581">If you copy these 4 files with a 6316_1.zip to a clean USB-disk, you can always restore your uis8581 (sc9863) unit.</string>
     <string name="hashmap_key">Key</string>
@@ -64,13 +64,13 @@
     <string name="prepare_script">The script will be prepared</string>
     <string name="reboot_text">You need to reboot your unit now to activate the change.</string>
     <string name="reboot_title">Reboot required</string>
-    <string name="start_collect_system_info">Starting to collect system info.\nPlease be patient.</string>
+    <string name="dialog_start_collect_system_info">Starting to collect system info. Please be patient and wait for the popup.</string>
     <string name="system_theme_day">Set system to day mode</string>
     <string name="system_theme_night">Sets system to night mode</string>
     <string name="teyes_unit_title">This is a partly incompatible Teyes unit.</string>
     <string name="teyes_unit_txt">This is a Teyes unit with \"ro.build.fytmanufacturer = 95\". The partition/flashing scheme is different. No backup possible.</string>
     <string name="the_property">property</string>
-    <string name="toast_start_zip">Starting backup. Please be patient.</string>
+    <string name="dialog_start_zip">Starting backup. Please be patient and wait for the popup.</string>
     <string name="version">Version</string>
     <string name="website">website</string>
 </resources>

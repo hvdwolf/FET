@@ -38,7 +38,7 @@
     <string name="exit_app">Uscita applicazione</string>
     <string name="firmware_upgrade_title">Caricamento del firmware in atto </string>
     <string name="firmware_upgrade_txt">In pochi secondi vedrai il popup con Inzio/Cancella per un \"firmware aggiornamento\". E\'necessario fare del cambiamenti.</string>
-    <string name="fytbackup_first_sentence">Ora troverai 4 file sulla tua chiavetta USB all\'interno della cartella BACKUP:</string>
+    <string name="fytbackup_first_sentence">Ora troverai 4 file sulla memoria interna all\'interno della cartella BACKUP:</string>
     <string name="fytbackup_last_sentence_7862">Se copi questi 4 file con un 6315_1.zip su un disco USB pulito, puoi sempre ripristinare la tua unità uis7862 (ums512).</string>
     <string name="fytbackup_last_sentence_8581">Se copi questi 4 file con un 6315_1.zip su un disco USB pulito, puoi sempre ripristinare la tua unità uis8581(sc9863).</string>
     <string name="hashmap_key">Chiave</string>
@@ -62,13 +62,13 @@
     <string name="prepare_script">Lo script sarà preparato</string>
     <string name="reboot_text">È necessario riavviare l\'unità adesso per attivare la modifica.</string>
     <string name="reboot_title">Riavvio richiesto</string>
-    <string name="start_collect_system_info">Inizio raccolta informazioni di sistema./Sii paziente.</string>
+    <string name="dialog_start_collect_system_info">Inizio raccolta informazioni di sistema. Sii paziente e attendere il popup.</string>
     <string name="system_theme_day">Imposta in modalità giorno</string>
     <string name="system_theme_night">Imposta in modalità notte</string>
     <string name="teyes_unit_title">Questa è un\'unità Teyes parzialmente incompatibile.</string>
     <string name="teyes_unit_txt">Questa è un\'unità Teyes con \"ro.build.fytmanufacturer = 95\".Lo schema di partizione/lampeggio è diverso.Nessun backup possibile.</string>
     <string name="the_property">proprietà</string>
-    <string name="toast_start_zip">Avvio del backup.</string>
+    <string name="dialog_start_zip">Avvio del backup. Sii paziente e attendere il popup.</string>
     <string name="version">Versione</string>
     <string name="website">sito</string>
 </resources>

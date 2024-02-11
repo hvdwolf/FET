@@ -15,8 +15,6 @@ import com.topjohnwu.superuser.Shell;
  * Similar to threads where there is a special "main thread", libsu also has the concept of the "main shell".
  * For each process, there is a single globally shared "main shell" that is constructed on-demand and cached.
  * Set default configurations before the main Shell instance is created
- *
- * Currently not used
  */
 
 public class SplashActivity extends Activity {

@@ -87,14 +87,6 @@
                 android:visibility="gone"
                 android:text="Start Apps On BOOT_COMPLETED"/>
 
-            <ProgressBar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:visibility="gone"
-                android:text="Please be patient..."
-                android:id="@+id/progressBar" />
-
         </LinearLayout>
 
         <LinearLayout

@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -15,9 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -45,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
             "persist.sys.syu.audio", "persist.syu.camera360", "persist.fyt.fm.name", "persist.fyt.withrdsfn", "persist.fyt.zh_frontview_enable", "ro.build.fytmanufacturer" };
     Map<String, String> propsHashMap = new HashMap<>();
 
-    ProgressBar mprogressBar;
+    private AlertDialog bePatientDialog;
+
     File cacheDir;
     // Define a constant for the permission request
     private static final int REQUEST_CODE = 123;
@@ -65,10 +65,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Context context;
-
-        mprogressBar = findViewById(R.id.progressBar);
-        // Make it invisible
-        mprogressBar.setVisibility(View.INVISIBLE);
 
         // Make sure it is only executed once, for example after a reconfigure. Like the app light/dark restarts the onCreate
         if (!logFileCreated) {
@@ -187,9 +183,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void dispAboutInfo(View view) {
-        Utils.showAboutDialog(this, "about");
-    }
     public void dispImportantProperties() {
         Utils.showAboutDialog(this, "properties");
     }
@@ -316,24 +309,6 @@ public class MainActivity extends AppCompatActivity {
         //Log.i("Home button disabled");
     } */
 
-
-    /*
-    public void setPass(View view) {
-        EasyLock.setPassword(this, TestActivity.class);
-    }
-
-    public void changePass(View view) {
-        EasyLock.changePassword(this, TestActivity.class);
-    }
-
-    public void disable(View view) {
-        EasyLock.disablePassword(this, TestActivity.class);
-    }
-
-    public void checkPass(View view) {
-        EasyLock.checkPassword(this);
-    }*/
-
     public void exitApp(View view) {
         // Call finish() to exit the program
         finish();
@@ -420,10 +395,6 @@ public class MainActivity extends AppCompatActivity {
         String fytProp = propsHashMap.get("ro.build.fytmanufacturer");
         if (!fytProp.equals("95")) { // If not a T'eyes unit we can start our backup
 
-            //showToastAndWait(getString(R.string.toast_start_zip), 100);
-            // Start with displaying our progressBar
-            mprogressBar.setVisibility(View.VISIBLE);
-
             String message = getBackupMessage();
             cacheDir = this.getCacheDir();
             String cacheDirString = cacheDir.toString();
@@ -468,56 +439,39 @@ public class MainActivity extends AppCompatActivity {
             ///////////////////////
             // option 1
             // Below 2 sentences are working but block the UI
-            String zipCommand = cacheDirString + "/zip-arm  -r -v -y -0 --password 048a02243bb74474b25233bda3cd02f8 /storage/emulated/0/BACKUP/AllAppUpdate.bin .";
+            //String zipCommand = cacheDirString + "/zip-arm  -r -v -y -0 --password 048a02243bb74474b25233bda3cd02f8 /storage/emulated/0/BACKUP/AllAppUpdate.bin .";
             //Now start the command to do the backup using ShellExec or Rootexec
-            ShellRootCommands.shellExec("echo twipe_all > /storage/emulated/0/BACKUP/updatecfg.txt", "cd /oem", zipCommand);
+            //ShellRootCommands.shellExec("echo twipe_all > /storage/emulated/0/BACKUP/updatecfg.txt", "cd /oem", zipCommand);
 
-            //////////////////////////////
-            // option 2
-            /*AsyncTask.execute(new Runnable() {
+            /////////////////////////////////////
+            // Option 2
+            //Toast.makeText(this, getString(R.string.toast_start_zip), Toast.LENGTH_LONG).show();
+
+            String dlgTitle = getString(R.string.backup_finished);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     String zipCommand = cacheDirString + "/zip-arm  -r -v -y -0 --password 048a02243bb74474b25233bda3cd02f8 /storage/emulated/0/BACKUP/AllAppUpdate.bin .";
-                    ShellRootCommands.shellExec("cd /oem", zipCommand);
-                    //new ZipTask().onPreExecute();
+                    //Now start the command to do the backup using ShellExec or Rootexec
+                    ShellRootCommands.shellExec("echo twipe_all > /storage/emulated/0/BACKUP/updatecfg.txt", "cd /oem", zipCommand);
+                    bePatientDialog.dismiss();
+                    endDialog(dlgTitle, message);
                 }
-            });*/
+            }, 200);
 
-            /////////////////////////////////////
-            // Option 3
-            //new ZipTask().doInBackground();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(getString(R.string.dialog_start_zip));
+            bePatientDialog = builder.create();
+            bePatientDialog.show();
 
-            // And now hide our progressBar again
-            mprogressBar.setVisibility(View.INVISIBLE);
-
-            Utils.showInfoDialog(this, getString(R.string.backup_finished), message);
         } else { // So we are on a T'eyes unit. This backup will not functiom.
             Utils.showInfoDialog(this, getString(R.string.teyes_unit_title), getString(R.string.teyes_unit_txt));
         }
-
     }
 
-    private class ZipTask extends AsyncTask<Void, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mprogressBar.setVisibility(View.VISIBLE);
-        }
-        @Override
-        protected String doInBackground(Void... params) {
-            String cacheDirString = cacheDir.toString();
-            String zipCommand = cacheDirString + "/zip-arm  -r -v -y -0 --password 048a02243bb74474b25233bda3cd02f8 /storage/emulated/0/BACKUP/AllAppUpdate.bin .";
-            ShellRootCommands.shellExec("echo twipe_all > /storage/emulated/0/BACKUP/updatecfg.txt", "cd /oem", zipCommand);
-
-            return "ZipTask ready";
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            // This is executed on the main thread after the background task is completed
-            mprogressBar.setVisibility(View.GONE);
-        }
+    private void endDialog(String title, String message) {
+        Utils.showInfoDialog(this, title, message);
     }
 
 
@@ -640,8 +594,26 @@ public class MainActivity extends AppCompatActivity {
                 "cd /storage/emulated/0/HWGetInfo/",
                 cacheDirString + "/zip-arm  -r -v -y * /storage/emulated/0/HWGetInfo.zip"};
 
-        ShellRootCommands.shellExec(Commands);
-        Utils.showInfoDialog(this, getString(R.string.collected_system_info_title), getString(R.string.collected_system_info_txt));
+        //Toast.makeText(this, getString(R.string.start_collect_system_info), Toast.LENGTH_LONG).show();
+
+        String dlgTitle = (getString(R.string.collected_system_info_title));
+        String dlgMessage = getString(R.string.collected_system_info_txt);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                String zipCommand = cacheDirString + "/zip-arm  -r -v -y -0 --password 048a02243bb74474b25233bda3cd02f8 /storage/emulated/0/BACKUP/AllAppUpdate.bin .";
+                //Now start the command to do the backup using ShellExec or Rootexec
+                ShellRootCommands.shellExec(Commands);
+                bePatientDialog.dismiss();
+                endDialog(dlgTitle, dlgMessage);
+            }
+        }, 200);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.dialog_start_collect_system_info));
+        bePatientDialog = builder.create();
+        bePatientDialog.show();
     }
 
 }

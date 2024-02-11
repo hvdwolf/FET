@@ -62,13 +62,13 @@
     <string name="prepare_script">Script sẽ được chuẩn bị</string>
     <string name="reboot_text">Bạn cần khởi động lại thiết bị của mình ngay bây giờ để kích hoạt thay đổi.</string>
     <string name="reboot_title">Yêu cầu Khởi động lại</string>
-    <string name="start_collect_system_info">Đang bắt đầu thu thập thông tin hệ thống.\nHãy kiên nhẫn.</string>
+    <string name="dialog_start_collect_system_info">Đang bắt đầu thu thập thông tin hệ thống.\nHãy kiên nhẫn.</string>
     <string name="system_theme_day">Đặt hệ thống sáng chế độ Sáng</string>
     <string name="system_theme_night">Đặt hệ thống sáng chế độ Tối</string>
     <string name="teyes_unit_title">Đây là một Teyes unit không tương thích hoàn toàn.</string>
     <string name="teyes_unit_txt">Đây là đơn vị Teyes có \"ro.build.fytmanufacturer = 95\". Sơ đồ phân vùng/flash là khác nhau. Không có bản sao lưu.</string>
     <string name="the_property">Đặc tính</string>
-    <string name="toast_start_zip">Bắt đầu Sao lưu. Hãy kiên nhẫn.</string>
+    <string name="dialog_start_zip">Bắt đầu Sao lưu. Hãy kiên nhẫn.</string>
     <string name="version">Phiên bản</string>
     <string name="website">Website</string>
 </resources>

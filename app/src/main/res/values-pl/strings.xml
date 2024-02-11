@@ -62,13 +62,13 @@
     <string name="prepare_script">Tworzy się skrypt</string>
     <string name="reboot_text">Aby zmiana zadziałała, musisz uruchomić ponownie urządzenie.</string>
     <string name="reboot_title">Wymagane ponowne uruchomienie</string>
-    <string name="start_collect_system_info">Trwa zbieranie informacji systemowych.\nProszę o cierpliwość.</string>
+    <string name="dialog_start_collect_system_info">Trwa zbieranie informacji systemowych.\nProszę o cierpliwość.</string>
     <string name="system_theme_day">Włącz tryb dzienny</string>
     <string name="system_theme_night">Włącz tryb nocny</string>
     <string name="teyes_unit_title">To urządzenie firmy Teyes jest częściowo niekompatybilne.</string>
     <string name="teyes_unit_txt">To jest urządzenie firmy Teyes z parametrem\"ro.build.fytmanufacturer = 95\". Schemat partycji/flashowania jest inny. Stworzenie kopii zapasowej jest niemożliwe.</string>
     <string name="the_property">Właściwość</string>
-    <string name="toast_start_zip">Trwa tworzenie kopii zapasowej. Proszę o cierpliwość.</string>
+    <string name="dialog_start_zip">Trwa tworzenie kopii zapasowej. Proszę o cierpliwość.</string>
     <string name="version">Wersja</string>
     <string name="website">strona internetowa</string>
 </resources>

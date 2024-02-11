@@ -62,13 +62,13 @@
     <string name="prepare_script">The script will be prepared</string>
     <string name="reboot_text">Перезагрузите устройство из шторки для применения темы.</string>
     <string name="reboot_title">Требуется перезагрузка</string>
-    <string name="start_collect_system_info">Starting to collect system info.\nPlease be patient.</string>
+    <string name="dialog_start_collect_system_info">Starting to collect system info.\nPlease be patient.</string>
     <string name="system_theme_day">Включить дневную тему андроид</string>
     <string name="system_theme_night">Включить тёмную тему андроид</string>
     <string name="teyes_unit_title">Это частично несовместимое устройство Teyes.</string>
     <string name="teyes_unit_txt">Это устройство Teyes с \"ro.build.fytmanufacturer = 95\". Схема раздела/прошивки отличается. Резервное копирование невозможно.</string>
     <string name="the_property">property</string>
-    <string name="toast_start_zip">Starting backup. Please be patient.</string>
+    <string name="dialog_start_zip">Starting backup. Please be patient.</string>
     <string name="version">Версия</string>
     <string name="website">Сайт</string>
 </resources>

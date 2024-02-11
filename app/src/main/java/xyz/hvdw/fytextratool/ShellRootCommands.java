@@ -29,7 +29,7 @@ public class ShellRootCommands {
             StringBuilder output = new StringBuilder();
 
             // Example: Mounting /system as read-write
-            //rootCommand = "mount -o remount,rw /system\n";
+            //rootCommand = "mount -o remount,rw /oem\n";
 
             // Write the command to the shell
             process.getOutputStream().write(rootCommand.getBytes());

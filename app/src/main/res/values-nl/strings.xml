@@ -38,7 +38,7 @@
     <string name="exit_app">Verlaat app</string>
     <string name="firmware_upgrade_title">Firmware flash vindt zo plaats</string>
     <string name="firmware_upgrade_txt">Binnen een paar seconden zie je de popup met Start/Cancel voor een \"firmware upgrade\". Klik \"Start\" want dit is nodig om de wijzigingen toe te passen.</string>
-    <string name="fytbackup_first_sentence">Je vindt nu 4 bestanden op je usb-stick in de folder BACKUP:</string>
+    <string name="fytbackup_first_sentence">Je vindt nu 4 bestanden op het interne geheugen in de folder BACKUP:</string>
     <string name="fytbackup_last_sentence_7862">Als je deze 4 bestanden samen met een 6315_1.zip op een lege USB-stick kopieert, kun je altijd je uis7862 (ums512) unit in functie herstellen.</string>
     <string name="fytbackup_last_sentence_8581">Als je deze 4 bestanden samen met een 6316_1.zip op een lege USB-stick kopieert, kun je altijd je uis8581 (sc9863) unit in functie herstellen.</string>
     <string name="hashmap_key">Sleutel</string>
@@ -62,13 +62,13 @@
     <string name="prepare_script">Het script wordt voorbereid</string>
     <string name="reboot_text">Je moet je unit nu herstarten om de wijziging te activeren.</string>
     <string name="reboot_title">Een reboot is nodig</string>
-    <string name="start_collect_system_info">Start verzamelen systeem info.\nEven geduld alsjeblieft.</string>
+    <string name="dialog_start_collect_system_info">Start verzamelen systeem info. Even geduld alsjeblieft en wacht op de popup.</string>
     <string name="system_theme_day">Zet systeem naar dag modus</string>
     <string name="system_theme_night">Zet systeem naar nacht modus</string>
     <string name="teyes_unit_title">Dit is een gedeeltelijk incompatible Teyes unit.</string>
     <string name="teyes_unit_txt">Dit is een Teyes unit met \"ro.build.fytmanufacturer = 95\". Het partitionering/flashing schema is afwijken. Er is geen backup mogelijk.</string>
     <string name="the_property">property</string>
-    <string name="toast_start_zip">Starten van de backup. Even geduld alsjeblieft.</string>
+    <string name="dialog_start_zip">Starten van de backup. Even geduld alsjeblieft en wacht op de popup.</string>
     <string name="version">Versie</string>
     <string name="website">website</string>
 </resources>
