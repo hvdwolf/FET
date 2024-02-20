@@ -3,31 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentConfigSettings">
+    tools:context=".Fragment_Settings">
 
     <LinearLayout
         android:id="@+id/center_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/number_pad_parent_margin"
+        android:paddingLeft="50dip"
+        android:paddingRight="50dip"
         android:orientation="vertical">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/number_pad_margin_top"
-            android:onClick="openBluetoothSettings"
-            android:text="@string/btn_open_def_bt"
-            android:drawableLeft="@drawable/bluetooth_icon" />
-
-        <Button
-            android:id="@+id/addbttosettings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/number_pad_margin_top"
-            android:onClick="addBTSettingsToFYTSettings"
-            android:text="@string/btn_add_btsettings_to_fyt_settings"
-            android:drawableLeft="@drawable/rootfunction" />
 
         <Button
             android:layout_marginTop="@dimen/number_pad_margin_top"

@@ -1,35 +1,50 @@
 package xyz.hvdw.fytextratool;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import p32929.easypasscodelock.Utils.EasyLock;
 
 
+@RequiresApi(api = Build.VERSION_CODES.S)
 public class MainActivity extends AppCompatActivity {
+
+    private TabLayout tabLayout;
+    private FrameLayout frameLayout;
+
     String[] REQUIRED_PERMISSIONS = {
             android.Manifest.permission.BLUETOOTH,
             android.Manifest.permission.BLUETOOTH_ADMIN,
@@ -45,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     Map<String, String> propsHashMap = new HashMap<>();
 
     private AlertDialog bePatientDialog;
+    private Menu menu;
 
     File cacheDir;
     // Define a constant for the permission request
@@ -59,12 +75,56 @@ public class MainActivity extends AppCompatActivity {
     private static final String NIGHT_MODE = "night";
     private Boolean logFileCreated = false;
     //private MenuItem toggleTextItem;
-
+    private MenuItem appMode;
+    private Button suSystemMode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Context context;
+
+        tabLayout = findViewById(R.id.tabLayout);
+        frameLayout = findViewById(R.id.frameLayout);
+        appMode = findViewById(R.id.action_apptogglebutton);
+        suSystemMode = findViewById(R.id.suDeviceDayNight);
+
+        // Add tabs
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_general)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_bluetooth)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_settings)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_lockscreen)));
+
+        // Set listener for tab selection
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        loadFragment(new Fragment_General());
+                        break;
+                    case 1:
+                        loadFragment(new Fragment_Bluetooth());
+                        break;
+                    case 2:
+                        loadFragment(new Fragment_Settings());
+                        break;
+                    case 3:
+                        loadFragment(new Fragment_Lockscreen());
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+
+        // Set default fragment on launch
+        loadFragment(new Fragment_General());
 
         // Make sure it is only executed once, for example after a reconfigure. Like the app light/dark restarts the onCreate
         if (!logFileCreated) {
@@ -88,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
             if ( !isRooted && !isMagiskRooted) {
                 disableRootedButtons();
             }
-
         }
 
 
@@ -99,6 +158,51 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    // End of OnCreate
+
+    private void loadFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameLayout, fragment)
+                .commit();
+    }
+
+    // Fragment for Tab General
+    public static class Fragment_General extends Fragment {
+        private Button suSystemMode;
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.fragment_general, container, false);
+            suSystemMode = view.findViewById(R.id.suDeviceDayNight);
+            return view;
+        }
+
+        public void updateButtonText(String newText) {
+            suSystemMode.setText(newText);
+        }
+    }
+    // Fragment for tab Bluetooth
+    public static class Fragment_Bluetooth extends Fragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.fragment_bluetooth, container, false);
+        }
+    }
+    // Fragment for Tab Settings
+    public static class Fragment_Settings extends Fragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.fragment_settings, container, false);
+        }
+    }
+
+    // Fragment for Tab Lockscreen
+    public static class Fragment_Lockscreen extends Fragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.fragment_lockscreen, container, false);
+        }
+    }
+
 
     ///////////////////////////////////////////// top-right menu /////////////////////////
     @Override
@@ -127,47 +231,68 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        //pincode screens
-        if (id == R.id.action_pin_readme) {
-            Utils.showInfoDialog(this,getString(R.string.menuitem_pin_readme), getString(R.string.pin_disclaimer_text));
-        }
-        if (id == R.id.action_setpin) {
-            EasyLock.setPassword(this, TestActivity.class);
-        }
-        if (id == R.id.action_changepin) {
-            EasyLock.setPassword(this, TestActivity.class);
-        }
-        if (id == R.id.action_disablepin) {
-            EasyLock.disablePassword(this, TestActivity.class);
-        }
-        if (id == R.id.action_lockunit) {
-            EasyLock.checkPassword(this);
-        }
         return super.onOptionsItemSelected(item);
     }
     /////////////////////////////////////////////  top-right menu /////////////////////////
 
-    private void textButtonsAppSystem() {
-        Button appMode = findViewById(R.id.toggleButton);
+    // Buttons for locscreen
+    public void setPass(View view) {
+        EasyLock.setPassword(this, TestActivity.class);
+    }
 
-        Button systemMode = findViewById(R.id.DeviceDayNight);
-        Button suSystemMode = findViewById(R.id.suDeviceDayNight);
+    public void changePass(View view) {
+        EasyLock.changePassword(this, TestActivity.class);
+    }
+
+    public void disable(View view) {
+        EasyLock.disablePassword(this, TestActivity.class);
+    }
+
+    public void checkPass(View view) {
+        EasyLock.checkPassword(this);
+    }
+    //////// End of buttons for lockscreen
+
+    private void textButtonsAppSystem() {
+        //Button appMode = findViewById(R.id.toggleButton);
+        //appMode = findViewById(R.id.action_apptogglebutton);
+
         int currentMode = getSavedMode("App");
+        Logger.logToFile("current app mode = " + String.valueOf(currentMode));
+        String appMode = "current app mode = " + String.valueOf(currentMode);
+        applyAppModeFromStart(currentMode);
+        //Toast.makeText(this, "current app mode = " + String.valueOf(currentMode), Toast.LENGTH_LONG).show();
+        // I need to fix this some time.
+        /*MenuItem menuitemAppMode = menu.findItem(R.id.action_apptogglebutton);
         if (currentMode == AppCompatDelegate.MODE_NIGHT_YES) {
-            appMode.setText(R.string.app_theme_light);
+            //appMode.setText(R.string.app_theme_light);
+            //appMode.setTitle(R.string.app_theme_light);
             //toggleTextItem.setTitle(R.string.app_theme_light);
+            menuitemAppMode.setTitle(R.string.app_theme_light);
+            Toast.makeText(this, "current app mode = " + String.valueOf(currentMode), Toast.LENGTH_LONG).show();
         } else {
-            appMode.setText(R.string.app_theme_dark);
+            //appMode.setText(R.string.app_theme_dark);
+            //appMode.setTitle(R.string.app_theme_dark);
             //toggleTextItem.setTitle(R.string.app_theme_dark);
-        }
+            menuitemAppMode.setTitle(R.string.app_theme_dark);
+            Toast.makeText(this, "current app mode = " + String.valueOf(currentMode), Toast.LENGTH_LONG).show();
+        }*/
         currentMode = getSavedMode("System");
+        Logger.logToFile("current system mode = " + String.valueOf(currentMode));
+        String systemMode = "current system mode = " + String.valueOf(currentMode);
+        //Toast.makeText(this, "current system mode = " + String.valueOf(currentMode), Toast.LENGTH_SHORT).show();
+        Fragment_General fragmentGeneral = (Fragment_General) getSupportFragmentManager().findFragmentById(R.id.fragment_general);
         if (currentMode == 1) { //Day
-            systemMode.setText(R.string.system_theme_night);
-            suSystemMode.setText(R.string.system_theme_night);
+            if (fragmentGeneral != null) {
+                fragmentGeneral.updateButtonText(getString(R.string.system_theme_night));
+            }
         } else {
-            systemMode.setText(R.string.system_theme_day);
-            suSystemMode.setText(R.string.system_theme_day);
+            if (fragmentGeneral != null) {
+                fragmentGeneral.updateButtonText(getString(R.string.system_theme_day));
+            }
         }
+        //Utils.showInfoDialog(this, "textButtons", appMode + "\n" + systemMode);
+
     }
 
     private void disableRootedButtons() {
@@ -189,6 +314,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     /* Below 5 methods are for the light/dark app toggle mode */
+
     // menu option
     public void toggleAppMode() {
         int currentMode = getSavedMode("App");
@@ -243,6 +369,10 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(mode);
         Logger.logToFile("Recreate the activity to apply the new theme");
         recreate();
+    }
+    private void applyAppModeFromStart(int mode) {
+        Logger.logToFile("App theme switching to " + String.valueOf(mode));
+        AppCompatDelegate.setDefaultNightMode(mode);
     }
     /* Above 4 methods  are for the light/dark app toggle mode */
 
@@ -316,7 +446,53 @@ public class MainActivity extends AppCompatActivity {
 
     public void openBluetoothSettings(View view) {
         // Start Bluetooth settings
-        Utils.startBluetoothSettings(this);
+        BluetoothUtils.startBluetoothSettings(this);
+    }
+
+    public void checkBluetoothDevice(View view) {
+        List<String> bluetoothProperties = BluetoothUtils.checkBluetoothDevice(this);
+        String message = "Primary Bluetooth Adapter Name: " + bluetoothProperties.get(0) + "\n";
+        message += "Primary Bluetooth Adapter MAC address: " + bluetoothProperties.get(1) + "\n";
+        message += "Is the primary Bluetooth Adapter enabled? " + bluetoothProperties.get(2) + "\n";
+        message += "Primary Bluetooth Adapter state: " + bluetoothProperties.get(3) + "\n";
+        Utils.showInfoDialog(this, "Primary Bluetooth Adapter", message);
+    }
+
+    public void checkMultipleBTAdapters(View view) {
+        String message = "";
+        List<String> bluetoothProperties = BluetoothUtils.checkMultipleBTAdapters(this);
+        for (String entry : bluetoothProperties) {
+            message += entry;
+        }
+        Utils.showInfoDialog(this, "Bluetooth Adapters", message);
+    }
+
+    public void checkFYTBTAdapter(View view) {
+        String message = "";
+        try {
+            List<String> bluetoothProperties = BluetoothUtils.checkFYTBluetoothAdapter(this);
+            for (String entry : bluetoothProperties) {
+                message += entry;
+            }
+        } catch (Exception e) {
+            message = e.toString();
+            throw new RuntimeException(e);
+        }
+        Utils.showInfoDialog(this, "Bluetooth Adapters", message);
+    }
+
+    public void findSecondaryBluetoothAdapters(View view) {
+        String message = "";
+        List<BluetoothAdapter> bluetoothAdapters = BluetoothUtils.findSecondaryBluetoothAdapters(this);
+        for (BluetoothAdapter adapter : bluetoothAdapters) {
+            if (adapter != null) {
+                // Retrieve information about each Bluetooth adapter
+                message += adapter.getName(); // Get the name of the adapter
+                message += adapter.getAddress(); // Get the MAC address of the adapter
+                message += adapter.getState(); // Get the current state of the adapter
+            }
+        }
+        Utils.showInfoDialog(this, "Bluetooth Adapters", message);
     }
 
     public void addBTSettingsToFYTSettings(View view) {

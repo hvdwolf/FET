@@ -1,159 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="xyz.hvdw.fytextratool.MainActivity">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:gravity="top"
-        android:orientation="horizontal">
+        android:layout_alignParentTop="true"
+        app:tabGravity="fill"
+        app:tabMode="fixed" />
 
-        <LinearLayout
-            android:id="@+id/left_panel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/number_pad_parent_margin"
-            android:orientation="vertical">
-
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:onClick="zipAllAppUpdateBin"
-                android:text="@string/btn_zip_allappupdate" />
-
-            <Button
-                android:id="@+id/toggleButton"
-                android:onClick="toggleAppMode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:visibility="gone"
-                android:text="@string/btn_app_light_dark" />
-
-            <Button
-                android:id="@+id/DeviceDayNight"
-                android:onClick="switchDeviceToDayNightMode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:visibility="gone"
-                android:text="@string/btn_device_light_dark" />
-
-            <Button
-                android:id="@+id/suDeviceDayNight"
-                android:onClick="suSwitchDeviceToDayNightMode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:text="@string/btn_device_light_dark"
-                android:drawableLeft="@drawable/rootfunction" />
-
-            <Button
-                android:id="@+id/collectSystemInfo"
-                android:onClick="collectSystemInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:text="@string/btn_collect_system_info"/>
-
-            <Button
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="disp_config_txt"
-                android:text="@string/btn_disp_config_txt" />
-
-            <Button
-                android:id="@+id/btneditconfig"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="editConfigTxt"
-                android:text="@string/btn_edit_config_txt"
-                android:drawableLeft="@drawable/rootfunction" />
-
-            <Button
-                android:id="@+id/enableAppsOnBoot"
-                android:onClick="enableAppsOnBoot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:visibility="gone"
-                android:text="Start Apps On BOOT_COMPLETED"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/right_panel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/left_panel"
-            android:layout_margin="@dimen/number_pad_parent_margin"
-            android:orientation="vertical">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:onClick="openBluetoothSettings"
-                android:text="@string/btn_open_def_bt"
-                android:drawableLeft="@drawable/bluetooth_icon" />
-
-            <Button
-                android:id="@+id/addbttosettings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:onClick="addBTSettingsToFYTSettings"
-                android:text="@string/btn_add_btsettings_to_fyt_settings"
-                android:drawableLeft="@drawable/rootfunction" />
-
-            <Button
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="deviceInfo"
-                android:text="@string/btn_device_info" />
-
-            <Button
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:layout_marginBottom="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="systemInfo"
-                android:visibility="gone"
-                android:text="@string/btn_system_info" />
-
-            <Button
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="syusettings"
-                android:text="@string/btn_headunit_settings" />
-
-            <Button
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="defaultandroidsettings"
-                android:text="@string/btn_def_android_settings" />
-
-            <Button
-                android:layout_marginTop="@dimen/number_pad_margin_top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="engineermode"
-                android:text="@string/btn_engineer_mode" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabLayout" />
 
 </RelativeLayout>

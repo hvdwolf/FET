@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment_Bluetooth">
+
+    <LinearLayout
+        android:id="@+id/center_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="50dip"
+        android:paddingRight="50dip"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:onClick="openBluetoothSettings"
+            android:text="@string/btn_open_def_bt"
+            android:drawableLeft="@drawable/bluetooth_icon" />
+
+        <Button
+            android:id="@+id/addbttosettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:onClick="addBTSettingsToFYTSettings"
+            android:text="@string/btn_add_btsettings_to_fyt_settings"
+            android:drawableLeft="@drawable/root_icon" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:onClick="checkBluetoothDevice"
+            android:text="Display primary BT adapter"
+            android:visibility="gone"
+            android:drawableLeft="@drawable/bluetooth_icon" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:onClick="checkFYTBTAdapter"
+            android:text="Display FYT BT adapter"
+            android:visibility="gone"
+            android:drawableLeft="@drawable/bluetooth_icon" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:onClick="checkMultipleBTAdapters"
+            android:text="Display builtin Bluetooth adapter plus bonded devices"
+            android:visibility="gone"
+            android:drawableLeft="@drawable/bluetooth_icon" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:onClick="findSecondaryBluetoothAdapters"
+            android:text="(Try to) Find all BT adapters"
+            android:visibility="gone"
+            android:drawableLeft="@drawable/bluetooth_icon" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

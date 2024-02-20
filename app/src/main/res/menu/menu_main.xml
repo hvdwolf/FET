@@ -11,38 +11,6 @@
         android:title="@string/menuitem_important_props"
         android:orderInCategory="120"
         app:showAsAction="never" />
-    <item
-        android:title="@string/menu_lockscreen"
-        android:orderInCategory="130"
-        app:showAsAction="always" >
-        <menu>
-            <item
-                android:id="@+id/action_pin_readme"
-                android:title="@string/menuitem_pin_readme"
-                android:orderInCategory="131"
-                app:showAsAction="never" />
-            <item
-                android:id="@+id/action_setpin"
-                android:title="@string/menuitem_set_pincode"
-                android:orderInCategory="131"
-                app:showAsAction="never" />
-            <item
-                android:id="@+id/action_changepin"
-                android:title="@string/menuitem_change_pincode"
-                android:orderInCategory="131"
-                app:showAsAction="never" />
-            <item
-                android:id="@+id/action_disablepin"
-                android:title="@string/menuitem_disable_pincode"
-                android:orderInCategory="131"
-                app:showAsAction="never" />
-            <item
-                android:id="@+id/action_lockunit"
-                android:title="@string/menuitem_lock_unit"
-                android:orderInCategory="131"
-                app:showAsAction="never" />
-        </menu>
-    </item>
 
     <item
         android:id="@+id/action_about"

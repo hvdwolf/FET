@@ -3,18 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentGeneral">
+    android:id="@+id/fragment_general"
+    tools:context=".Fragment_General" >
 
     <LinearLayout
         android:id="@+id/left_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/number_pad_parent_margin"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="50dip"
+        android:paddingRight="50dip" >
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="@dimen/number_pad_margin_top"
             android:onClick="zipAllAppUpdateBin"
             android:text="@string/btn_zip_allappupdate" />
@@ -35,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/number_pad_margin_top"
             android:text="@string/btn_device_light_dark"
-            android:drawableLeft="@drawable/rootfunction" />
+            android:drawableLeft="@drawable/root_icon" />
 
         <Button
             android:id="@+id/collectSystemInfo"
@@ -59,7 +61,7 @@
             android:layout_height="wrap_content"
             android:onClick="editConfigTxt"
             android:text="@string/btn_edit_config_txt"
-            android:drawableLeft="@drawable/rootfunction" />
+            android:drawableLeft="@drawable/root_icon" />
         <Button
             android:id="@+id/enableAppsOnBoot"
             android:onClick="enableAppsOnBoot"
@@ -71,5 +73,4 @@
 
 
     </LinearLayout>
-
 </RelativeLayout>

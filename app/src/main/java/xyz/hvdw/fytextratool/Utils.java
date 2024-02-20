@@ -37,12 +37,16 @@ public class Utils {
     static String[] REQUIRED_PERMISSIONS = {
             android.Manifest.permission.BLUETOOTH,
             android.Manifest.permission.BLUETOOTH_ADMIN,
+            android.Manifest.permission.BLUETOOTH_CONNECT,
+            android.Manifest.permission.BLUETOOTH_SCAN,
             android.Manifest.permission.READ_EXTERNAL_STORAGE,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.WRITE_SETTINGS,
             android.Manifest.permission.WRITE_SECURE_SETTINGS};
 
     private static final int REQUEST_CODE = 123;
+
+
     public static void checkPermissions(Context context) {
         if (Utils.arePermissionsGranted(context, REQUIRED_PERMISSIONS)) {
             Logger.logToFile("All permissions are granted");
@@ -53,11 +57,8 @@ public class Utils {
         }
     }
 
-    public static void startBluetoothSettings(Context context) {
-        Logger.logToFile("Starting the Bluetooth settings");
-        Intent intent = new Intent(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
-        context.startActivity(intent);
-    }
+
+
 
     // we use below one for certain Settings apk activities */
     public static void startExternalAppByActivity(Context context, String appName, String appActivity) {

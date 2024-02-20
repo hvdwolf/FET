@@ -9,22 +9,23 @@
         android:id="@+id/right_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/number_pad_parent_margin"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="50dip"
+        android:paddingRight="50dip" >
 
         <Button
             android:layout_marginTop="@dimen/number_pad_margin_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="setPass"
-            android:text="@string/menuitem_set_pincode" />
+            android:text="@string/btn_set_pincode" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/number_pad_margin_top"
             android:onClick="changePass"
-            android:text="@string/menuitem_change_pincode" />
+            android:text="@string/btn_change_pincode" />
 
         <Button
             android:layout_width="match_parent"
@@ -38,13 +39,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/number_pad_margin_top"
             android:onClick="checkPass"
-            android:text="@string/menuitem_lock_unit"
+            android:text="@string/btn_lock_unit"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:textSize="22sp"
             android:text="@string/pin_disclaimer_text" />
     </LinearLayout>
 
