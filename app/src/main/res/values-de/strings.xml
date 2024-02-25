@@ -1,9 +1,11 @@
 <resources>
+    <string name="btn_adboverwifiandusbdebugging">Enable adb over WiFi and enable USB debugging</string>
+    <string name="adb_already_activated">ADB over TCPIP has already been enabled</string>
     <string name="add_btsettings_to_fyt_settings_text">Fügt die sonst nicht direkt zugänglichen Standard-Bluetooth-Einstellungen den FYT-Einstellungen hinzu.</string>
     <string name="add_btsettings_to_fyt_settings_title">Standard-BT zu FYT-Einstellungen</string>
     <string name="admin_message_disabled">Geräte Admin : aktiv</string>
     <string name="admin_message_enabled">Geräte Admin : inaktiv</string>
-    <string name="android_root">Knöpfe mit grünem Androiden benötigen Root.</string>
+    <string name="android_root">Knöpfe mit grünem \"#"\ benötigen Root</string>
     <string name="app_theme_dark">Aktiviere dunkles Thema</string>
     <string name="author">Entwickelt von</string>
     <string name="backup_finished">Backup der FYT Apps fertig</string>
@@ -59,6 +61,8 @@
     <string name="not_a_fyt_message">Dies ist kein FYT-Gerät. Die App wird geschlossen.</string>
     <string name="not_applicable_abbreviation">N.A.</string>
     <string name="not_applicable_full">Nicht anwendbar</string>
+    <string name="not_rooted_title">The unit is not rooted</string>
+    <string name="not_rooted_text">Your unit is not rooted. This function can\'t be used.</string>
     <string name="pin_disclaimer_text">Die PIN funktioniert auf Geräten ohne physische Knöpfe. Auf Geräten mit physischer Home-Taste wird diese Taste den Sperrbildschirm umgehen, der Sperrbildschirm ist dort also nutzlos.</string>
     <string name="pkg_name">Paketname</string>
     <string name="prepare_script">Das Skript wird vorbereitet</string>\    <string name="app_theme_light">Stelle auf helles Thema</string>

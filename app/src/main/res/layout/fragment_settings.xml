@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragment_settings"
     tools:context=".Fragment_Settings">
 
     <LinearLayout
@@ -49,6 +50,15 @@
             android:layout_height="wrap_content"
             android:onClick="engineermode"
             android:text="@string/btn_engineer_mode" />
+
+        <Button
+            android:id="@+id/adbusbdebugging"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="adboverwifiandusbdebugging"
+            android:text="@string/btn_adboverwifiandusbdebugging"
+            android:drawableLeft="@drawable/root_icon" />
 
     </LinearLayout>
 

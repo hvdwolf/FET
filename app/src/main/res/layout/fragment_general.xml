@@ -22,15 +22,6 @@
             android:text="@string/btn_zip_allappupdate" />
 
         <Button
-            android:id="@+id/DeviceDayNight"
-            android:onClick="switchDeviceToDayNightMode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/number_pad_margin_top"
-            android:visibility="gone"
-            android:text="@string/btn_device_light_dark" />
-
-        <Button
             android:id="@+id/suDeviceDayNight"
             android:onClick="suSwitchDeviceToDayNightMode"
             android:layout_width="match_parent"
@@ -71,6 +62,14 @@
             android:visibility="gone"
             android:text="Start Apps On BOOT_COMPLETED"/>
 
+        <Button
+            android:id="@+id/testbutton"
+            android:onClick="testButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:visibility="gone"
+            android:text="Test: show storage locations"/>
 
     </LinearLayout>
 </RelativeLayout>

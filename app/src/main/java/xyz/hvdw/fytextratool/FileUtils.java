@@ -1,7 +1,11 @@
 package xyz.hvdw.fytextratool;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Environment;
+import android.os.StatFs;
+import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -9,11 +13,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FileUtils {
@@ -316,4 +324,182 @@ public class FileUtils {
             return false; // Error occurred during comparison
         }
     }
+    /**********************************************************************************************
+     * Cache File Utils
+     **********************************************************************************************/
+    public static void copyAssetFileToCache(Context context, String logFileName, String assetFileName) {
+        // Get the cache directory
+        File cacheDir = context.getCacheDir();
+
+        // Create a File object representing the destination file in the cache directory
+        File destinationFile = new File(cacheDir, assetFileName);
+
+        try (
+                InputStream inputStream = context.getAssets().open(assetFileName);
+                OutputStream outputStream = new FileOutputStream(destinationFile)
+        ) {
+            // Copy the file from assets to the cache directory
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Logger.logToFile(e.toString());
+        }
+    }
+
+    public static void writeToCache(Context context, String fileName, String data) {
+        File cacheDir = context.getCacheDir();
+        File file = new File(cacheDir, fileName);
+
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(data.getBytes());
+            // Do additional operations if needed
+        } catch (IOException e) {
+            e.printStackTrace();
+            Logger.logToFile(e.toString());
+        }
+    }
+
+    public static String saveStringToCacheFile(File filename, String data) {
+
+        String result = "";
+
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(filename);
+            writer.write(data);
+            result = "writing config.txt to cache";
+        } catch (IOException e) {
+            e.printStackTrace();
+            Logger.logToFile("error writing to cache: " + e.toString());
+            result = e.toString();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                    result += "\nwritten to cache";
+                    Logger.logToFile("config.txt written to cache");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                Logger.logToFile("error writing to cache: " + e.toString());
+                result = e.toString();
+            }
+        }
+        return result;
+    }
+    /**********************************************************************************************
+     * Cache File Utils
+     **********************************************************************************************/
+
+    /**********************************************************************************************
+     * Storage Utils
+     **********************************************************************************************/
+    public static boolean isExternalStorageAvailable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
+    }
+
+    public static float getFreeSpaceOnExternalStorage() {
+        File externalDir = Environment.getExternalStorageDirectory();
+        StatFs stat = new StatFs(externalDir.getPath());
+        long blockSize = stat.getBlockSizeLong();
+        long availableBlocks = stat.getAvailableBlocksLong();
+        // We want it in MBytes, not in bytes
+        return availableBlocks * blockSize / 1000000;
+    }
+
+    public static File externalStorage() {
+        return Environment.getExternalStorageDirectory();
+    }
+
+    public static String strExternalStorage() {
+        File file = Environment.getExternalStorageDirectory();
+        return file.getAbsolutePath();
+    }
+
+    public static List<String> getAvailableStorageLocations(Context context) {
+        List<String> storageLocations = new ArrayList<>();
+
+        // Get the default external storage directory
+        File externalStorageDir = Environment.getExternalStorageDirectory();
+        storageLocations.add("External Storage: " + externalStorageDir.getAbsolutePath());
+
+        /*
+        // Get all available storage volumes
+        StorageManager storageManager = (StorageManager) context.getSystemService(Context.STORAGE_SERVICE);
+        if (storageManager != null) {
+            for (File file : storageManager.getVolumePaths()) {
+                if (!file.getAbsolutePath().equals(externalStorageDir.getAbsolutePath())) {
+                    storageLocations.add("Volume: " + file.getAbsolutePath());
+                }
+            }
+        } */
+
+        /*
+        // Use reflection to obtain storage volumes if getVolumePaths is not available
+        StorageManager storageManager = (StorageManager) context.getSystemService(Context.STORAGE_SERVICE);
+        if (storageManager != null) {
+            Method methodGetVolumes = null;
+            try {
+                methodGetVolumes = StorageManager.class.getMethod("getVolumes");
+                List<StorageVolume> storageVolumes = (List<StorageVolume>) methodGetVolumes.invoke(storageManager);
+                for (StorageVolume volume : storageVolumes) {
+                    String volumePath;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        File volumeDirectory = volume.getDirectory();
+                        if (volumeDirectory != null) {
+                            volumePath = volumeDirectory.getAbsolutePath();
+                            storageLocations.add("Volume: " + volumePath);
+                        }
+                    } else {
+                        volumePath = volume.getStoragePath();
+                        storageLocations.add("Volume: " + volumePath);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }*/
+
+        return storageLocations;
+    }
+
+    public static String shellGetAvailableStorageLocations(Context context) {
+        // Use old fashioned shell command script
+        // List all storage
+        String command = "mount | grep -E 'sd[a-z]|ext[a-z]|mmcblk[0-9]p[0-9]' | while read -r line ; do\n" +
+                "    echo \"$line\" | awk '{print \"Mounted: \" $1 \", Type: \" $5 \", Path: \" $3}'\n" +
+                "    path=$(echo \"$line\" | awk '{print $3}')\n" +
+                "    # Get free space in MB\n" +
+                "    free_space=$(df -h \"$path\" | awk 'NR==2{print $4}')\n" +
+                "    echo \"Free Space: $free_space\"\n" +
+                "done";
+        // list only mounts with storage in the name
+        command = "mount | grep -E 'storage' | while read -r line ; do\n" +
+                "    echo \"$line\" | awk '{print \"Mounted: \" $1 \", Type: \" $5 \", Path: \" $3}'\n" +
+                "    path=$(echo \"$line\" | awk '{print $3}')\n" +
+                "    # Get free space in MB\n" +
+                "    free_space=$(df -h \"$path\" | awk 'NR==2{print $4}')\n" +
+                "    echo \"Free Space: $free_space\"\n" +
+                "done";
+        String result = ShellRootCommands.shellExec(command);
+        return result;
+    }
+
+
+
+    public static float getFreeSpace(String path) {
+        StatFs statFs = new StatFs(path);
+        long blockSize = statFs.getBlockSizeLong();
+        long availableBlocks = statFs.getAvailableBlocksLong();
+        // We want it in MBytes, not in bytes
+        return availableBlocks * blockSize / 1000000;
+    }
+    /**********************************************************************************************
+     * Storage Utils
+     **********************************************************************************************/
+
 }

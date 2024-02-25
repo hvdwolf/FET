@@ -36,26 +36,48 @@ public class CustomDialog extends AppCompatActivity {
 
         // Now start on the actions of the config.txt
 
-        if ((getIntent().getStringExtra("IMAGE")).contains("btsettingstofyt")) {
+        if ((getIntent().getStringExtra("ACTION")).contains("btsettingstofyt")) {
             dialogImage.setImageResource(R.drawable.btsettingstofyt);
-        }
-        configText = loadConfigText(getIntent().getStringExtra("FILENAME"));
-        if (configText.equals("config.txt not loaded")) {
-            btnContinue.setEnabled(false);
-            dialogText.setText(getString(R.string.config_txt_not_found));
-            dialogImage.setImageResource(R.drawable.blank);
-        } else { //We did find the config.txt
-            returnText = checkConfigText(configText);
-            // If not added already, do below
-            if (returnText.contains("alreadyAdded")) {
-                // Nothing to do.Tell user it has already been added
+
+            configText = loadConfigText(getIntent().getStringExtra("FILENAME"));
+            if (configText.equals("config.txt not loaded")) {
                 btnContinue.setEnabled(false);
-                dialogText.setText(getString(R.string.btsettings_already_added_to_fyt_settings_text));
-            } else {
-                configText = returnText;
-                dialogText.setText(getIntent().getStringExtra("TEXT"));
+                dialogText.setText(getString(R.string.config_txt_not_found));
+                dialogImage.setImageResource(R.drawable.blank);
+            } else { //We did find the config.txt
+                returnText = checkConfigTextBTSettings(configText);
+                // If not added already, do below
+                if (returnText.contains("alreadyAdded")) {
+                    // Nothing to do.Tell user it has already been added
+                    btnContinue.setEnabled(false);
+                    dialogText.setText(getString(R.string.btsettings_already_added_to_fyt_settings_text));
+                } else {
+                    configText = returnText;
+                    dialogText.setText(getIntent().getStringExtra("TEXT"));
+                }
+            }
+        } else if ((getIntent().getStringExtra("ACTION")).contains("adboverwifiandusbdebugging")) {
+            dialogImage.setImageResource(R.drawable.blank);
+            configText = loadConfigText(getIntent().getStringExtra("FILENAME"));
+            if (configText.equals("config.txt not loaded")) {
+                btnContinue.setEnabled(false);
+                dialogText.setText(getString(R.string.config_txt_not_found));
+                dialogImage.setImageResource(R.drawable.blank);
+            } else { //We did find the config.txt
+                returnText = checkConfigTextADB(configText);
+                // If not added already, do below
+                if (returnText.contains("alreadyAdded")) {
+                    // Nothing to do.Tell user it has already been added
+                    btnContinue.setEnabled(false);
+                    dialogText.setText(getString(R.string.adb_already_activated));
+                } else {
+                    configText = returnText;
+                    dialogText.setText(getIntent().getStringExtra("TEXT"));
+                }
             }
         }
+
+
 
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +133,7 @@ public class CustomDialog extends AppCompatActivity {
         Utils.prepareInternalFlash(this);
     }
 
-    private String checkConfigText(String configText) {
+    private String checkConfigTextBTSettings(String configText) {
         String[] lines = configText.split("\n");
         String fytOBD = "sys.fyt.systemobd=true";
         String a2dp = "persist.lsec.enable_a2dp=true";
@@ -147,4 +169,34 @@ public class CustomDialog extends AppCompatActivity {
             return configText;
         }
     }
+
+    private String checkConfigTextADB(String configText) {
+        String[] lines = configText.split("\n");
+        String ADB = "persist.adb.tcp.port=5555";
+        String UD = "ro.build.type=userdebug";
+        Boolean bADB = false;
+        Boolean bUD = false;
+
+
+        for (String line : lines) {
+            if (line.contains(ADB)) {
+                bADB = true;
+            }
+            if (line.contains(UD)) {
+                bUD = true;
+            }
+        }
+        if (!bADB) {
+            configText += "\n" + ADB + "\n";
+        }
+        if (!bUD) {
+            configText += "\n" + UD + "\n";
+        }
+        if (bADB && bUD) {
+            return "alreadyAdded";
+        } else {
+            return configText;
+        }
+    }
+
 }

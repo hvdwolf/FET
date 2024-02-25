@@ -12,6 +12,7 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Handler;
+import android.provider.Settings;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -45,6 +46,9 @@ public class Utils {
             android.Manifest.permission.WRITE_SECURE_SETTINGS};
 
     private static final int REQUEST_CODE = 123;
+
+    /* Duplicate MainActivity dialog */
+    private static AlertDialog bePatientDialog;
 
 
     public static void checkPermissions(Context context) {
@@ -323,7 +327,6 @@ public class Utils {
 
     }
 
-
     public static void prepareInternalFlash(Context context) {
         FileUtils.removeAndRecreateFolder("lsec_updatesh");
         Map<String, String> fytPlatform = MyGettersSetters.getPropsHashMap();
@@ -351,7 +354,7 @@ public class Utils {
             Logger.logToFile("Failed to copy " + script + " to external storage lsec_updatesh");
         }
 
-        Utils.showInfoDialog(context, context.getString(R.string.firmware_upgrade_title), context.getString(R.string.firmware_upgrade_txt));
+        //Utils.showInfoDialog(context, context.getString(R.string.firmware_upgrade_title), context.getString(R.string.firmware_upgrade_txt));
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -359,7 +362,13 @@ public class Utils {
                 // Code to be executed after the delay
                 //ShellRootCommands.rootExec("echo \"0\" > /sys/bus/usb/devices/1-1/authorized","echo \"1\" > /sys/bus/usb/devices/1-1/authorized");
                 TreeMap output = ShellRootCommands.libsuRootExec("echo \"0\" > /sys/bus/usb/devices/1-1/authorized","echo \"1\" > /sys/bus/usb/devices/1-1/authorized");
+                //bePatientDialog.dismiss();
             }
         }, 1500);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(context.getString(R.string.firmware_upgrade_txt));
+        bePatientDialog = builder.create();
+        bePatientDialog.show();
     }
+
 }

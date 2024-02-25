@@ -74,9 +74,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String DAY_MODE = "day";
     private static final String NIGHT_MODE = "night";
     private Boolean logFileCreated = false;
-    //private MenuItem toggleTextItem;
-    private MenuItem appMode;
-    private Button suSystemMode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tabLayout);
         frameLayout = findViewById(R.id.frameLayout);
-        appMode = findViewById(R.id.action_apptogglebutton);
-        suSystemMode = findViewById(R.id.suDeviceDayNight);
+        //appMode = findViewById(R.id.action_apptogglebutton);
+        //suSystemMode = findViewById(R.id.suDeviceDayNight);
 
         // Add tabs
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_general)));
@@ -137,17 +134,25 @@ public class MainActivity extends AppCompatActivity {
         // Is this a FYT and as second test: on Android 10 SDK 29
         if (checkIsFYT()) {
             //If it is a FYT we can continue and do some further checks
+            //String remoteVersion = CheckUpdates.readFETVersionString("https://github.com/hvdwolf/FET/blob/main/version.txt");
+            //String remoteVersion = CheckUpdates.readFETVersionString("https://github.com/hvdwolf/FET/blob/main/app/build.gradle");
             Utils.checkPermissions(this);
             // Check app and system modi and set button texts
             textButtonsAppSystem();
             // Check if rooted. If not disable some buttons
             boolean isRooted = CheckIfRooted.isUnitRooted();
+            MyGettersSetters.setIsRooted(isRooted);
             Logger.logToFile("Boolean isRooted is " + Boolean.toString(isRooted));
             boolean isMagiskRooted = CheckIfRooted.isMagiskRooted();
+            MyGettersSetters.setIsMagiskRooted(isMagiskRooted);
             Logger.logToFile("Boolean isMagiskRooted is " + Boolean.toString(isMagiskRooted));
             if ( !isRooted && !isMagiskRooted) {
-                disableRootedButtons();
+                //disableRootedButtons();
+                Logger.logToFile("The unit is not rooted.");
             }
+            // Where is my External Storage ?
+            Logger.logToFile("ExternalStorage path is " + FileUtils.strExternalStorage());
+            //Toast.makeText(MainActivity.this, FileUtils.strExternalStorage(), Toast.LENGTH_SHORT).show();
         }
 
 
@@ -169,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
     // Fragment for Tab General
     public static class Fragment_General extends Fragment {
         private Button suSystemMode;
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_general, container, false);
@@ -295,25 +301,29 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void disableRootedButtons() {
-        //If not our testVersion
-        if (!MyGettersSetters.getTestVersion()) {
-            Button androidsystemmode = findViewById(R.id.suDeviceDayNight);
-            Button editconfig = findViewById(R.id.btneditconfig);
-            Button addBTtoFyt = findViewById(R.id.addbttosettings);
-            androidsystemmode.setEnabled(false);
-            editconfig.setEnabled(false);
-            addBTtoFyt.setEnabled(false);
+    /*private void disableRootedButtons() {
+        Fragment_General fragmentGeneral = (Fragment_General) getSupportFragmentManager().findFragmentById(R.id.fragment_general);
+        if (fragmentGeneral != null) {
+            Toast.makeText(MainActivity.this, "Trying to disable daynight and editconfig", Toast.LENGTH_SHORT).show();
+            fragmentGeneral.disableDayNightButton(false);
+            fragmentGeneral.disableEditoConfigbtn(false);
         }
-
-    }
+        Fragment_Bluetooth fragmentBluetooth = (Fragment_Bluetooth) getSupportFragmentManager().findFragmentById(R.id.fragment_bluetooth);
+        if (fragmentBluetooth != null) {
+            fragmentBluetooth.disableAddbttosettings();
+        }
+        Fragment_Settings fragmentSettings = (Fragment_Settings) getSupportFragmentManager().findFragmentById(R.id.fragment_settings);
+        if (fragmentSettings != null) {
+            fragmentSettings.disableADBUSBButton();
+        }
+    } */
 
     public void dispImportantProperties() {
         Utils.showAboutDialog(this, "properties");
     }
 
 
-    /* Below 5 methods are for the light/dark app toggle mode */
+    /* Below 6 methods are for the light/dark app toggle mode */
 
     // menu option
     public void toggleAppMode() {
@@ -374,40 +384,28 @@ public class MainActivity extends AppCompatActivity {
         Logger.logToFile("App theme switching to " + String.valueOf(mode));
         AppCompatDelegate.setDefaultNightMode(mode);
     }
-    /* Above 4 methods  are for the light/dark app toggle mode */
+    /* Above 6 methods  are for the light/dark app toggle mode */
 
     /* Below method switches the unit to night or day mode */
-    public void switchDeviceToDayNightMode(View view) {
-        Boolean switchToNight = true;
-
-        int currentMode = getSavedMode("System");
-        if (currentMode == 2) {
-            Utils.setNightMode(this, false);
-            saveMode("System", 1);
-        } else {
-            Utils.setNightMode(this, true);
-            saveMode("System", 2);
-        }
-
-        Utils.showInfoDialog(this,getString(R.string.reboot_title), getString(R.string.reboot_text));
-    }
-
     public void suSwitchDeviceToDayNightMode(View view) {
+        if ( (MyGettersSetters.getIsRooted()) && MyGettersSetters.getIsMagiskRooted()) {
+            ContentResolver contentResolver = this.getContentResolver();
+            int currentMode = getSavedMode("System");
+            if (currentMode == 1) {
+                //RootCommands.executeRootCommand("settings put secure ui_night_mode 2");
+                //ShellRootCommands.rootExec("settings put secure ui_night_mode 2"); //set device mode to night
+                Settings.Secure.putInt(contentResolver, "ui_night_mode", 2);
+                saveMode("System", 2);
+            } else {
+                //ShellRootCommands.rootExec("settings put secure ui_night_mode 1"); //set devicem mode to day
+                Settings.Secure.putInt(contentResolver, "ui_night_mode", 1);
+                saveMode("System", 1);
+            }
 
-        ContentResolver contentResolver = this.getContentResolver();
-        int currentMode = getSavedMode("System");
-        if (currentMode == 1) {
-            //RootCommands.executeRootCommand("settings put secure ui_night_mode 2");
-            //ShellRootCommands.rootExec("settings put secure ui_night_mode 2"); //set device mode to night
-            Settings.Secure.putInt(contentResolver, "ui_night_mode", 2);
-            saveMode("System", 2);
+            Utils.showInfoDialog(this,getString(R.string.reboot_title), getString(R.string.reboot_text));
         } else {
-            //ShellRootCommands.rootExec("settings put secure ui_night_mode 1"); //set devicem mode to day
-            Settings.Secure.putInt(contentResolver, "ui_night_mode", 1);
-            saveMode("System", 1);
+            unitNotRooted();
         }
-
-        Utils.showInfoDialog(this,getString(R.string.reboot_title), getString(R.string.reboot_text));
     }
 
 
@@ -496,12 +494,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addBTSettingsToFYTSettings(View view) {
-        Intent intent = new Intent(MainActivity.this, CustomDialog.class);
-        intent.putExtra("FILENAME", "/oem/app/config.txt");
-        intent.putExtra("TITLE", getString(R.string.add_btsettings_to_fyt_settings_title));
-        intent.putExtra("TEXT", getString(R.string.add_btsettings_to_fyt_settings_text));
-        intent.putExtra("IMAGE", "btsettingstofyt");
-        startActivity(intent);
+        if ( (MyGettersSetters.getIsRooted()) && MyGettersSetters.getIsMagiskRooted()) {
+            Intent intent = new Intent(MainActivity.this, CustomDialog.class);
+            intent.putExtra("FILENAME", "/oem/app/config.txt");
+            intent.putExtra("TITLE", getString(R.string.add_btsettings_to_fyt_settings_title));
+            intent.putExtra("TEXT", getString(R.string.add_btsettings_to_fyt_settings_text));
+            intent.putExtra("ACTION", "btsettingstofyt");
+            startActivity(intent);
+        } else {
+            unitNotRooted();
+        }
 
     }
     public void systemInfo(View view) {
@@ -531,6 +533,36 @@ public class MainActivity extends AppCompatActivity {
         Utils.startExternalAppByActivity(this,"com.sprd.engineermode", "com.sprd.engineermode.EngineerModeActivity");
     }
 
+    public void adboverwifiandusbdebugging(View view) {
+        if ( (MyGettersSetters.getIsRooted()) && MyGettersSetters.getIsMagiskRooted()) {
+            // First we enable the USB debugging. We do not even check if it us enabled
+            //settings put global adb_enabled 1
+            ShellRootCommands.libsuRootExec("settings put global adb_enabled 1");
+
+            Logger.logToFile("Enable ADB over WiFi and enable usb debugging");
+            Intent intent = new Intent(MainActivity.this, CustomDialog.class);
+            intent.putExtra("FILENAME", "/oem/app/config.txt");
+            intent.putExtra("TITLE", getString(R.string.btn_adboverwifiandusbdebugging));
+            intent.putExtra("TEXT", getString(R.string.btn_adboverwifiandusbdebugging));
+            intent.putExtra("ACTION", "adboverwifiandusbdebugging");
+            startActivity(intent);
+        } else {
+            unitNotRooted();
+        }
+    }
+
+    public void testButton(View view) {
+        String message = "";
+        String result = FileUtils.shellGetAvailableStorageLocations(this);
+        String[] lines = result.split("\\n");
+        for (String line : lines) {
+            if (!line.contains("tmpfs")) {
+                message += line;
+            }
+        }
+        Utils.showInfoDialog(this, "Storage Locations", message);
+    }
+
     /**
      * This method shows an info dialog (with scrollview) for the mention file/text
      * @param view
@@ -553,10 +585,14 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void editConfigTxt(View view) {
-        Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-        intent.putExtra("FILENAME", "/oem/app/config.txt");
-        intent.putExtra("TITLE", getString(R.string.btn_edit_config_txt));
-        startActivity(intent);
+        if ( (MyGettersSetters.getIsRooted()) && MyGettersSetters.getIsMagiskRooted()) {
+            Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+            intent.putExtra("FILENAME", "/oem/app/config.txt");
+            intent.putExtra("TITLE", getString(R.string.btn_edit_config_txt));
+            startActivity(intent);
+        } else {
+            unitNotRooted();
+        }
     }
 
     /**
@@ -650,6 +686,9 @@ public class MainActivity extends AppCompatActivity {
         Utils.showInfoDialog(this, title, message);
     }
 
+    private void unitNotRooted() {
+        Utils.showInfoDialog(this, getString(R.string.not_rooted_title), getString(R.string.not_rooted_text));
+    }
 
     private String getBackupMessage() {
         String message = getString(R.string.fytbackup_first_sentence) + "\n" +

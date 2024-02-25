@@ -13,6 +13,8 @@ public class MyGettersSetters {
     private File logFile;
     private Map<String, String> propsHashMap;
     private Boolean testVersion;
+    private Boolean isRooted;
+    private Boolean isMagiskRooted;
 
     public static String getLogFileName() {
         return staticInstance.logFileName;
@@ -33,5 +35,11 @@ public class MyGettersSetters {
 
     public static Boolean getTestVersion() { return staticInstance.testVersion; }
     public static void setTestVersion(Boolean testVers) {staticInstance.testVersion = testVers; }
+
+    public static Boolean getIsRooted() { return staticInstance.isRooted; }
+    public static void setIsRooted(Boolean rooted) { staticInstance.isRooted = rooted; }
+
+    public static Boolean getIsMagiskRooted() {return staticInstance.isMagiskRooted; }
+    public static void setIsMagiskRooted(Boolean magiskRooted) { staticInstance.isMagiskRooted = magiskRooted; }
 
 }

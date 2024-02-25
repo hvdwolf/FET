@@ -1,9 +1,11 @@
 <resources>
+    <string name="btn_adboverwifiandusbdebugging">Schakel adb over WiFi in en schakel USB-foutopsporing in</string>
+    <string name="adb_already_activated">ADB over TCPIP is al ingeschakeld</string>
     <string name="add_btsettings_to_fyt_settings_text">Dit zal het standaard Bluetooth settings scherm, dat je nooit rechtsreeks kunt benaderen, toevoegen aan de FYT Settings apk.</string>
     <string name="add_btsettings_to_fyt_settings_title">Voeg de standaard BT settings toe aan de FYT Settings.</string>
     <string name="admin_message_disabled">Apparaatbeheer: uitgeschakeld</string>
     <string name="admin_message_enabled">Apparaatbeheer: ingeschakeld</string>
-    <string name="android_root">Knoppen met het groene Android-pictogram vereisen root-toegang</string>
+    <string name="android_root">Knoppen met het groene \"#\"-pictogram vereisen root-toegang</string>
     <string name="app_theme_dark">Gebruik donkere app modus</string>
     <string name="app_theme_light">Gebruik lichte App modus</string>
     <string name="author">Gemaakt door</string>
@@ -60,6 +62,8 @@
     <string name="not_a_fyt_message">Dit is geen FYT unit. De app wordt gesloten.</string>
     <string name="not_applicable_abbreviation">n.v.t.</string>
     <string name="not_applicable_full">Niet van toepassing</string>
+    <string name="not_rooted_title">De unit is niet ge-root</string>
+    <string name="not_rooted_text">Je unit is niet ge-root. Deze functie kan niet gebruikt worden.</string>
     <string name="pin_disclaimer_text">De pincode beveiliging werkt op een scherm zonder fysieke knoppen, maar op een unit met de fysieke homekey omzeilt deze het vergrendelscherm,dus op zo\'n unit is de vergrendelscherm functionaliteit nutteloos.</string>
     <string name="pkg_name">Package naam</string>
     <string name="prepare_script">Het script wordt voorbereid</string>

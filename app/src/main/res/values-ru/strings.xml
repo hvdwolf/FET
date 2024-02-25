@@ -1,4 +1,6 @@
 <resources>
+    <string name="btn_adboverwifiandusbdebugging">Enable adb over WiFi and enable USB debugging</string>
+    <string name="adb_already_activated">ADB over TCPIP has already been enabled</string>
     <string name="add_btsettings_to_fyt_settings_text">This will add the default Bluetooth settings screen, that you are never able to access directly, into the FYT Settings apk.</string>
     <string name="add_btsettings_to_fyt_settings_title">Add default BT settings to FYT Settings.</string>
     <string name="admin_message_disabled">Администратор устройства : отключено</string>
@@ -60,6 +62,8 @@
     <string name="not_a_fyt">Не FYT</string>
     <string name="not_applicable_abbreviation">N.A.</string>
     <string name="not_applicable_full">Not applicable</string>
+    <string name="not_rooted_title">The unit is not rooted</string>
+    <string name="not_rooted_text">Your unit is not rooted. This function can\'t be used.</string>
     <string name="pin_disclaimer_text">The pincode works on a unit without physical buttons. On a unit with a physical homekey on the side or the bottom, this homekey overrules the lockscreen, so the lockscreen is useless on such a unit.</string>
     <string name="pkg_name">Имя пакета</string>
     <string name="prepare_script">The script will be prepared</string>
