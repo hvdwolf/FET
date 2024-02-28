@@ -53,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
             android.Manifest.permission.READ_EXTERNAL_STORAGE,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.WRITE_SETTINGS,
-            android.Manifest.permission.WRITE_SECURE_SETTINGS};
+            android.Manifest.permission.WRITE_SECURE_SETTINGS,
+            android.Manifest.permission.GET_PACKAGE_SIZE
+            };
     String[] propNames = {"ro.board.platform", "ro.build.version.sdk", "ro.build.version.release", "ro.fyt.uiid", "sys.fyt.bluetooth_type", "sys.fyt.front_video_ic", "ro.build.fytid",
             "sys.fyt.platform", "ro.fota.platform", "sys.fyt.cvbs.height", "sys.fyt.cvbs.width", "persist.sys.syu.audio", "ro.system.build.date", "ro.lsec.app.version",
             "persist.sys.syu.audio", "persist.syu.camera360", "persist.fyt.fm.name", "persist.fyt.withrdsfn", "persist.fyt.zh_frontview_enable", "ro.build.fytmanufacturer" };
@@ -140,16 +142,19 @@ public class MainActivity extends AppCompatActivity {
             // Check app and system modi and set button texts
             textButtonsAppSystem();
             // Check if rooted. If not disable some buttons
-            boolean isRooted = CheckIfRooted.isUnitRooted();
+            boolean isRooted = CheckIfRooted.isUnitRooted(this);
             MyGettersSetters.setIsRooted(isRooted);
             Logger.logToFile("Boolean isRooted is " + Boolean.toString(isRooted));
-            boolean isMagiskRooted = CheckIfRooted.isMagiskRooted();
+            boolean isMagiskRooted = CheckIfRooted.isMagiskRooted(this);
             MyGettersSetters.setIsMagiskRooted(isMagiskRooted);
             Logger.logToFile("Boolean isMagiskRooted is " + Boolean.toString(isMagiskRooted));
             if ( !isRooted && !isMagiskRooted) {
                 //disableRootedButtons();
                 Logger.logToFile("The unit is not rooted.");
             }
+            /*if ( !(CheckIfRooted.isUnitRooted()) && !(CheckIfRooted.isMagiskRooted()) ) {
+
+            }*/
             // Where is my External Storage ?
             Logger.logToFile("ExternalStorage path is " + FileUtils.strExternalStorage());
             //Toast.makeText(MainActivity.this, FileUtils.strExternalStorage(), Toast.LENGTH_SHORT).show();
@@ -388,7 +393,8 @@ public class MainActivity extends AppCompatActivity {
 
     /* Below method switches the unit to night or day mode */
     public void suSwitchDeviceToDayNightMode(View view) {
-        if ( (MyGettersSetters.getIsRooted()) && MyGettersSetters.getIsMagiskRooted()) {
+        //Toast.makeText(this, "isRooted " + MyGettersSetters.getIsRooted() + " isMagiskRooted " + MyGettersSetters.getIsMagiskRooted(), Toast.LENGTH_SHORT).show();
+        if ( (MyGettersSetters.getIsRooted()) || MyGettersSetters.getIsMagiskRooted()) {
             ContentResolver contentResolver = this.getContentResolver();
             int currentMode = getSavedMode("System");
             if (currentMode == 1) {
@@ -494,7 +500,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addBTSettingsToFYTSettings(View view) {
-        if ( (MyGettersSetters.getIsRooted()) && MyGettersSetters.getIsMagiskRooted()) {
+        if ( (MyGettersSetters.getIsRooted()) || MyGettersSetters.getIsMagiskRooted()) {
             Intent intent = new Intent(MainActivity.this, CustomDialog.class);
             intent.putExtra("FILENAME", "/oem/app/config.txt");
             intent.putExtra("TITLE", getString(R.string.add_btsettings_to_fyt_settings_title));
@@ -534,7 +540,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void adboverwifiandusbdebugging(View view) {
-        if ( (MyGettersSetters.getIsRooted()) && MyGettersSetters.getIsMagiskRooted()) {
+        if ( (MyGettersSetters.getIsRooted()) || MyGettersSetters.getIsMagiskRooted()) {
             // First we enable the USB debugging. We do not even check if it us enabled
             //settings put global adb_enabled 1
             ShellRootCommands.libsuRootExec("settings put global adb_enabled 1");
@@ -585,7 +591,7 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void editConfigTxt(View view) {
-        if ( (MyGettersSetters.getIsRooted()) && MyGettersSetters.getIsMagiskRooted()) {
+        if ( (MyGettersSetters.getIsRooted()) || MyGettersSetters.getIsMagiskRooted()) {
             Intent intent = new Intent(MainActivity.this, EditorActivity.class);
             intent.putExtra("FILENAME", "/oem/app/config.txt");
             intent.putExtra("TITLE", getString(R.string.btn_edit_config_txt));
@@ -736,6 +742,12 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 //showToastAndCloseApp("This is not a FYT unit. The app will be closed.", 3500);
                 Utils.showDialogAndCloseApp(this, getString(R.string.not_a_fyt), getString(R.string.not_a_fyt_message));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finishAffinity();
+                    }
+                }, 3500);
             }
         }
         return FYT;

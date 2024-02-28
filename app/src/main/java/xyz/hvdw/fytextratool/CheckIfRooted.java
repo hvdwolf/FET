@@ -1,12 +1,15 @@
 package xyz.hvdw.fytextratool;
 
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import java.io.File;
 
 public class CheckIfRooted {
 
     // Check if Magisk rooted
-    public static boolean isMagiskRooted() {
-        return checkMagiskFiles() || checkMagiskSuBinary();
+    public static boolean isMagiskRooted(Context context) {
+        return (checkMagiskFiles() || checkMagiskSuBinary()) && isMagiskAPKInstalled(context);
     }
 
     private static boolean checkMagiskFiles() {
@@ -23,13 +26,27 @@ public class CheckIfRooted {
         return file1.exists() || file2.exists();
     }
 
+    private static boolean isMagiskAPKInstalled(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            ApplicationInfo applicationInfo = packageManager.getApplicationInfo("com.topjohnwu.magisk", 0);
+            return applicationInfo != null;
+        } catch (PackageManager.NameNotFoundException e) {
+            // Magisk Manager package not found
+            return false;
+        }
+    }
+
+
 
     // General root check
-    public static boolean isUnitRooted() {
-        return checkRootMethod1() || checkRootMethod2() || checkRootMethod3();
+    public static boolean isUnitRooted(Context context) {
+        //return checkRootMethod1() || checkRootMethod2() || checkRootMethod3();
+        return isSuperSUInstalled(context) && checkRootMethod3();
     }
 
     // This check is very debatable. Having test keys does not mean the unit is rooted.
+    // Now no longer used
     private static boolean checkRootMethod1() {
         String buildTags = android.os.Build.TAGS;
         return buildTags != null && buildTags.contains("test-keys");
@@ -39,6 +56,17 @@ public class CheckIfRooted {
         // Check if Superuser.apk is present
         File file = new File("/system/app/Superuser.apk");
         return file.exists();
+    }
+
+    public static boolean isSuperSUInstalled(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            ApplicationInfo applicationInfo = packageManager.getApplicationInfo("eu.chainfire.supersu", 0);
+            return applicationInfo != null;
+        } catch (PackageManager.NameNotFoundException e) {
+            // SuperSU package not found
+            return false;
+        }
     }
 
     private static boolean checkRootMethod3() {

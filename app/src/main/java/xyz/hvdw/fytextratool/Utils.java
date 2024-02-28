@@ -1,5 +1,7 @@
 package xyz.hvdw.fytextratool;
 
+import static androidx.core.app.ActivityCompat.finishAffinity;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.UiModeManager;

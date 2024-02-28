@@ -1,11 +1,11 @@
 <resources>
-    <string name="btn_adboverwifiandusbdebugging">Enable adb over WiFi and enable USB debugging</string>
-    <string name="adb_already_activated">ADB over TCPIP has already been enabled</string>
+    <string name="btn_adboverwifiandusbdebugging">Abilita adb tramite WiFi ed abilita il debug USB</string>
+    <string name="adb_already_activated">ADB su TCPIP è già stato abilitato</string>
     <string name="add_btsettings_to_fyt_settings_text">Ciò aggiungerà la schermata delle impostazioni Bluetooth predefinite, a cui non potrai mai accedere direttamente, nell\'apk delle impostazioni FYT.</string>
     <string name="add_btsettings_to_fyt_settings_title">Aggiungi le impostazioni BT predefinite alle Impostazioni FYT.</string>
     <string name="admin_message_disabled">Amministrazione dispositivo: disabilitata</string>
     <string name="admin_message_enabled">Amministrazione dispositivo: abilitata</string>
-    <string name="android_root">I pulsanti con \"Android con root hanno un icona\" richiedono l\'accesso root.</string>
+    <string name="android_root">I pulsanti con l\'icona \"#\" richiedono l\'accesso root.</string>
     <string name="app_theme_dark">Imposta il tema scuro dell\'app</string>
     <string name="app_theme_light">Imposta il tema chiaro dell\'app</string>
     <string name="author">Creato da</string>
@@ -62,8 +62,6 @@
     <string name="not_a_fyt">Not a FYT</string>
     <string name="not_applicable_abbreviation">N.A.</string>
     <string name="not_applicable_full">Non applicabile</string>
-    <string name="not_rooted_title">The unit is not rooted</string>
-    <string name="not_rooted_text">Your unit is not rooted. This function can\'t be used.</string>
     <string name="pin_disclaimer_text">Il Pincode funziona su un\'unità senza pulsanti fisici.Su un\'unità con un tasto Home fisico sul lato o sul fondo, questo tasto Home prevale sulla schermata di blocco, quindi la schermata di blocco è inutile su tale unità.</string>
     <string name="pkg_name">Nome pachetto</string>
     <string name="prepare_script">Lo script sarà preparato</string>
