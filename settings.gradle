@@ -1,1 +1,1 @@
-include ':app', ':easypasscodelock'
+include ':app', ':easypasscodelock', 'fytcanbusmonitor'

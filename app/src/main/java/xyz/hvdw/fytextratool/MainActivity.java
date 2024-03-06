@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -54,8 +55,11 @@ public class MainActivity extends AppCompatActivity {
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.WRITE_SETTINGS,
             android.Manifest.permission.WRITE_SECURE_SETTINGS,
-            android.Manifest.permission.GET_PACKAGE_SIZE
+            android.Manifest.permission.GET_PACKAGE_SIZE,
+            android.Manifest.permission.INTERNET,
+            android.Manifest.permission.ACCESS_NETWORK_STATE
             };
+
     String[] propNames = {"ro.board.platform", "ro.build.version.sdk", "ro.build.version.release", "ro.fyt.uiid", "sys.fyt.bluetooth_type", "sys.fyt.front_video_ic", "ro.build.fytid",
             "sys.fyt.platform", "ro.fota.platform", "sys.fyt.cvbs.height", "sys.fyt.cvbs.width", "persist.sys.syu.audio", "ro.system.build.date", "ro.lsec.app.version",
             "persist.sys.syu.audio", "persist.syu.camera360", "persist.fyt.fm.name", "persist.fyt.withrdsfn", "persist.fyt.zh_frontview_enable", "ro.build.fytmanufacturer" };
@@ -136,11 +140,13 @@ public class MainActivity extends AppCompatActivity {
         // Is this a FYT and as second test: on Android 10 SDK 29
         if (checkIsFYT()) {
             //If it is a FYT we can continue and do some further checks
-            //String remoteVersion = CheckUpdates.readFETVersionString("https://github.com/hvdwolf/FET/blob/main/version.txt");
-            //String remoteVersion = CheckUpdates.readFETVersionString("https://github.com/hvdwolf/FET/blob/main/app/build.gradle");
             Utils.checkPermissions(this);
             // Check app and system modi and set button texts
             textButtonsAppSystem();
+            //String remoteVersion = CheckUpdates.readFETVersionString("https://raw.githubusercontent.com/hvdwolf/FET/main/version.txt");
+            //String remoteVersion = CheckUpdates.readFETVersionString("https://github.com/hvdwolf/FET/blob/main/app/build.gradle");
+            //Utils.showInfoDialog(this, remoteVersion, remoteVersion);
+
             // Check if rooted. If not disable some buttons
             boolean isRooted = CheckIfRooted.isUnitRooted(this);
             MyGettersSetters.setIsRooted(isRooted);
@@ -169,6 +175,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     // End of OnCreate
+
+   // Handle mulit-window support in case of splitscreen
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
 
     private void loadFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()

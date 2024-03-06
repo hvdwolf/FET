@@ -1,6 +1,7 @@
 package xyz.hvdw.fytextratool;
 
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -93,6 +94,12 @@ public class CustomDialog extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    // Handle mulit-window support in case of splitscreen
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
     private String loadConfigText(String fileName) {
