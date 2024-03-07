@@ -285,7 +285,25 @@ public class Utils {
                 } else {
                     longText = context.getString(R.string.config_txt_not_found);
                 }
+            case "/odm/app/config.txt":
+                dialogTitle = FileUtils.extractFileName(whichInfo);
+                textFile = new File(whichInfo);
+                if (textFile.exists()) {
+                    longText = FileUtils.readFileToString(textFile);
+                } else {
+                    longText = context.getString(R.string.m7_7870_config_txt_not_found);
+                }
                 textView.setText(longText);
+                contentLayout.addView(textView);
+                break;
+
+            case "used_os_tools":
+                dialogTitle = context.getString(R.string.menuitem_used_os_tools);
+                textView.setText(context.getString(R.string.used_os_tools_header) + "\n\n");
+                textView.append("easypasscodelock; p32929 (Fayaz Bin Salam); https://github.com/p32929/AndroidAppLockscreen\n\n");
+                textView.append("FYTCanbusMonitor; Axes of Evil; https://github.com/AxesOfEvil/FYTCanbusMonitor\n\n");
+                textView.append("libsu; TopJohnWu; https://github.com/topjohnwu/libsu\n");
+
                 contentLayout.addView(textView);
                 break;
         }

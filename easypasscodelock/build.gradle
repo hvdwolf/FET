@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 34
-
+    namespace 'p32929.easypasscodelock'
     defaultConfig {
         minSdkVersion 26
         targetSdkVersion 34
@@ -22,7 +22,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    namespace 'p32929.easypasscodelock'
 
 }
 

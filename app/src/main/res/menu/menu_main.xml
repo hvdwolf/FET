@@ -13,6 +13,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_used_os_tools"
+        android:title="@string/menuitem_used_os_tools"
+        android:orderInCategory="140"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_about"
         android:title="@string/menuitem_about_text"
         android:orderInCategory="200"

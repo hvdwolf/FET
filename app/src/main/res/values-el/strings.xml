@@ -78,4 +78,9 @@
     <string name="dialog_start_zip">Έναρξη δημιουργίας αντιγράφου ασφαλείας. Παρακαλώ αναμείνατε έως ότου εμφανιστεί το αναδυόμενο παράθυρο μηνύματος.</string>
     <string name="version">Έκδοση</string>
     <string name="website">Ιστότοπος</string>
+    <string name="menuitem_used_os_tools">Open Source tools used</string>
+    <string name="used_os_tools_header">This application was made using the following Open Source tools (in alphabetical order):</string>
+    <string name="fytcanbusmonitor">Start FYT Canbus monitor</string>
+    <string name="m7_7870_unit_txt">This functionality can\'t be used on a 7870.</string>
+    <string name="m7_7870_config_txt_not_found">file config.txt does not exist or could not find file in folder /odm/app.</string>
 </resources>

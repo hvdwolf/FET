@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_general)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_bluetooth)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_settings)));
+        //tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_fytcanbusmonitor)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_lockscreen)));
 
         // Set listener for tab selection
@@ -112,8 +113,12 @@ public class MainActivity extends AppCompatActivity {
                         loadFragment(new Fragment_Settings());
                         break;
                     case 3:
+                        //loadFragment(new Fragment_FytCanbusMonitor());
+                        //break;
+                    //case 4:
                         loadFragment(new Fragment_Lockscreen());
                         break;
+
                 }
             }
 
@@ -217,6 +222,13 @@ public class MainActivity extends AppCompatActivity {
             return inflater.inflate(R.layout.fragment_settings, container, false);
         }
     }
+    // Fragment for the Canbus monitor
+    public static class Fragment_FytCanbusMonitor extends Fragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.fragment_fytcanbusmonitor, container, false);
+        }
+    }
 
     // Fragment for Tab Lockscreen
     public static class Fragment_Lockscreen extends Fragment {
@@ -251,6 +263,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.action_about) {
             Utils.showAboutDialog(this, "about");
+            return true;
+        }
+
+        if (id == R.id.action_used_os_tools) {
+            Utils.showAboutDialog(this, "used_os_tools");
             return true;
         }
 
@@ -514,7 +531,12 @@ public class MainActivity extends AppCompatActivity {
     public void addBTSettingsToFYTSettings(View view) {
         if ( (MyGettersSetters.getIsRooted()) || MyGettersSetters.getIsMagiskRooted()) {
             Intent intent = new Intent(MainActivity.this, CustomDialog.class);
-            intent.putExtra("FILENAME", "/oem/app/config.txt");
+            Map<String, String> fytPlatform = MyGettersSetters.getPropsHashMap();
+            if (fytPlatform.get("ro.board.platform").contains("ums9620")) {
+                intent.putExtra("FILENAME", "/odm/app/config.txt");
+            } else {
+                intent.putExtra("FILENAME", "/oem/app/config.txt");
+            }
             intent.putExtra("TITLE", getString(R.string.add_btsettings_to_fyt_settings_title));
             intent.putExtra("TEXT", getString(R.string.add_btsettings_to_fyt_settings_text));
             intent.putExtra("ACTION", "btsettingstofyt");
@@ -559,7 +581,12 @@ public class MainActivity extends AppCompatActivity {
 
             Logger.logToFile("Enable ADB over WiFi and enable usb debugging");
             Intent intent = new Intent(MainActivity.this, CustomDialog.class);
-            intent.putExtra("FILENAME", "/oem/app/config.txt");
+            Map<String, String> fytPlatform = MyGettersSetters.getPropsHashMap();
+            if (fytPlatform.get("ro.board.platform").contains("ums9620")) {
+                intent.putExtra("FILENAME", "/odm/app/config.txt");
+            } else {
+                intent.putExtra("FILENAME", "/oem/app/config.txt");
+            }
             intent.putExtra("TITLE", getString(R.string.btn_adboverwifiandusbdebugging));
             intent.putExtra("TEXT", getString(R.string.btn_adboverwifiandusbdebugging));
             intent.putExtra("ACTION", "adboverwifiandusbdebugging");
@@ -586,15 +613,18 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void disp_config_txt(View view) {
-        Utils.showAboutDialog(this, "/oem/app/config.txt");
+        Map<String, String> fytPlatform = MyGettersSetters.getPropsHashMap();
+        if (fytPlatform.get("ro.board.platform").contains("ums9620")) {
+            Utils.showAboutDialog(this, "/odm/app/config.txt");
+        } else {
+            Utils.showAboutDialog(this, "/oem/app/config.txt");
+        }
     }
-
     public void enableAppsOnBoot(View view) {
         Intent intent = new Intent(MainActivity.this, EnableAppsOnBoot.class);
         intent.putExtra("TITLE", "Start Apps On BOOT_COMPLETED");
         startActivity(intent);
         //startActivity(new Intent(MainActivity.this, EnableAppsOnBoot.class));
-
     }
 
     /**
@@ -613,6 +643,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void fytCanbusMonitor(View view) {
+        Intent intent = new Intent(MainActivity.this, FytCanBusMonitor.class);
+        //intent.putExtra("TITLE", "Start Apps On BOOT_COMPLETED");
+        startActivity(intent);
+    }
     /**
      * This method makes a backup of the app layer as provided by FYT in the AllAppUpdate.bin
      * It will zip with password withour compression and add the lsex631Xupdate, config.txt and updatecfg.txt to folder
@@ -623,7 +658,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Check if we are on a T'eyes
         String fytProp = propsHashMap.get("ro.build.fytmanufacturer");
-        if (!fytProp.equals("95")) { // If not a T'eyes unit we can start our backup
+        String boardProp = propsHashMap.get("ro.board.platform");
+        if ((!fytProp.equals("95")) && (!boardProp.equals("ums9620"))) { // If not a T'eyes unit (95) AND not a 7870(ums9620) we can start our backup
 
             String message = getBackupMessage();
             cacheDir = this.getCacheDir();
@@ -695,9 +731,14 @@ public class MainActivity extends AppCompatActivity {
             bePatientDialog = builder.create();
             bePatientDialog.show();
 
-        } else { // So we are on a T'eyes unit. This backup will not functiom.
-            Utils.showInfoDialog(this, getString(R.string.teyes_unit_title), getString(R.string.teyes_unit_txt));
+        } else { // So we are on a T'eyes unit OR on a 7870(ums9620). This backup will not function.
+            if (fytProp.contains("ums9620")) {
+                Utils.showInfoDialog(this, getString(R.string.teyes_unit_title), getString(R.string.m7_7870_unit_txt));
+            } else { // so we are on a T'eyes
+                Utils.showInfoDialog(this, getString(R.string.teyes_unit_title), getString(R.string.teyes_unit_txt));
+            }
         }
+
     }
 
     private void endDialog(String title, String message) {
@@ -739,14 +780,21 @@ public class MainActivity extends AppCompatActivity {
         //"ro.fota.platform" gives SC7862 or SC8581
 
         ///////////// SET TO FALSE BEFORE RELEASE TO FYT /////////////
-        Boolean TEST = false;
+        Boolean TEST = true;
         MyGettersSetters.setTestVersion(TEST);
         if (TEST) { // For testing on my phone
             FYT = true;
         } else { // When using on a unit to really test whether it is a FYT
             if ((fytProp.contains("ums512")) || (fytProp.contains("sp9863a"))) {
-                //It is a FYT, but we still want to know whether it is at the right SDK level
+                //It is a FYT uis7862/ums512 or a uis8581/sc9863, but we still want to know whether it is at the right SDK level
                 if (!sdkProp.equals("29")) {
+                    Utils.showDialogAndCloseApp(this, getString(R.string.correct_fyt_wrong_sdk), getString(R.string.correct_fyt_wrong_sdk_message));
+                }
+                // In backup we can test for Teyes
+                FYT = true;
+            } else if (fytProp.contains("ums9620")) {
+                // It is a FYT 7870
+                if (!sdkProp.equals("33")) {
                     Utils.showDialogAndCloseApp(this, getString(R.string.correct_fyt_wrong_sdk), getString(R.string.correct_fyt_wrong_sdk_message));
                 }
                 // In backup we can test for Teyes
@@ -827,8 +875,11 @@ public class MainActivity extends AppCompatActivity {
                 "ls -lR /product/  > /storage/emulated/0/HWGetInfo/product_listing.txt",
                 "cp /oem/app/config.txt /storage/emulated/0/HWGetInfo/",
                 "cp /oem/app/fyt.prop /storage/emulated/0/HWGetInfo/",
+                "cp /odm/app/config.txt /storage/emulated/0/HWGetInfo/",
+                "cp /odm/app/fyt.prop /storage/emulated/0/HWGetInfo/",
                 "cp /system/build.prop /storage/emulated/0/HWGetInfo/",
                 "cp /oem/Ver /storage/emulated/0/HWGetInfo/",
+                "cp /odm/Ver /storage/emulated/0/HWGetInfo/",
                 "rm -rf /storage/emulated/0/HWGetInfo.zip",
                 "cd /storage/emulated/0/HWGetInfo/",
                 cacheDirString + "/zip-arm  -r -v -y * /storage/emulated/0/HWGetInfo.zip"};

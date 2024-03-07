@@ -78,4 +78,9 @@
     <string name="dialog_start_zip">Starten van de backup. Even geduld alsjeblieft en wacht op de popup.</string>
     <string name="version">Versie</string>
     <string name="website">website</string>
+    <string name="menuitem_used_os_tools">Gebruikte Open Source tools</string>
+    <string name="used_os_tools_header">Deze applicatie is gemaakt met gebruikmaking van de volgende Open Source tools (in alfabetische volgorde):</string>
+    <string name="fytcanbusmonitor">Start FYT Canbus monitor</string>
+    <string name="m7_7870_unit_txt">Deze functionaliteit kan niet op een 7870 gebruikt worden.</string>
+    <string name="m7_7870_config_txt_not_found">bestand config.txt bestaat niet of kon niet gevonden worden in folder /odm/app.</string>
 </resources>
