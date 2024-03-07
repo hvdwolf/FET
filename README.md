@@ -4,10 +4,10 @@ A simple tool that adds some extra functionality to your FYT unit.<br>
 ![logo](https://github.com/hvdwolf/FET/raw/main/images/logo.png)
 
 # Screenshots
-(preliminary)<br>
-## Dark Theme 1.0.8
+As of 1.2.0 the app switched to a tab layout.<br>
+## Dark Theme 1.2.x
 ![dark theme](https://github.com/hvdwolf/FET/raw/main/images/darktheme.png)
-## Light Theme 1.0.7
+## Light Theme 1.2.x
 ![light theme](https://github.com/hvdwolf/FET/raw/main/images/lighttheme.png)
 
 
@@ -19,13 +19,15 @@ The releases are not done via github, but via the XDA-forum via the thread: http
 That is also where you find the Changelogs and more screenshots displaying new/modified functionality.
 
 ## Translations
-Default is (US) English. Translated (90~100%) in Dutch, German, Italian, Polish, Russian, Vietnamese.
+Default is (US) English. Translated (90~100%) in Dutch, German, Greek, Italian, Polish, Russian, Swedish, Turkish, Vietnamese.
 
 <HR>
 MIT License
 
 Copyleft 2023 Harry van der Wolf (surfer63)<br>
-Copyright (c) 2018 Fayaz Bin Salam for his easypasscodelock functionality.
+Copyright (c) 2018 Fayaz Bin Salam for his easypasscodelock functionality.<br>
+Libsu from TopJohnWu, Apache 2 license.<br>
+Copyright AxesOfEvil for his FYTCanbusMonitor library.<br>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
