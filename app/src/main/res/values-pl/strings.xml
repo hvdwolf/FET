@@ -83,4 +83,9 @@
     <string name="fytcanbusmonitor">Start FYT Canbus monitor</string>
     <string name="m7_7870_unit_txt">This functionality can\'t be used on a 7870.</string>
     <string name="m7_7870_config_txt_not_found">file config.txt does not exist or could not find file in folder /odm/app.</string>
+    <string name="fytcanbusmonitor_select">Select options for monitoring</string>
+    <string name="fytcanbusmonitor_main">Main: No Canbus necessary</string>
+    <string name="fytcanbusmonitor_canbus">CANbus</string>
+    <string name="fytcanbusmonitor_sound">Sound</string>
+    <string name="fytcanbusmonitor_canup">Canup</string>
 </resources>

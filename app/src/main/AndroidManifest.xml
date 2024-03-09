@@ -18,7 +18,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.REBOOT"/>  <!-- So we can reboot our device -->
-    
 
 
     <application
@@ -48,6 +47,9 @@
         <activity android:name=".CustomDialog" android:exported="false">
             <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".MainActivity"/>
             <meta-data android:name="android.app.lib_name" android:value=""/>
+        </activity>
+        <activity android:name=".FytCanBusMonitor" android:exported="false">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".MainActivity"/>
         </activity>
     </application>
 

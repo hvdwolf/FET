@@ -8,6 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -19,10 +21,13 @@ public class CheckUpdates {
     public static String readFETVersionString(String urlStr) {
         content = new StringBuilder();
         boolean validconnection = true;
-        HttpURLConnection urlConnection = null;
+        HttpsURLConnection urlConnection = null;
+        // Disable certificate validation
+        HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
+
         try {
             URL url = new URL(urlStr);
-            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection = (HttpsURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             InputStream inputStream = urlConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -40,6 +45,13 @@ public class CheckUpdates {
                 urlConnection.disconnect();
             }
         }
+        /*String build_gradle = "";
+        try {
+            build_gradle = ShellRootCommands.shellExec("curl https://raw.githubusercontent.com/hvdwolf/FET/main/app/build.gradle");
+        } catch (Exception e) {
+            Logger.logToFile(e.toString());
+            throw new RuntimeException(e);
+        }*/
         /*try {
             URL url = new URL(urlStr);
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -76,6 +88,6 @@ public class CheckUpdates {
             e.printStackTrace();
         } */
         return content.toString();
-        //return result;
+        //return build_gradle;
     }
 }

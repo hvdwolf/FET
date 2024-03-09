@@ -1,6 +1,7 @@
 package xyz.hvdw.fytextratool;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Map;
 
 public class MyGettersSetters {
@@ -15,6 +16,7 @@ public class MyGettersSetters {
     private Boolean testVersion;
     private Boolean isRooted;
     private Boolean isMagiskRooted;
+    //public boolean[] fytCanbusMonitorCheckboxes;
 
     public static String getLogFileName() {
         return staticInstance.logFileName;
@@ -41,5 +43,8 @@ public class MyGettersSetters {
 
     public static Boolean getIsMagiskRooted() {return staticInstance.isMagiskRooted; }
     public static void setIsMagiskRooted(Boolean magiskRooted) { staticInstance.isMagiskRooted = magiskRooted; }
+
+    //public static boolean[] getFytCanbusMonitorCheckboxes() { return Arrays.copyOf(staticInstance.fytCanbusMonitorCheckboxes, staticInstance.fytCanbusMonitorCheckboxes.length); }
+    //public static void setFytCanbusMonitorCheckboxes(boolean[] ftcbmCheckboxes) { staticInstance.fytCanbusMonitorCheckboxes = Arrays.copyOf(ftcbmCheckboxes, ftcbmCheckboxes.length); }
 
 }

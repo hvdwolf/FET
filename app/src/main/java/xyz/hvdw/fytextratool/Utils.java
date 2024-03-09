@@ -15,7 +15,10 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Handler;
 import android.provider.Settings;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -45,7 +48,11 @@ public class Utils {
             android.Manifest.permission.READ_EXTERNAL_STORAGE,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.WRITE_SETTINGS,
-            android.Manifest.permission.WRITE_SECURE_SETTINGS};
+            android.Manifest.permission.WRITE_SECURE_SETTINGS,
+            android.Manifest.permission.GET_PACKAGE_SIZE,
+            android.Manifest.permission.INTERNET,
+            android.Manifest.permission.ACCESS_NETWORK_STATE
+    };
 
     private static final int REQUEST_CODE = 123;
 

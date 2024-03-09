@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String DAY_MODE = "day";
     private static final String NIGHT_MODE = "night";
     private Boolean logFileCreated = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_general)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_bluetooth)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_settings)));
-        //tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_fytcanbusmonitor)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_fytcanbusmonitor)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_lockscreen)));
 
         // Set listener for tab selection
@@ -113,9 +114,9 @@ public class MainActivity extends AppCompatActivity {
                         loadFragment(new Fragment_Settings());
                         break;
                     case 3:
-                        //loadFragment(new Fragment_FytCanbusMonitor());
-                        //break;
-                    //case 4:
+                        loadFragment(new Fragment_System());
+                        break;
+                    case 4:
                         loadFragment(new Fragment_Lockscreen());
                         break;
 
@@ -134,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         // Set default fragment on launch
         loadFragment(new Fragment_General());
 
+
         // Make sure it is only executed once, for example after a reconfigure. Like the app light/dark restarts the onCreate
         if (!logFileCreated) {
             String logFileName = createLogFile();
@@ -150,7 +152,8 @@ public class MainActivity extends AppCompatActivity {
             textButtonsAppSystem();
             //String remoteVersion = CheckUpdates.readFETVersionString("https://raw.githubusercontent.com/hvdwolf/FET/main/version.txt");
             //String remoteVersion = CheckUpdates.readFETVersionString("https://github.com/hvdwolf/FET/blob/main/app/build.gradle");
-            //Utils.showInfoDialog(this, remoteVersion, remoteVersion);
+            //String remoteVersion = CheckUpdates.readFETVersionString("https://raw.githubusercontent.com/hvdwolf/FET/main/app/build.gradle");
+            //Utils.showInfoDialog(this, "remoteVersion", remoteVersion);
 
             // Check if rooted. If not disable some buttons
             boolean isRooted = CheckIfRooted.isUnitRooted(this);
@@ -223,11 +226,34 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     // Fragment for the Canbus monitor
-    public static class Fragment_FytCanbusMonitor extends Fragment {
+    public static class Fragment_System extends Fragment {
+        /*private CheckBox main_interface;
+        private CheckBox canbus_interface;
+        private CheckBox sound_interface;
+        private CheckBox canup_interface;*/
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_fytcanbusmonitor, container, false);
+            View view =  inflater.inflate(R.layout.fragment_system, container, false);
+            /*main_interface = view.findViewById(R.id.main_interface);
+            canbus_interface = view.findViewById(R.id.canbus_interface);
+            sound_interface = view.findViewById(R.id.sound_interface);
+            canup_interface = view.findViewById(R.id.canup_interface);*/
+            return view;
         }
+
+        /*public boolean read_main_interface() {
+            return main_interface.isChecked();
+        }
+        public boolean read_canbus_interface() {
+            return canup_interface.isChecked();
+        }
+        public boolean read_sound_interface() {
+            return sound_interface.isChecked();
+        }
+        public boolean read_canup_interface() {
+            return canup_interface.isChecked();
+        }*/
+
     }
 
     // Fragment for Tab Lockscreen
@@ -643,11 +669,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void fytCanbusMonitor(View view) {
+
+    public void continueWithMethodForFytCanbusMonitor(boolean mainChecked, boolean canbusChecked, boolean soundChecked, boolean canupChecked) {
+        // Do something with the checked options
         Intent intent = new Intent(MainActivity.this, FytCanBusMonitor.class);
-        //intent.putExtra("TITLE", "Start Apps On BOOT_COMPLETED");
+        intent.putExtra("MAIN", mainChecked);
+        intent.putExtra("CANBUS", canbusChecked);
+        intent.putExtra("SOUND", soundChecked);
+        intent.putExtra("CANUP", canupChecked);
         startActivity(intent);
     }
+    public void fytCanbusMonitor(View view) {
+
+        final boolean[][] checkBoxes = {new boolean[4]};
+        DialogWithCheckboxes dialog = new DialogWithCheckboxes();
+        dialog.show(getSupportFragmentManager(), "dialog_with_checkboxes");
+
+    }
+
     /**
      * This method makes a backup of the app layer as provided by FYT in the AllAppUpdate.bin
      * It will zip with password withour compression and add the lsex631Xupdate, config.txt and updatecfg.txt to folder
@@ -764,6 +803,11 @@ public class MainActivity extends AppCompatActivity {
         }
         return message;
     }
+
+    public MainActivity() {
+        super();
+    }
+
     public Boolean checkIsFYT() {
         //String fytProp = Utils.propReader("ro.build.fytmanufacturer");
         propsHashMap = Utils.multiPropReader(this, propNames);
@@ -780,7 +824,7 @@ public class MainActivity extends AppCompatActivity {
         //"ro.fota.platform" gives SC7862 or SC8581
 
         ///////////// SET TO FALSE BEFORE RELEASE TO FYT /////////////
-        Boolean TEST = true;
+        Boolean TEST = false;
         MyGettersSetters.setTestVersion(TEST);
         if (TEST) { // For testing on my phone
             FYT = true;

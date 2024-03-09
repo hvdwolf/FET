@@ -27,7 +27,7 @@
     <string name="btn_open_def_bt">Standaard BT-instellingen openen</string>
     <string name="btn_save">Save</string>
     <string name="btn_system_info">systeem info</string>
-    <string name="btn_zip_allappupdate">Zip FYT apps in AllAppUpdate.bin</string>
+    <string name="btn_zip_allappupdate">Backup FYT apps in AllAppUpdate.bin</string>
     <string name="btsettings_already_added_to_fyt_settings_text">De standaard Bluetooth settings zijn al toegevoegd aan de FYT Settings apk.</string>
     <string name="collected_system_info_title">Alle systeem info verzameld.</string>
     <string name="collected_system_info_txt">Controleer de Interne opslag op zip bestand HWGetInfo.zip en folder HWGetInfo die de verzamelde systeem info bevat.</string>
@@ -83,4 +83,9 @@
     <string name="fytcanbusmonitor">Start FYT Canbus monitor</string>
     <string name="m7_7870_unit_txt">Deze functionaliteit kan niet op een 7870 gebruikt worden.</string>
     <string name="m7_7870_config_txt_not_found">bestand config.txt bestaat niet of kon niet gevonden worden in folder /odm/app.</string>
+    <string name="fytcanbusmonitor_select">Selecteer opties om te monitoren</string>
+    <string name="fytcanbusmonitor_main">Algemeen: Geen Canbus nodig</string>
+    <string name="fytcanbusmonitor_canbus">CANbus</string>
+    <string name="fytcanbusmonitor_sound">Geluid</string>
+    <string name="fytcanbusmonitor_canup">Canup</string>
 </resources>

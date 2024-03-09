@@ -22,13 +22,14 @@ That is also where you find the Changelogs and more screenshots displaying new/m
 Default is (US) English. Translated (90~100%) in Dutch, German, Greek, Italian, Polish, Russian, Swedish, Turkish, Vietnamese.
 
 <HR>
-MIT License
 
-Copyleft 2023 Harry van der Wolf (surfer63)<br>
-Copyright (c) 2018 Fayaz Bin Salam for his easypasscodelock functionality.<br>
+
+Copyleft 2023 Harry van der Wolf (surfer63), MIT License.<br>
+Copyright (c) 2018 Fayaz Bin Salam for his easypasscodelock functionality, MIT License.<br>
 Libsu from TopJohnWu, Apache 2 license.<br>
-Copyright AxesOfEvil for his FYTCanbusMonitor library.<br>
+Copyright AxesOfEvil for his FYTCanbusMonitor library.<br><br>
 
+#MIT License
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
