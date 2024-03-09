@@ -57,6 +57,7 @@
     <string name="tab_general">Genel</string>
     <string name="tab_lockscreen">Kilit ekranı</string>
     <string name="tab_settings">Ayarlar</string>
+    <string name="tab_system">System</string>
     <string name="menu_other">Diğer</string>
     <string name="not_a_fyt_message">Bu bir FYT birimi değildir. Uygulama kapatılacaktır.</string>
     <string name="not_a_fyt">FYT değil</string>
@@ -83,6 +84,7 @@
     <string name="fytcanbusmonitor">Start FYT Canbus monitor</string>
     <string name="m7_7870_unit_txt">This functionality can\'t be used on a 7870.</string>
     <string name="m7_7870_config_txt_not_found">file config.txt does not exist or could not find file in folder /odm/app.</string>
+    <string name="btn_fytcanbusmonitor">FYT Canbus Monitor</string>
     <string name="fytcanbusmonitor_select">Select options for monitoring</string>
     <string name="fytcanbusmonitor_main">Main: No Canbus necessary</string>
     <string name="fytcanbusmonitor_canbus">CANbus</string>

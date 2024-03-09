@@ -57,6 +57,7 @@
     <string name="tab_general">Algemeen</string>
     <string name="tab_lockscreen">Vergrendelscherm</string>
     <string name="tab_settings">Instellingen</string>
+    <string name="tab_system">Systeem</string>
     <string name="menu_other">Overig</string>
     <string name="not_a_fyt">Geen FYT</string>
     <string name="not_a_fyt_message">Dit is geen FYT unit. De app wordt gesloten.</string>
@@ -83,6 +84,7 @@
     <string name="fytcanbusmonitor">Start FYT Canbus monitor</string>
     <string name="m7_7870_unit_txt">Deze functionaliteit kan niet op een 7870 gebruikt worden.</string>
     <string name="m7_7870_config_txt_not_found">bestand config.txt bestaat niet of kon niet gevonden worden in folder /odm/app.</string>
+    <string name="btn_fytcanbusmonitor">FYT Canbus Monitor</string>
     <string name="fytcanbusmonitor_select">Selecteer opties om te monitoren</string>
     <string name="fytcanbusmonitor_main">Algemeen: Geen Canbus nodig</string>
     <string name="fytcanbusmonitor_canbus">CANbus</string>

@@ -56,6 +56,7 @@
     <string name="tab_bluetooth">Bluetooth</string>
     <string name="tab_general">Generali</string>
     <string name="tab_lockscreen">Blocca Schermo</string>
+    <string name="tab_system">System</string>
     <string name="tab_settings">Impostazioni</string>
     <string name="menu_other">Altro</string>
     <string name="not_a_fyt_message">Questa non è una unità FYT.L\'app sarà chiusa.</string>
@@ -81,6 +82,7 @@
     <string name="fytcanbusmonitor">Start FYT Canbus monitor</string>
     <string name="m7_7870_unit_txt">This functionality can\'t be used on a 7870.</string>
     <string name="m7_7870_config_txt_not_found">file config.txt does not exist or could not find file in folder /odm/app.</string>
+    <string name="btn_fytcanbusmonitor">FYT Canbus Monitor</string>
     <string name="fytcanbusmonitor_select">Select options for monitoring</string>
     <string name="fytcanbusmonitor_main">Main: No Canbus necessary</string>
     <string name="fytcanbusmonitor_canbus">CANbus</string>

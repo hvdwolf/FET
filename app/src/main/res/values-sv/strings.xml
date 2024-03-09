@@ -57,6 +57,7 @@
     <string name="tab_general">Allmänt</string>
     <string name="tab_lockscreen">Låsskärm</string>
     <string name="tab_settings">Inställningar</string>
+    <string name="tab_system">System</string>
     <string name="menu_other">Övrigt</string>
     <string name="not_a_fyt_message">Detta är inte en FYT-enhet. Appen kommer att stängas.</string>
     <string name="not_a_fyt">Inte en FYT</string>
@@ -81,6 +82,7 @@
     <string name="fytcanbusmonitor">Start FYT Canbus monitor</string>
     <string name="m7_7870_unit_txt">This functionality can\'t be used on a 7870.</string>
     <string name="m7_7870_config_txt_not_found">file config.txt does not exist or could not find file in folder /odm/app.</string>
+    <string name="btn_fytcanbusmonitor">FYT Canbus Monitor</string>
     <string name="fytcanbusmonitor_select">Select options for monitoring</string>
     <string name="fytcanbusmonitor_main">Main: No Canbus necessary</string>
     <string name="fytcanbusmonitor_canbus">CANbus</string>

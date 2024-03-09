@@ -18,6 +18,9 @@ class FytCanBusMonitor : AppCompatActivity(), ComponentCallbacks2 {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fytcanbusmonitor)
 
+        val title = intent.getStringExtra("TITLE")
+        supportActionBar?.title = title
+
         ModuleCallback.init(this)
         if (intent.getBooleanExtra("MAIN", true)) {
             connectMain()

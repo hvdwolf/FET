@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_general)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_bluetooth)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_settings)));
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_fytcanbusmonitor)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_system)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_lockscreen)));
 
         // Set listener for tab selection
@@ -669,23 +669,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void fytCanbusMonitor(View view) {
 
+        final boolean[][] checkBoxes = {new boolean[4]};
+        DialogWithCheckboxes dialog = new DialogWithCheckboxes();
+        dialog.show(getSupportFragmentManager(), "dialog_with_checkboxes");
+    }
     public void continueWithMethodForFytCanbusMonitor(boolean mainChecked, boolean canbusChecked, boolean soundChecked, boolean canupChecked) {
         // Do something with the checked options
         Intent intent = new Intent(MainActivity.this, FytCanBusMonitor.class);
+        intent.putExtra("TITLE", getString(R.string.btn_fytcanbusmonitor));
         intent.putExtra("MAIN", mainChecked);
         intent.putExtra("CANBUS", canbusChecked);
         intent.putExtra("SOUND", soundChecked);
         intent.putExtra("CANUP", canupChecked);
         startActivity(intent);
     }
-    public void fytCanbusMonitor(View view) {
 
-        final boolean[][] checkBoxes = {new boolean[4]};
-        DialogWithCheckboxes dialog = new DialogWithCheckboxes();
-        dialog.show(getSupportFragmentManager(), "dialog_with_checkboxes");
-
-    }
 
     /**
      * This method makes a backup of the app layer as provided by FYT in the AllAppUpdate.bin
