@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import com.aoe.fytcanbusmonitor.IModuleCallback
 import java.io.OutputStream
 import java.time.Instant
+import java.util.Locale
 import java.util.concurrent.locks.ReentrantLock
 
 class ModuleCallback(private val name: String, private val view: TextView?) : IModuleCallback.Stub() {
@@ -22,7 +23,20 @@ class ModuleCallback(private val name: String, private val view: TextView?) : IM
         floatArray: FloatArray?,
         strArray: Array<String?>?
     ) {
-        logMsg("Module: $name Code: $updateCode Ints: ${intArray!![0]}")
+        if (intArray != null) {
+            var CodeValue = "0.0"
+            when (updateCode) {
+                101 -> {
+                    CodeValue = convertIntoToString(updateCode, intArray)
+                    logMsg("Module: $name Speed: $CodeValue")
+                }
+                114 -> {
+                    CodeValue = convertIntoToString(updateCode, intArray)
+                    logMsg("Module: $name Battery Voltage: $CodeValue")
+                }
+                else -> logMsg("Module: $name Code: $updateCode Ints: ${intArray!![0]}")
+            }
+        }
     }
 
     init {
@@ -49,7 +63,7 @@ class ModuleCallback(private val name: String, private val view: TextView?) : IM
         fun init(Act: FytCanBusMonitor) {
             act = Act
             view = Act.findViewById(R.id.text_view)
-            Log.i("TextView", "Count1: ${view?.lineCount}")
+            //Log.i("TextView", "Count1: ${view?.lineCount}")
             //view?.movementMethod = ScrollingMovementMethod()
             for (i in 1..100) {
                 lines.add("\n")
@@ -75,7 +89,7 @@ class ModuleCallback(private val name: String, private val view: TextView?) : IM
                     if ((numLines == 0) and (view!!.layout != null)) {
                         val height = view!!.height
                         numLines = view!!.layout.getLineForVertical(height)
-                        Log.i("TextView", "H:$height L1:$numLines")
+                        //Log.i("TextView", "H:$height L1:$numLines")
                     } else if (numLines > 0) {
                         while (lines.count() > numLines) {
                             lines.removeFirst()
@@ -89,7 +103,34 @@ class ModuleCallback(private val name: String, private val view: TextView?) : IM
                 ostrm!!.write((msg + "\n").toByteArray())
                 ostrm!!.flush()
             }
-            Log.i("UPDATE", msg)
+            //Log.i("UPDATE", msg)
+        }
+
+        private fun convertIntoToString(UpdateCode: Int, intArray: IntArray) : String {
+            return if (UpdateCode == 114) {
+                val valorMedidoFloat: Float = when {
+                    intArray[0] in 100..999 -> {
+                        val partInt = intArray[0] / 10
+                        val partDec = intArray[0] % 10
+                        "$partInt.$partDec".toFloat()
+                    }
+                    intArray[0] in 1000..9999 -> {
+                        val partInt = intArray[0] / 100
+                        val partDec = intArray[0] % 100
+                        "$partInt.${partDec / 10}${partDec % 10}".toFloat()
+                    }
+                    else -> intArray[0].toFloat()
+                }
+
+                // Ajuste considerando a diferença percentual
+                val diferencaPercentual = 2.80f / 100
+                val valorMedidoComAjuste = valorMedidoFloat + valorMedidoFloat * diferencaPercentual
+
+                // Especifica Locale.US para garantir que o ponto seja usado como separador decimal
+                String.format(Locale.US, "%.2f", valorMedidoComAjuste)
+            } else {
+                "Invalid UpdateCode"
+            }
         }
     }
 }

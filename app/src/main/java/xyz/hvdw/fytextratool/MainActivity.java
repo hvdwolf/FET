@@ -679,6 +679,7 @@ public class MainActivity extends AppCompatActivity {
         // Do something with the checked options
         Intent intent = new Intent(MainActivity.this, FytCanBusMonitor.class);
         intent.putExtra("TITLE", getString(R.string.btn_fytcanbusmonitor));
+        intent.putExtra("OPTION", "GENERAL");
         intent.putExtra("MAIN", mainChecked);
         intent.putExtra("CANBUS", canbusChecked);
         intent.putExtra("SOUND", soundChecked);
@@ -686,6 +687,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void fytMainMonitor(View view) {
+        Intent intent = new Intent(MainActivity.this, FytCanBusMonitor.class);
+        intent.putExtra("TITLE", getString(R.string.btn_fytcanbusmonitor));
+        intent.putExtra("OPTION", "MAIN_ONLY");
+        startActivity(intent);
+    }
 
     /**
      * This method makes a backup of the app layer as provided by FYT in the AllAppUpdate.bin

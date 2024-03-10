@@ -16,26 +16,33 @@ class FytCanBusMonitor : AppCompatActivity(), ComponentCallbacks2 {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_fytcanbusmonitor)
+        if (intent.getStringExtra("OPTION").equals("GENERAL")) {
+            setContentView(R.layout.activity_fytcanbusmonitor)
+
+            ModuleCallback.init(this)
+            if (intent.getBooleanExtra("MAIN", true)) {
+                connectMain()
+            }
+            if (intent.getBooleanExtra("CANBUS", false)) {
+                connectCanbus()
+            }
+            if (intent.getBooleanExtra("SOUND", false)) {
+                connectSound()
+            }
+            if (intent.getBooleanExtra("CANUP", false)) {
+                connectCanUp()
+            }
+        } else { // MAIN_ONLY uses a limited outputs only
+            setContentView(R.layout.activity_fyt_main_monitor)
+
+            ModuleCallback.init(this)
+            connectMain()
+        }
 
         val title = intent.getStringExtra("TITLE")
         supportActionBar?.title = title
 
-        ModuleCallback.init(this)
-        if (intent.getBooleanExtra("MAIN", true)) {
-            connectMain()
-        }
-        if (intent.getBooleanExtra("CANBUS", false)) {
-            connectCanbus()
-        }
-        if (intent.getBooleanExtra("SOUND", false)) {
-            connectSound()
-        }
-        if (intent.getBooleanExtra("CANUP", false)) {
-            connectCanUp()
-        }
         MsToolkitConnection.instance.connect(this)
-
     }
     // Make multi-window (split-screen) aware
     override fun onConfigurationChanged(newConfig: Configuration) {
