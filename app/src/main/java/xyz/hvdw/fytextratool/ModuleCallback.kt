@@ -27,11 +27,13 @@ class ModuleCallback(private val name: String, private val view: TextView?) : IM
             var CodeValue = "0.0"
             when (updateCode) {
                 101 -> {
-                    CodeValue = convertIntoToString(updateCode, intArray)
+                    // speed
+                    CodeValue = convertIntoToString(updateCode, intArray, false)
                     logMsg("Module: $name Speed: $CodeValue")
                 }
                 114 -> {
-                    CodeValue = convertIntoToString(updateCode, intArray)
+                    // voltage
+                    CodeValue = convertIntoToString(updateCode, intArray, false)
                     logMsg("Module: $name Battery Voltage: $CodeValue")
                 }
                 else -> logMsg("Module: $name Code: $updateCode Ints: ${intArray!![0]}")
@@ -106,31 +108,30 @@ class ModuleCallback(private val name: String, private val view: TextView?) : IM
             //Log.i("UPDATE", msg)
         }
 
-        private fun convertIntoToString(UpdateCode: Int, intArray: IntArray) : String {
-            return if (UpdateCode == 114) {
-                val valorMedidoFloat: Float = when {
-                    intArray[0] in 100..999 -> {
-                        val partInt = intArray[0] / 10
-                        val partDec = intArray[0] % 10
-                        "$partInt.$partDec".toFloat()
-                    }
-                    intArray[0] in 1000..9999 -> {
-                        val partInt = intArray[0] / 100
-                        val partDec = intArray[0] % 100
-                        "$partInt.${partDec / 10}${partDec % 10}".toFloat()
-                    }
-                    else -> intArray[0].toFloat()
+        private fun convertIntoToString(updateCode: Int, intArray: IntArray, needCorrection: Boolean) : String {
+
+            val measuredValueFloat: Float = when {
+                intArray[0] in 100..999 -> {
+                    val partInt = intArray[0] / 10
+                    val partDec = intArray[0] % 10
+                    "$partInt.$partDec".toFloat()
                 }
-
-                // Ajuste considerando a diferença percentual
-                val diferencaPercentual = 2.80f / 100
-                val valorMedidoComAjuste = valorMedidoFloat + valorMedidoFloat * diferencaPercentual
-
-                // Especifica Locale.US para garantir que o ponto seja usado como separador decimal
-                String.format(Locale.US, "%.2f", valorMedidoComAjuste)
-            } else {
-                "Invalid UpdateCode"
+                intArray[0] in 1000..9999 -> {
+                    val partInt = intArray[0] / 100
+                    val partDec = intArray[0] % 100
+                    "$partInt.${partDec / 10}${partDec % 10}".toFloat()
+                }
+                else -> intArray[0].toFloat()
             }
+
+            // Correct if necessary. Fagner did this for Voltage, I don't understand why but just leave it in temporarily
+            val newMeasuredValue = measuredValueFloat
+            if (needCorrection) {
+                val correctionPercentage = 2.80f / 100
+                val newMeasuredValue = measuredValueFloat + measuredValueFloat * correctionPercentage
+            }
+            // Use Locale.US to always use a dot as decimal separator
+            return String.format(Locale.US, "%.2f", newMeasuredValue)
         }
     }
 }
