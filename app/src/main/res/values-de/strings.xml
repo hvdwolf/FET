@@ -1,6 +1,6 @@
 <resources>
-    <string name="btn_adboverwifiandusbdebugging">Enable adb over WiFi and enable USB debugging</string>
-    <string name="adb_already_activated">ADB over TCPIP has already been enabled</string>
+    <string name="btn_adboverwifiandusbdebugging">Aktiviere ADB/WiFi, USB Debugging</string>
+    <string name="adb_already_activated">ADB über TCPIP ist schon aktiv</string>
     <string name="add_btsettings_to_fyt_settings_text">Fügt die sonst nicht direkt zugänglichen Standard-Bluetooth-Einstellungen den FYT-Einstellungen hinzu.</string>
     <string name="add_btsettings_to_fyt_settings_title">Standard-BT zu FYT-Einstellungen</string>
     <string name="admin_message_disabled">Geräte Admin : aktiv</string>
@@ -50,20 +50,20 @@
     <string name="menuitem_disable_pincode">PIN deaktivieren</string>
     <string name="menuitem_important_props">Einige wichtige Eigenschaften</string>
     <string name="btn_lock_unit">Gerät sperren</string>
-    <string name="btn_pin_readme">PIN: Read me!</string>
+    <string name="btn_pin_readme">PIN: Lesen!</string>
     <string name="btn_set_pincode">PIN einstellen</string>
     <string name="tab_bluetooth">Bluetooth</string>
-    <string name="tab_general">General</string>
+    <string name="tab_general">Allgemein</string>
     <string name="tab_lockscreen">Lockscreen</string>
     <string name="tab_system">System</string>
-    <string name="tab_settings">Settings</string>
+    <string name="tab_settings">Einstellungen</string>
     <string name="menu_other">Weitere</string>
     <string name="not_a_fyt">Kein FYT</string>
     <string name="not_a_fyt_message">Dies ist kein FYT-Gerät. Die App wird geschlossen.</string>
     <string name="not_applicable_abbreviation">N.A.</string>
     <string name="not_applicable_full">Nicht anwendbar</string>
-    <string name="not_rooted_title">The unit is not rooted</string>
-    <string name="not_rooted_text">Your unit is not rooted. This function can\'t be used.</string>
+    <string name="not_rooted_title">Das Gerät ist nicht gerooted</string>
+    <string name="not_rooted_text">Dein Gerät ist nicht gerooted. Diese Funktion kann nicht genutzt werden.</string>
     <string name="pin_disclaimer_text">Die PIN funktioniert auf Geräten ohne physische Knöpfe. Auf Geräten mit physischer Home-Taste wird diese Taste den Sperrbildschirm umgehen, der Sperrbildschirm ist dort also nutzlos.</string>
     <string name="pkg_name">Paketname</string>
     <string name="prepare_script">Das Skript wird vorbereitet</string>\    <string name="app_theme_light">Stelle auf helles Thema</string>
@@ -78,14 +78,14 @@
     <string name="dialog_start_zip">Starte Backup. Sei bitte geduldig und warten Sie auf das Popup.</string>
     <string name="version">Version</string>
     <string name="website">Website</string>
-    <string name="menuitem_used_os_tools">Open Source tools used</string>
-    <string name="used_os_tools_header">This application was made using the following Open Source tools (in alphabetical order):</string>
-    <string name="fytcanbusmonitor">Start FYT Canbus monitor</string>
-    <string name="m7_7870_unit_txt">This functionality can\'t be used on a 7870.</string>
-    <string name="m7_7870_config_txt_not_found">file config.txt does not exist or could not find file in folder /odm/app.</string>
+    <string name="menuitem_used_os_tools">Genutzte Open Source Tools</string>
+    <string name="used_os_tools_header">Für diese App wurden die folgenden Open Source Tools genutzt (alphabetisch):</string>
+    <string name="fytcanbusmonitor">Starte FYT Canbus Monitor</string>
+    <string name="m7_7870_unit_txt">Diese Funktion ist auf 7870 nicht nutzbar.</string>
+    <string name="m7_7870_config_txt_not_found">Datei config.txt existiert nicht oder wurde in /odm/app nicht gefunden.</string>
     <string name="btn_fytcanbusmonitor">FYT Canbus Monitor</string>
-    <string name="fytcanbusmonitor_select">Select options for monitoring</string>
-    <string name="fytcanbusmonitor_main">Main: No Canbus necessary</string>
+    <string name="fytcanbusmonitor_select">Wähle Optionen zum Monitoring</string>
+    <string name="fytcanbusmonitor_main">Primär: Benötigt keinen Canbus</string>
     <string name="fytcanbusmonitor_canbus">CANbus</string>
     <string name="fytcanbusmonitor_sound">Sound</string>
     <string name="fytcanbusmonitor_canup">Canup</string>

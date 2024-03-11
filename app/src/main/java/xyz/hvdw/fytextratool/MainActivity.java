@@ -89,8 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tabLayout);
         frameLayout = findViewById(R.id.frameLayout);
-        //appMode = findViewById(R.id.action_apptogglebutton);
-        //suSystemMode = findViewById(R.id.suDeviceDayNight);
 
         // Add tabs
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_general)));
@@ -150,8 +148,6 @@ public class MainActivity extends AppCompatActivity {
             Utils.checkPermissions(this);
             // Check app and system modi and set button texts
             textButtonsAppSystem();
-            //String remoteVersion = CheckUpdates.readFETVersionString("https://raw.githubusercontent.com/hvdwolf/FET/main/version.txt");
-            //String remoteVersion = CheckUpdates.readFETVersionString("https://github.com/hvdwolf/FET/blob/main/app/build.gradle");
             //String remoteVersion = CheckUpdates.readFETVersionString("https://raw.githubusercontent.com/hvdwolf/FET/main/app/build.gradle");
             //Utils.showInfoDialog(this, "remoteVersion", remoteVersion);
 
@@ -320,29 +316,12 @@ public class MainActivity extends AppCompatActivity {
     //////// End of buttons for lockscreen
 
     private void textButtonsAppSystem() {
-        //Button appMode = findViewById(R.id.toggleButton);
-        //appMode = findViewById(R.id.action_apptogglebutton);
 
         int currentMode = getSavedMode("App");
         Logger.logToFile("current app mode = " + String.valueOf(currentMode));
         String appMode = "current app mode = " + String.valueOf(currentMode);
         applyAppModeFromStart(currentMode);
-        //Toast.makeText(this, "current app mode = " + String.valueOf(currentMode), Toast.LENGTH_LONG).show();
-        // I need to fix this some time.
-        /*MenuItem menuitemAppMode = menu.findItem(R.id.action_apptogglebutton);
-        if (currentMode == AppCompatDelegate.MODE_NIGHT_YES) {
-            //appMode.setText(R.string.app_theme_light);
-            //appMode.setTitle(R.string.app_theme_light);
-            //toggleTextItem.setTitle(R.string.app_theme_light);
-            menuitemAppMode.setTitle(R.string.app_theme_light);
-            Toast.makeText(this, "current app mode = " + String.valueOf(currentMode), Toast.LENGTH_LONG).show();
-        } else {
-            //appMode.setText(R.string.app_theme_dark);
-            //appMode.setTitle(R.string.app_theme_dark);
-            //toggleTextItem.setTitle(R.string.app_theme_dark);
-            menuitemAppMode.setTitle(R.string.app_theme_dark);
-            Toast.makeText(this, "current app mode = " + String.valueOf(currentMode), Toast.LENGTH_LONG).show();
-        }*/
+
         currentMode = getSavedMode("System");
         Logger.logToFile("current system mode = " + String.valueOf(currentMode));
         String systemMode = "current system mode = " + String.valueOf(currentMode);
@@ -361,22 +340,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*private void disableRootedButtons() {
-        Fragment_General fragmentGeneral = (Fragment_General) getSupportFragmentManager().findFragmentById(R.id.fragment_general);
-        if (fragmentGeneral != null) {
-            Toast.makeText(MainActivity.this, "Trying to disable daynight and editconfig", Toast.LENGTH_SHORT).show();
-            fragmentGeneral.disableDayNightButton(false);
-            fragmentGeneral.disableEditoConfigbtn(false);
-        }
-        Fragment_Bluetooth fragmentBluetooth = (Fragment_Bluetooth) getSupportFragmentManager().findFragmentById(R.id.fragment_bluetooth);
-        if (fragmentBluetooth != null) {
-            fragmentBluetooth.disableAddbttosettings();
-        }
-        Fragment_Settings fragmentSettings = (Fragment_Settings) getSupportFragmentManager().findFragmentById(R.id.fragment_settings);
-        if (fragmentSettings != null) {
-            fragmentSettings.disableADBUSBButton();
-        }
-    } */
 
     public void dispImportantProperties() {
         Utils.showAboutDialog(this, "properties");
@@ -490,13 +453,6 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    /*
-    @Override
-    protected void onUserLeaveHint() {
-        // Disable the home button
-        //Toast.makeText(this, "Home button disabled", Toast.LENGTH_SHORT).show();
-        //Log.i("Home button disabled");
-    } */
 
     public void exitApp(View view) {
         // Call finish() to exit the program
