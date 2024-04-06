@@ -25,7 +25,7 @@
     <string name="btn_headunit_settings">Open Head unit Settings</string>
     <string name="btn_ok">OK</string>
     <string name="btn_open_def_bt">Standaard BT-instellingen openen</string>
-    <string name="btn_save">Save</string>
+    <string name="btn_save">Opslaan</string>
     <string name="btn_system_info">systeem info</string>
     <string name="btn_zip_allappupdate">Backup FYT apps in AllAppUpdate.bin</string>
     <string name="btsettings_already_added_to_fyt_settings_text">De standaard Bluetooth settings zijn al toegevoegd aan de FYT Settings apk.</string>
