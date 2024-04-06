@@ -60,6 +60,22 @@
             android:text="@string/btn_adboverwifiandusbdebugging"
             android:drawableLeft="@drawable/root_icon" />
 
+        <Button
+            android:id="@+id/batteryoptimization"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="batteryoptimization"
+            android:text="Battery Optimization" />
+
+        <Button
+            android:id="@+id/setfontsize"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="setFontSize"
+            android:text="@string/btn_change_font_scale" />
+
     </LinearLayout>
 
 

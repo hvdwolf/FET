@@ -16,7 +16,7 @@ class FytCanBusMonitor : AppCompatActivity(), ComponentCallbacks2 {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (intent.getStringExtra("OPTION").equals("GENERAL")) {
+        /*if (intent.getStringExtra("OPTION").equals("GENERAL")) {
             setContentView(R.layout.activity_fytcanbusmonitor)
 
             ModuleCallback.init(this)
@@ -37,6 +37,22 @@ class FytCanBusMonitor : AppCompatActivity(), ComponentCallbacks2 {
 
             ModuleCallback.init(this)
             connectMain()
+        }*/
+
+        setContentView(R.layout.activity_fytcanbusmonitor)
+
+        ModuleCallback.init(this)
+        if (intent.getBooleanExtra("MAIN", true)) {
+            connectMain()
+        }
+        if (intent.getBooleanExtra("CANBUS", false)) {
+            connectCanbus()
+        }
+        if (intent.getBooleanExtra("SOUND", false)) {
+            connectSound()
+        }
+        if (intent.getBooleanExtra("CANUP", false)) {
+            connectCanUp()
         }
 
         val title = intent.getStringExtra("TITLE")

@@ -10,7 +10,7 @@ import android.widget.CheckBox;
 
 import androidx.fragment.app.DialogFragment;
 
-public class DialogWithCheckboxes extends DialogFragment {
+public class FytCanbusDialogWithCheckboxes extends DialogFragment {
 
     private CheckBox checkboxMain;
     private CheckBox checkboxCanbus;

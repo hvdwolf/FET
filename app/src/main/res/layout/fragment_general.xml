@@ -71,5 +71,14 @@
             android:visibility="gone"
             android:text="Test: show storage locations"/>
 
+        <Button
+            android:id="@+id/kioskactivity"
+            android:onClick="kioskActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/number_pad_margin_top"
+            android:visibility="gone"
+            android:text="KioskMode"/>
+
     </LinearLayout>
 </RelativeLayout>

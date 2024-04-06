@@ -85,8 +85,18 @@
     <string name="m7_7870_config_txt_not_found">Datei config.txt existiert nicht oder wurde in /odm/app nicht gefunden.</string>
     <string name="btn_fytcanbusmonitor">FYT Canbus Monitor</string>
     <string name="fytcanbusmonitor_select">Wähle Optionen zum Monitoring</string>
-    <string name="fytcanbusmonitor_main">Primär: Benötigt keinen Canbus</string>
+    <string name="fytcanbusmonitor_main">Primär (Mcu): Benötigt keinen Canbus</string>
     <string name="fytcanbusmonitor_canbus">CANbus</string>
     <string name="fytcanbusmonitor_sound">Sound</string>
     <string name="fytcanbusmonitor_canup">Canup</string>
+    <string name="fyt_main_voltage">Voltage</string>
+    <string name="fyt_main_outtemp">Outside temperature</string>
+    <string name="fyt_main_speed">Speed</string>
+    <string name="fyt_main_volume">Volume</string>
+    <string name="btn_change_font_scale">Change System Font Scale</string>
+    <string name="change_font_scale_title">Change System Font Scale</string>
+    <string name="change_font_scale_info">Pull the slider left or right to change the font scaling. Press \"Save\" to apply the font scale.</string>
+    <string name="change_font_scale_preview">Font Scaling</string>
+    <string name="btn_battery_optimization">Battery Optimization</string>
+
 </resources>

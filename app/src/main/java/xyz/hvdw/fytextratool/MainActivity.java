@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String DAY_MODE = "day";
     private static final String NIGHT_MODE = "night";
     private Boolean logFileCreated = false;
+    private int currentTabIndex = 0; // We use this to get back to the same tab index when returning from another screen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                currentTabIndex = tab.getPosition(); // Set tabindex to be able to rerurn to same tab
                 switch (tab.getPosition()) {
                     case 0:
                         loadFragment(new Fragment_General());
@@ -146,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
         if (checkIsFYT()) {
             //If it is a FYT we can continue and do some further checks
             Utils.checkPermissions(this);
+            //Rescue option for wrong font size
+            //Settings.System.putFloat(getBaseContext().getContentResolver(), "font_scale", 8.0f);
             // Check app and system modi and set button texts
             textButtonsAppSystem();
             //String remoteVersion = CheckUpdates.readFETVersionString("https://raw.githubusercontent.com/hvdwolf/FET/main/app/build.gradle");
@@ -555,6 +559,11 @@ public class MainActivity extends AppCompatActivity {
         Utils.startExternalAppByActivity(this,"com.sprd.engineermode", "com.sprd.engineermode.EngineerModeActivity");
     }
 
+    public void setFontSize(View view) {
+        Intent intent = new Intent(MainActivity.this, ChangeFontScaleActivity.class);
+        startActivity(intent);
+    }
+
     public void adboverwifiandusbdebugging(View view) {
         if ( (MyGettersSetters.getIsRooted()) || MyGettersSetters.getIsMagiskRooted()) {
             // First we enable the USB debugging. We do not even check if it us enabled
@@ -625,10 +634,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void batteryoptimization(View view) {
+        Logger.logToFile("Starting the Battery Optimization Settings");
+        Intent intent = new Intent();
+        intent.setAction(android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+        startActivity(intent);
+    }
+
+    public void kioskActivity(View view) {
+        Intent intent = new Intent(MainActivity.this, KioskActivity.class);
+        startActivity(intent);
+    }
+
     public void fytCanbusMonitor(View view) {
 
         final boolean[][] checkBoxes = {new boolean[4]};
-        DialogWithCheckboxes dialog = new DialogWithCheckboxes();
+        FytCanbusDialogWithCheckboxes dialog = new FytCanbusDialogWithCheckboxes();
         dialog.show(getSupportFragmentManager(), "dialog_with_checkboxes");
     }
     public void continueWithMethodForFytCanbusMonitor(boolean mainChecked, boolean canbusChecked, boolean soundChecked, boolean canupChecked) {
