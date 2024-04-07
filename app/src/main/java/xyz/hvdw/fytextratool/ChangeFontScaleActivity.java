@@ -31,6 +31,7 @@ public class ChangeFontScaleActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(getString(R.string.change_font_scale_title));
         }
+        font_preview.setText(getString(R.string.change_font_scale_preview) + ": 1.0");
 
         if (!Settings.System.canWrite(this)) {
             Intent intent = new Intent("android.settings.action.MANAGE_WRITE_SETTINGS");
