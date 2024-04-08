@@ -79,7 +79,7 @@
     <string name="website">sito</string>
     <string name="menuitem_used_os_tools">Strumenti Sorgente Aperta utilizzati</string>
     <string name="used_os_tools_header">Questa applicazione è stata realizzata utilizzando i seguenti strumenti Sorgente Aperta(in ordine alfabetico):</string>
-    <string name="fytcanbusmonitor">Iniziato FYT Canbus monitor</string>
+    <string name="fytcanbusmonitor">Avvio FYT Canbus monitor</string>
     <string name="m7_7870_unit_txt">Questa funzionalità non può essere utilizzata su un 7870.</string>
     <string name="m7_7870_config_txt_not_found">il file config.txt non esiste o non è stato possibile trovare il file nella cartella /odm/app.</string>
     <string name="btn_fytcanbusmonitor">FYT Canbus Monitor</string>
@@ -88,14 +88,14 @@
     <string name="fytcanbusmonitor_canbus">Canbus</string>
     <string name="fytcanbusmonitor_sound">Suono</string>
     <string name="fytcanbusmonitor_canup">Canup</string>
-    <string name="fyt_main_voltage">Voltage</string>
-    <string name="fyt_main_outtemp">Outside temperature</string>
-    <string name="fyt_main_speed">Speed</string>
+    <string name="fyt_main_voltage">Voltaggio</string>
+    <string name="fyt_main_outtemp">Temperatura esterna</string>
+    <string name="fyt_main_speed">Velocità</string>
     <string name="fyt_main_volume">Volume</string>
-    <string name="btn_change_font_scale">Change System Font Scale</string>
-    <string name="change_font_scale_title">Change System Font Scale</string>
-    <string name="change_font_scale_info">Pull the slider left or right to change the font scaling. Press \"Save\" to apply the font scale.</string>
-    <string name="change_font_scale_preview">Font Scaling</string>
-    <string name="btn_battery_optimization">Battery Optimization</string>
+    <string name="btn_change_font_scale">Modifica la scala del carattere del sistema</string>
+    <string name="change_font_scale_title">Modifica la scala del carattere del sistema</string>
+    <string name="change_font_scale_info">Trascina il cursore verso sinistra o verso destra per modificare il ridimensionamento del carattere. Premi \"Salva\" per applicare la scala del carattere.</string>
+    <string name="change_font_scale_preview">Ridimensionamento dei caratteri</string>
+    <string name="btn_battery_optimization">Ottimizzatore della batteria</string>
 
 </resources>

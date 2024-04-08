@@ -89,14 +89,14 @@
     <string name="fytcanbusmonitor_canbus">CANbus</string>
     <string name="fytcanbusmonitor_sound">Sound</string>
     <string name="fytcanbusmonitor_canup">Canup</string>
-    <string name="fyt_main_voltage">Voltage</string>
-    <string name="fyt_main_outtemp">Outside temperature</string>
-    <string name="fyt_main_speed">Speed</string>
-    <string name="fyt_main_volume">Volume</string>
-    <string name="btn_change_font_scale">Change System Font Scale</string>
-    <string name="change_font_scale_title">Change System Font Scale</string>
-    <string name="change_font_scale_info">Pull the slider left or right to change the font scaling. Press \"Save\" to apply the font scale.</string>
-    <string name="change_font_scale_preview">Font Scaling</string>
-    <string name="btn_battery_optimization">Battery Optimization</string>
+    <string name="fyt_main_voltage">Spannung</string>
+    <string name="fyt_main_outtemp">Außentemperatur</string>
+    <string name="fyt_main_speed">Geschwindigkeit</string>
+    <string name="fyt_main_volume">Lautstärke</string>
+    <string name="btn_change_font_scale">Schriftgröße</string>
+    <string name="change_font_scale_title">Größe der Systemschrift ändern</string>
+    <string name="change_font_scale_info">Ziehe den Regler zur Anpassung der Schriftgröße nach rechts oder links. Drücke abschließend \"Speichern\".</string>
+    <string name="change_font_scale_preview">Schriftgröße</string>
+    <string name="btn_battery_optimization">Batterieoptimierung</string>
 
 </resources>
