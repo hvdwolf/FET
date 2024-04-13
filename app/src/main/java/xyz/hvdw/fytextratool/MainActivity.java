@@ -5,7 +5,11 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -148,12 +152,8 @@ public class MainActivity extends AppCompatActivity {
         if (checkIsFYT()) {
             //If it is a FYT we can continue and do some further checks
             Utils.checkPermissions(this);
-            //Rescue option for wrong font size
-            //Settings.System.putFloat(getBaseContext().getContentResolver(), "font_scale", 8.0f);
             // Check app and system modi and set button texts
             textButtonsAppSystem();
-            //String remoteVersion = CheckUpdates.readFETVersionString("https://raw.githubusercontent.com/hvdwolf/FET/main/app/build.gradle");
-            //Utils.showInfoDialog(this, "remoteVersion", remoteVersion);
 
             // Check if rooted. If not disable some buttons
             boolean isRooted = CheckIfRooted.isUnitRooted(this);
@@ -172,6 +172,10 @@ public class MainActivity extends AppCompatActivity {
             // Where is my External Storage ?
             Logger.logToFile("ExternalStorage path is " + FileUtils.strExternalStorage());
             //Toast.makeText(MainActivity.this, FileUtils.strExternalStorage(), Toast.LENGTH_SHORT).show();
+
+            // And finally check for a new Version
+            CheckForNewVersion();
+
         }
 
 
@@ -184,7 +188,8 @@ public class MainActivity extends AppCompatActivity {
     }
     // End of OnCreate
 
-   // Handle mulit-window support in case of splitscreen
+
+    // Handle multi-window support in case of splitscreen
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -291,6 +296,19 @@ public class MainActivity extends AppCompatActivity {
             Utils.showAboutDialog(this, "about");
             return true;
         }
+        if (id == R.id.check_new_version) {
+            if (isInternetAvailable(this)) {
+                String githubRawUrl = "https://raw.githubusercontent.com/hvdwolf/FET/main/version.txt";
+
+                GitHubCheckVersion fileReader = new GitHubCheckVersion(this);
+                fileReader.readTextFileFromGitHub(githubRawUrl);
+                return true;
+            } else {
+                //popup no internet
+                Utils.showInfoDialog(this, getString(R.string.version_check_no_internet_available_title),
+                        ( getString(R.string.version_check_no_internet_available_title) + "\n" + getString(R.string.version_check_have_internet_text) ));
+            }
+        }
 
         if (id == R.id.action_used_os_tools) {
             Utils.showAboutDialog(this, "used_os_tools");
@@ -301,7 +319,18 @@ public class MainActivity extends AppCompatActivity {
     }
     /////////////////////////////////////////////  top-right menu /////////////////////////
 
-    // Buttons for locscreen
+    /* Check if we even have internet before trying to check for a new version.
+    */
+    private static boolean isInternetAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+        return false;
+    }
+
+    // Buttons for lockscreen
     public void setPass(View view) {
         EasyLock.setPassword(this, TestActivity.class);
     }
@@ -318,6 +347,16 @@ public class MainActivity extends AppCompatActivity {
         EasyLock.checkPassword(this);
     }
     //////// End of buttons for lockscreen
+
+    private void CheckForNewVersion() {
+        if (isInternetAvailable(this)) {
+            String githubRawUrl = "https://raw.githubusercontent.com/hvdwolf/FET/main/version.txt";
+
+            GitHubCheckVersion fileReader = new GitHubCheckVersion(this);
+            fileReader.readTextFileFromGitHub(githubRawUrl);
+            //return true;
+        }
+    }
 
     private void textButtonsAppSystem() {
 

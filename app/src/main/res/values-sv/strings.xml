@@ -97,5 +97,16 @@
     <string name="change_font_scale_info">Dra reglaget åt vänster eller höger för att ändra teckensnittets skalning. Tryck på \"Spara\" för att tillämpa teckensnittsskalan.</string>
     <string name="change_font_scale_preview">Teckensnittsskalning</string>
     <string name="btn_battery_optimization">Batterioptimisering</string>
-
+    <string name="menuitem_check_new_version">Check for new version</string>
+    <string name="version_check_popup_title">Version check result</string>
+    <string name="version_check_no_access_github">No access to github.</string>
+    <string name="version_check_no_access_xda">No access to XDA.</string>
+    <string name="version_check_no_internet_available_title">No internet available</string>
+    <string name="version_check_no_internet_available_text">Currently there is no internet available</string>
+    <string name="version_check_have_internet_text">Do you have access to internet?</string>
+    <string name="version_check_new_version">There is a new version available:</string>
+    <string name="version_check_ask_what_to_do">Download the APK from github?, or open the post in the XDA forum?</string>
+    <string name="btn_download_apk">Download apk</string>
+    <string name="btn_open_xda">Open XDA</string>
+    <string name="version_check_no_new_version">The local version is already the latest version:</string>
 </resources>

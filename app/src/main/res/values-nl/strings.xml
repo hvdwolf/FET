@@ -99,5 +99,16 @@
     <string name="change_font_scale_info">Trek de schuifregelaar naar links of rechts om de lettertype schaal aan te passen. Klik \"Opslaan\" om lettertype schaal op te slaan.</string>
     <string name="change_font_scale_preview">Lettertype Schaal</string>
     <string name="btn_battery_optimization">Batterijoptimalisatie</string>
-
+    <string name="menuitem_check_new_version">Controleren op nieuwe versie</string>
+    <string name="version_check_popup_title">Versie controle resultaat</string>
+    <string name="version_check_no_access_github">Geen toegang tot github.</string>
+    <string name="version_check_no_access_xda">Geen toegang tot XDA.</string>
+    <string name="version_check_no_internet_available_title">Geen internet beschikbaar</string>
+    <string name="version_check_no_internet_available_text">Op dit moment is er geen internet beschikbaar</string>
+    <string name="version_check_have_internet_text">Heb je toegang tot internet?</string>
+    <string name="version_check_new_version">Er is een nieuwe versie beschikbaar:</string>
+    <string name="version_check_ask_what_to_do">Download de APK van github?, of de post in het XDA forum openen?</string>
+    <string name="btn_download_apk">Download apk</string>
+    <string name="btn_open_xda">Open XDA</string>
+    <string name="version_check_no_new_version">De lokale geinstalleerde versie is al de nieuwste versie:</string>
 </resources>

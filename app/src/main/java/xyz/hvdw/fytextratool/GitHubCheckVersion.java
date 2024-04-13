@@ -1,10 +1,15 @@
 package xyz.hvdw.fytextratool;
 
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +18,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class GitHubTextFileReader {
+public class GitHubCheckVersion {
 
     private Context context;
     int webVersion = 0;
@@ -21,7 +26,7 @@ public class GitHubTextFileReader {
     String popupText = "";
     String whichIsNewer = "";
 
-    public GitHubTextFileReader(Context context) {
+    public GitHubCheckVersion(Context context) {
         this.context = context;
     }
 
@@ -47,6 +52,9 @@ public class GitHubTextFileReader {
                 }
                 return result.toString();
             } catch (IOException e) {
+                Logger.logToFile("Can't connect to github to check. No internet");
+                Utils.showInfoDialog(context, context.getString(R.string.version_check_no_access_github),
+                        ( context.getString(R.string.version_check_no_access_github) + " " + context.getString(R.string.version_check_have_internet_text) ));
                 e.printStackTrace();
             } finally {
                 if (urlConnection != null) {
@@ -58,6 +66,7 @@ public class GitHubTextFileReader {
 
         @Override
         protected void onPostExecute(String result) {
+            String formattedVersion = "";
             if (result != null) {
                 try {
                     PackageManager manager = context.getPackageManager();
@@ -70,14 +79,18 @@ public class GitHubTextFileReader {
                         Logger.logToFile("webVersion can't be converted to int: " + e.toString());
                         throw new RuntimeException(e);
                     }
-                    if (webVersion > localVersion) {
-                        Logger.logToFile("The webversion is newer:" + cleanResult);
-                        popupText = "There is a new version available:  " + getFormattedString(cleanResult);
-                        popupText += "\nOpen the download post in the XDA forum?";
-                        whichIsNewer = "web";
-                    } else {
-                        popupText = "The local version is already the latest version: " + getFormattedString(String.valueOf(localVersion));
-                        whichIsNewer = "local";
+                    if (webVersion != 0) {
+                        if (webVersion > localVersion) {
+                            Logger.logToFile("The webversion is newer:" + cleanResult);
+                            popupText = context.getString(R.string.version_check_new_version) + " " + getFormattedString(cleanResult);
+                            formattedVersion = getFormattedString(cleanResult);
+                            popupText += "\n" + context.getString(R.string.version_check_ask_what_to_do);
+                            whichIsNewer = "web";
+                        } else {
+                            popupText = context.getString(R.string.version_check_no_new_version) + " " + getFormattedString(String.valueOf(localVersion));
+                            formattedVersion = getFormattedString(String.valueOf(localVersion));
+                            whichIsNewer = "local";
+                        }
                     }
                 } catch (PackageManager.NameNotFoundException e) {
                     Logger.logToFile("packagemenager error " + e.toString());
@@ -85,7 +98,7 @@ public class GitHubTextFileReader {
                 }
 
                 //displayPopup(String.valueOf(localVersion));
-                displayPopup(popupText, whichIsNewer);
+                displayPopup(popupText, whichIsNewer, formattedVersion);
             } else {
                 // Handle error case
             }
@@ -111,19 +124,62 @@ public class GitHubTextFileReader {
         return formattedVersion;
     }
 
-    private void displayPopup(String text, String whichIsNewer) {
+    private void displayPopup(String text, String whichIsNewer, String formattedVersion) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(text);
+        builder.setTitle(context.getString(R.string.version_check_popup_title));
         if (whichIsNewer.contains("web")) {
-            builder.setMessage(text)
-                    .setTitle("Github Text File Content")
-                    .setPositiveButton("OK", null)
-                    .setNegativeButton("Cancel", null);
+            builder.setPositiveButton(context.getString(R.string.btn_download_apk), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    downloadApk(context, formattedVersion);
+                    dialog.dismiss(); // Close the dialog
+                    // Call a method or perform an action
+                }
+            });
+            builder.setNeutralButton(context.getString(R.string.btn_open_xda), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    openXDA(context);
+                }
+            });
+            builder.setNegativeButton(context.getString(R.string.btn_cancel), null);
         } else {
-            builder.setMessage(text)
-                    .setTitle("Github Text File Content")
-                    .setPositiveButton("OK", null);
+            builder.setPositiveButton(context.getString(R.string.btn_ok), null);
         }
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+    private void openXDA(Context context) {
+        // Create an Intent with ACTION_VIEW and the URL
+        String url = "https://xdaforums.com/t/fet-fyt-extra-tool.4653315/#post-89303107";
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            Utils.showInfoDialog(context, context.getString(R.string.version_check_no_access_xda),
+                    context.getString(R.string.version_check_no_access_xda) + " " + context.getString(R.string.version_check_have_internet_text) );
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void downloadApk(Context context, String releaseVersion) {
+        String baseLink = "https://github.com/hvdwolf/FET/releases/download/";
+        String baseApk = "xyz.hvdw.fytextratool.apk";
+        String releaseUrl = baseLink + releaseVersion + "/" + baseApk;
+        //Utils.showInfoDialog(context, "apk path", "path is: " + releaseUrl);
+
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(releaseUrl));
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, baseApk);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setTitle(baseApk);
+
+        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        if (downloadManager != null) {
+            downloadManager.enqueue(request);
+        }
+    }
+
 }

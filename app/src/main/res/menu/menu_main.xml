@@ -19,6 +19,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/check_new_version"
+        android:title="@string/menuitem_check_new_version"
+        android:orderInCategory="150"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_about"
         android:title="@string/menuitem_about_text"
         android:orderInCategory="200"
