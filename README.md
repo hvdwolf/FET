@@ -12,19 +12,21 @@ As of 1.2.0 the app switched to a tab layout.<br>
 
 
 ## Installation
-Just side-load the application from your file manager.<br><br>
+Just side-load the application from your file manager.<br>
+As of version 1.3.0 there is an auto-check on startup that checks for new versions and will offer to download the APK (to folder Downloads, no auto-install).
+This version check can also be started from the top-right menu.<br>
 
 ## Releases
-The releases are not done via github, but via the XDA-forum via the thread: https://xdaforums.com/t/fet-fyt-extra-tool.4653315/ <br>
-That is also where you find the Changelogs and more screenshots displaying new/modified functionality.
+The releases aredone via github AND via the XDA-forum via the thread: https://xdaforums.com/t/fet-fyt-extra-tool.4653315/ <br>
+That is also where you find the Changelogs, where you get support and where you can find more screenshots displaying new/modified functionality.
 
 ## Translations
-Default is (US) English. Translated (90~100%) in Dutch, German, Greek, Italian, Polish, Russian, Swedish, Turkish, Vietnamese.
+Default is (US) English. Translated (90~100%) in Dutch, German, Greek, Italian, Polish, Russian, Swedish, Turkish, Vietnamese.<br>
 
 <HR>
 
 
-Copyleft 2023 Harry van der Wolf (surfer63), MIT License.<br>
+Copyleft 2023-2024 Harry van der Wolf (surfer63), MIT License.<br>
 Copyright (c) 2018 Fayaz Bin Salam for his easypasscodelock functionality, MIT License.<br>
 Libsu from TopJohnWu, Apache 2 license.<br>
 Copyright AxesOfEvil for his FYTCanbusMonitor library.<br><br>
