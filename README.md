@@ -17,7 +17,7 @@ As of version 1.3.0 there is an auto-check on startup that checks for new versio
 This version check can also be started from the top-right menu.<br>
 
 ## Releases
-The releases aredone via github AND via the XDA-forum via the thread: https://xdaforums.com/t/fet-fyt-extra-tool.4653315/ <br>
+The releases are done via github AND via the XDA-forum via the thread: [https://xdaforums.com/t/fet-fyt-extra-tool.4653315/](https://xdaforums.com/t/fet-fyt-extra-tool.4653315/) <br>
 That is also where you find the Changelogs, where you get support and where you can find more screenshots displaying new/modified functionality.
 
 ## Translations
