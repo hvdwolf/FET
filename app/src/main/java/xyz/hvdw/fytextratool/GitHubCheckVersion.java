@@ -28,12 +28,14 @@ public class GitHubCheckVersion {
     String popupText = "";
     String whichIsNewer = "";
     private static long downloadID;
+    String thisAction = "";
 
     public GitHubCheckVersion(Context context) {
         this.context = context;
     }
 
-    public void readTextFileFromGitHub(String url) {
+    public void readTextFileFromGitHub(String url, String whichAction) {
+        thisAction = whichAction;
         new ReadTextFileTask().execute(url);
     }
 
@@ -90,9 +92,9 @@ public class GitHubCheckVersion {
                             popupText += "\n" + context.getString(R.string.version_check_ask_what_to_do);
                             whichIsNewer = "web";
                         } else {
-                            popupText = context.getString(R.string.version_check_no_new_version) + " " + getFormattedString(String.valueOf(localVersion));
-                            formattedVersion = getFormattedString(String.valueOf(localVersion));
-                            whichIsNewer = "local";
+                                popupText = context.getString(R.string.version_check_no_new_version) + " " + getFormattedString(String.valueOf(localVersion));
+                                formattedVersion = getFormattedString(String.valueOf(localVersion));
+                                whichIsNewer = "local";
                         }
                     }
                 } catch (PackageManager.NameNotFoundException e) {
@@ -101,7 +103,14 @@ public class GitHubCheckVersion {
                 }
 
                 //displayPopup(String.valueOf(localVersion));
-                displayPopup(popupText, whichIsNewer, formattedVersion);
+                if (whichIsNewer.contains("web")) {
+                    // Always display
+                    displayPopup(popupText, whichIsNewer, formattedVersion);
+                } else { //so local is newer; Only show when called from menu
+                    if (thisAction.contains("menuCheck")) {
+                        displayPopup(popupText, whichIsNewer, formattedVersion);
+                    }
+                }
             } else {
                 // Handle error case
             }

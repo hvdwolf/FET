@@ -83,9 +83,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String PREF_SYSTEM_MODE_KEY = "system_mode";
     private static final String DAY_MODE = "day";
     private static final String NIGHT_MODE = "night";
-    //private static final String PREF_FIRST_START = "first_start";
-    //private static final String FIRST_START =  "true"; 
+    private static final String PREF_FIRST_START = "first_start";
+    //private static final String FIRST_START =  "true";
+    private boolean onCreateCalled = false;
     private Boolean logFileCreated = false;
+    private static final String KEY_ALREADY_EXECUTED = "already_executed";
     private int currentTabIndex = 0; // We use this to get back to the same tab index when returning from another screen
 
     @Override
@@ -94,8 +96,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Context context;
 
-        // First set versionCheckDone GetterSetter
-        MyGettersSetters.setVersionCheckDone(false);
         tabLayout = findViewById(R.id.tabLayout);
         frameLayout = findViewById(R.id.frameLayout);
 
@@ -143,50 +143,56 @@ public class MainActivity extends AppCompatActivity {
         // Set default fragment on launch
         loadFragment(new Fragment_General());
 
+        boolean alreadyExecuted = savedInstanceState != null && savedInstanceState.getBoolean(KEY_ALREADY_EXECUTED, false);
 
-        // Make sure it is only executed once, for example after a reconfigure. Like the app light/dark restarts the onCreate
-        if (!logFileCreated) {
-            String logFileName = createLogFile();
-            MyGettersSetters.setLogFileName(logFileName);
-            logFileCreated = true;
-        }
-        Log.i(TAG, "Start of program at " + Utils.getDateTime());
-        Logger.logToFile("Start of program at " + Utils.getDateTime());
-        // Is this a FYT and as second test: on Android 10 SDK 29
-        if (checkIsFYT()) {
-            //If it is a FYT we can continue and do some further checks
-            Utils.checkPermissions(this);
-
-            // Check app and system modi and set button texts
-            // We also do the startup version check inside this method as we will otherwise see the poup twice (day/night) on a new version.
-            textButtonsAppSystem();
-
-            // Check if rooted. If not disable some buttons
-            boolean isRooted = CheckIfRooted.isUnitRooted(this);
-            MyGettersSetters.setIsRooted(isRooted);
-            Logger.logToFile("Boolean isRooted is " + Boolean.toString(isRooted));
-            boolean isMagiskRooted = CheckIfRooted.isMagiskRooted(this);
-            MyGettersSetters.setIsMagiskRooted(isMagiskRooted);
-            Logger.logToFile("Boolean isMagiskRooted is " + Boolean.toString(isMagiskRooted));
-            if ( !isRooted && !isMagiskRooted) {
-                //disableRootedButtons();
-                Logger.logToFile("The unit is not rooted.");
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        String firstStart = preferences.getString(PREF_FIRST_START, "true");
+        //if (!alreadyExecuted) {
+        if (firstStart.contains("true")) {
+        //if (!onCreateCalled) {
+            // Make sure it is only executed once, for example after a reconfigure. Like the app light/dark restarts the onCreate
+            if (!logFileCreated) {
+                String logFileName = createLogFile();
+                MyGettersSetters.setLogFileName(logFileName);
+                logFileCreated = true;
             }
-            /*if ( !(CheckIfRooted.isUnitRooted()) && !(CheckIfRooted.isMagiskRooted()) ) {
+            Log.i(TAG, "Start of program at " + Utils.getDateTime());
+            Logger.logToFile("Start of program at " + Utils.getDateTime());
+            // Is this a FYT and as second test: on Android 10 SDK 29
+            if (checkIsFYT()) {
+                //If it is a FYT we can continue and do some further checks
+                Utils.checkPermissions(this);
 
-            }*/
-            // Where is my External Storage ?
-            Logger.logToFile("ExternalStorage path is " + FileUtils.strExternalStorage());
-            //Toast.makeText(MainActivity.this, FileUtils.strExternalStorage(), Toast.LENGTH_SHORT).show();
-
-            // And finally check for a new Version
-            if (!MyGettersSetters.getVersionCheckDone()) {
                 CheckForNewVersion();
-                MyGettersSetters.setVersionCheckDone(true);
+
+                // Check if rooted. If not disable some buttons
+                boolean isRooted = CheckIfRooted.isUnitRooted(this);
+                MyGettersSetters.setIsRooted(isRooted);
+                Logger.logToFile("Boolean isRooted is " + Boolean.toString(isRooted));
+                boolean isMagiskRooted = CheckIfRooted.isMagiskRooted(this);
+                MyGettersSetters.setIsMagiskRooted(isMagiskRooted);
+                Logger.logToFile("Boolean isMagiskRooted is " + Boolean.toString(isMagiskRooted));
+                if (!isRooted && !isMagiskRooted) {
+                    //disableRootedButtons();
+                    Logger.logToFile("The unit is not rooted.");
+                }
+
+                // Where is my External Storage ?
+                Logger.logToFile("ExternalStorage path is " + FileUtils.strExternalStorage());
+                //Toast.makeText(MainActivity.this, FileUtils.strExternalStorage(), Toast.LENGTH_SHORT).show();
+
+                // And finally check for a new Version but only on first start
+                //CheckForNewVersion();
+                onCreateCalled = true;
+
+                SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+                editor.putString(PREF_FIRST_START, "false");
+                //savedInstanceState.putBoolean(KEY_ALREADY_EXECUTED, true);
             }
-
-        }
-
+        } // End of if (!onCreateCalled) {
+        // Check app and system modi and set button texts
+        // We also do the startup version check inside this method as we will otherwise see the poup twice (day/night) on a new version.
+        textButtonsAppSystem();
 
         EasyLock.forgotPassword(new View.OnClickListener() {
             @Override
@@ -197,9 +203,19 @@ public class MainActivity extends AppCompatActivity {
     }
     // End of OnCreate
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Reset the flag when the activity resumes
+        onCreateCalled = false;
+    }
+
     protected void onDestroy() {
         super.onDestroy();
         // Set the first start preference for our version check on startup
+        SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+        editor.putString(PREF_FIRST_START, "true"); // Use string instead of boolean
+        onCreateCalled = true;
     }
 
 
@@ -315,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
                 String githubRawUrl = "https://raw.githubusercontent.com/hvdwolf/FET/main/version.txt";
 
                 GitHubCheckVersion fileReader = new GitHubCheckVersion(this);
-                fileReader.readTextFileFromGitHub(githubRawUrl);
+                fileReader.readTextFileFromGitHub(githubRawUrl, "menuCheck");
                 return true;
             } else {
                 //popup no internet
@@ -364,11 +380,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void CheckForNewVersion() {
         if (isInternetAvailable(this)) {
+            /*SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+            String firstStart = preferences.getString(PREF_FIRST_START, "true");
+            if (firstStart.contains("true")) {
+                SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+                editor.putString(PREF_FIRST_START, "false");
+                String githubRawUrl = "https://raw.githubusercontent.com/hvdwolf/FET/main/version.txt";
+                GitHubCheckVersion fileReader = new GitHubCheckVersion(this);
+                fileReader.readTextFileFromGitHub(githubRawUrl, "startupCheck");
+            }*/
             String githubRawUrl = "https://raw.githubusercontent.com/hvdwolf/FET/main/version.txt";
-
             GitHubCheckVersion fileReader = new GitHubCheckVersion(this);
-            fileReader.readTextFileFromGitHub(githubRawUrl);
-            //return true;
+            fileReader.readTextFileFromGitHub(githubRawUrl, "startupCheck");
         }
     }
 
@@ -462,6 +485,9 @@ public class MainActivity extends AppCompatActivity {
     }
     private void applyAppModeFromStart(int mode) {
         Logger.logToFile("App theme switching to " + String.valueOf(mode));
+        /*if (!onCreateCalled) {
+            onCreateCalled = true;
+        }*/
         AppCompatDelegate.setDefaultNightMode(mode);
     }
     /* Above 6 methods  are for the light/dark app toggle mode */
@@ -860,8 +886,9 @@ public class MainActivity extends AppCompatActivity {
         Logger.logToFile("ro.fota.platform = " + fotaProp);
         //"ro.fota.platform" gives SC7862 or SC8581
 
-        ///////////// SET TO FALSE BEFORE RELEASE TO FYT /////////////
-        Boolean TEST = false;
+        ///////////// TRUE FOR TEST ON NON-FYT /////////////
+        ///////////// SET TO FALSE BEFORE RELEASING TO FYT /////////////
+        Boolean TEST = true;
         MyGettersSetters.setTestVersion(TEST);
         if (TEST) { // For testing on my phone
             FYT = true;
