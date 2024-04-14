@@ -17,6 +17,7 @@ public class MyGettersSetters {
     private Boolean isRooted;
     private Boolean isMagiskRooted;
     private int localVersion;
+    private Boolean versionCheckDone;
 
     public static String getLogFileName() {
         return staticInstance.logFileName;
@@ -50,4 +51,6 @@ public class MyGettersSetters {
     //public static boolean[] getFytCanbusMonitorCheckboxes() { return Arrays.copyOf(staticInstance.fytCanbusMonitorCheckboxes, staticInstance.fytCanbusMonitorCheckboxes.length); }
     //public static void setFytCanbusMonitorCheckboxes(boolean[] ftcbmCheckboxes) { staticInstance.fytCanbusMonitorCheckboxes = Arrays.copyOf(ftcbmCheckboxes, ftcbmCheckboxes.length); }
 
+    public static Boolean getVersionCheckDone() { return staticInstance.versionCheckDone; }
+    public static void setVersionCheckDone(Boolean vrsnChkDn) {staticInstance.versionCheckDone = vrsnChkDn; }
 }

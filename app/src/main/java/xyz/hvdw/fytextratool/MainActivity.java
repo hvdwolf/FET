@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String PREF_SYSTEM_MODE_KEY = "system_mode";
     private static final String DAY_MODE = "day";
     private static final String NIGHT_MODE = "night";
+    //private static final String PREF_FIRST_START = "first_start";
+    //private static final String FIRST_START =  "true"; 
     private Boolean logFileCreated = false;
     private int currentTabIndex = 0; // We use this to get back to the same tab index when returning from another screen
 
@@ -92,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Context context;
 
+        // First set versionCheckDone GetterSetter
+        MyGettersSetters.setVersionCheckDone(false);
         tabLayout = findViewById(R.id.tabLayout);
         frameLayout = findViewById(R.id.frameLayout);
 
@@ -152,7 +156,9 @@ public class MainActivity extends AppCompatActivity {
         if (checkIsFYT()) {
             //If it is a FYT we can continue and do some further checks
             Utils.checkPermissions(this);
+
             // Check app and system modi and set button texts
+            // We also do the startup version check inside this method as we will otherwise see the poup twice (day/night) on a new version.
             textButtonsAppSystem();
 
             // Check if rooted. If not disable some buttons
@@ -174,7 +180,10 @@ public class MainActivity extends AppCompatActivity {
             //Toast.makeText(MainActivity.this, FileUtils.strExternalStorage(), Toast.LENGTH_SHORT).show();
 
             // And finally check for a new Version
-            CheckForNewVersion();
+            if (!MyGettersSetters.getVersionCheckDone()) {
+                CheckForNewVersion();
+                MyGettersSetters.setVersionCheckDone(true);
+            }
 
         }
 
@@ -187,6 +196,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     // End of OnCreate
+
+    protected void onDestroy() {
+        super.onDestroy();
+        // Set the first start preference for our version check on startup
+    }
 
 
     // Handle multi-window support in case of splitscreen
@@ -379,8 +393,8 @@ public class MainActivity extends AppCompatActivity {
                 fragmentGeneral.updateButtonText(getString(R.string.system_theme_day));
             }
         }
-        //Utils.showInfoDialog(this, "textButtons", appMode + "\n" + systemMode);
 
+        //Utils.showInfoDialog(this, "textButtons", appMode + "\n" + systemMode);
     }
 
 

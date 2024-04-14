@@ -111,4 +111,5 @@
     <string name="btn_download_apk">Download apk</string>
     <string name="btn_open_xda">Open XDA</string>
     <string name="version_check_no_new_version">De lokale geinstalleerde versie is al de nieuwste versie:</string>
+    <string name="version_check_download_complete">Download van de nieuwe xyz.hvdw.fytextratool.apk naar folder Download is klaar"</string>
 </resources>

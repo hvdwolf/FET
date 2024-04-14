@@ -2,6 +2,7 @@ package xyz.hvdw.fytextratool;
 
 import android.app.AlertDialog;
 import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,6 +27,7 @@ public class GitHubCheckVersion {
     int localVersion = 0;
     String popupText = "";
     String whichIsNewer = "";
+    private static long downloadID;
 
     public GitHubCheckVersion(Context context) {
         this.context = context;
@@ -132,6 +135,7 @@ public class GitHubCheckVersion {
             builder.setPositiveButton(context.getString(R.string.btn_download_apk), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    //registerReceiver(downloadReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
                     downloadApk(context, formattedVersion);
                     dialog.dismiss(); // Close the dialog
                     // Call a method or perform an action
@@ -178,8 +182,22 @@ public class GitHubCheckVersion {
 
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         if (downloadManager != null) {
-            downloadManager.enqueue(request);
+            downloadID = downloadManager.enqueue(request);
         }
     }
+
+    /*private final BroadcastReceiver downloadReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+            if (id == downloadID) {
+                // Download complete
+                Logger.logToFile("Download of xyz.hvdw.fetextratool.apk complete");
+                // Show popup
+                Toast.makeText(this, "Download of xyz.hvdw.fetextratool.apk complete", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }; */
+
 
 }

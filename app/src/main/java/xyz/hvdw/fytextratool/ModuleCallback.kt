@@ -28,12 +28,12 @@ class ModuleCallback(private val name: String, private val view: TextView?) : IM
             when (updateCode) {
                 101 -> {
                     // speed
-                    CodeValue = convertIntoToString(updateCode, intArray, false)
+                    CodeValue = convertIntoToString(intArray, false)
                     logMsg("Module: $name Speed: $CodeValue")
                 }
                 114 -> {
                     // voltage
-                    CodeValue = convertIntoToString(updateCode, intArray, false)
+                    CodeValue = convertIntoToString(intArray, false)
                     logMsg("Module: $name Battery Voltage: $CodeValue")
                 }
                 else -> logMsg("Module: $name Code: $updateCode Ints: ${intArray!![0]}")
@@ -108,7 +108,7 @@ class ModuleCallback(private val name: String, private val view: TextView?) : IM
             //Log.i("UPDATE", msg)
         }
 
-        private fun convertIntoToString(updateCode: Int, intArray: IntArray, needCorrection: Boolean) : String {
+        private fun convertIntoToString(intArray: IntArray, needCorrection: Boolean) : String {
 
             val measuredValueFloat: Float = when {
                 intArray[0] in 100..999 -> {
