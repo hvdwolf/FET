@@ -888,7 +888,7 @@ public class MainActivity extends AppCompatActivity {
 
         ///////////// TRUE FOR TEST ON NON-FYT /////////////
         ///////////// SET TO FALSE BEFORE RELEASING TO FYT /////////////
-        Boolean TEST = true;
+        Boolean TEST = false;
         MyGettersSetters.setTestVersion(TEST);
         if (TEST) { // For testing on my phone
             FYT = true;

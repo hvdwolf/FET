@@ -110,5 +110,5 @@
     <string name="btn_download_apk">Apk laden</string>
     <string name="btn_open_xda">XDA öffnen</string>
     <string name="version_check_no_new_version">Die lokale Version ist aktuell:</string>
-    <string name="version_check_download_complete">Download of the new xyz.hvdw.fytextratool.apk into folder Download is complete"</string>
+    <string name="version_check_download_complete">Download der neuen xyz.hvdw.fytextratool.apk in Ordner Download ist vollständig"</string>
 </resources>
