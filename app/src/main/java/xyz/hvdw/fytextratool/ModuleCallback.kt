@@ -23,7 +23,13 @@ class ModuleCallback(private val name: String, private val view: TextView?) : IM
         floatArray: FloatArray?,
         strArray: Array<String?>?
     ) {
-        if (intArray != null) {
+        val intArrayStr = intArray?.contentToString() ?: "null"
+        val floatArrayStr = floatArray?.contentToString() ?: "null"
+        val strArrayStr = strArray?.contentToString() ?: "null"
+
+        logMsg("Module: $name Code: $updateCode Ints: $intArrayStr Floats: $floatArrayStr Strings: $strArrayStr")
+
+        /*if (intArray != null) {
             var CodeValue = "0.0"
             when (updateCode) {
                 101 -> {
@@ -38,7 +44,7 @@ class ModuleCallback(private val name: String, private val view: TextView?) : IM
                 }
                 else -> logMsg("Module: $name Code: $updateCode Ints: ${intArray!![0]}")
             }
-        }
+        }*/
     }
 
     init {
